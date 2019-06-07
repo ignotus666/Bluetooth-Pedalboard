@@ -86,7 +86,7 @@ char voltagePrintout[5];//Char array for battery voltage.
 char volPercPrintout[4];//Char array for battery percentage.
 int voltageBar = 0;
 int voltagePerc = 0;
-long unsigned lastReading = -20000;
+long unsigned lastReading = -30000;
 long unsigned currentReading = 0;
 bool usbOn = false;
 
