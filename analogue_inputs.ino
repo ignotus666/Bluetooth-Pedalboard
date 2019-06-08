@@ -67,7 +67,7 @@ void batteryIndicator()
   voltageBar = battRead;
   voltagePerc = battRead;
   float voltage = battery * (4.9 / 1023.0);
-  voltageBar = map(voltageBar, 668, 876, 0, 78);//Map bar to 3.1v (682) - 4.1v (895).
+  voltageBar = map(voltageBar, 668, 876, 0, 78);//Map bar to 3.1v - 4.1v.
   voltageBar = constrain(voltageBar, 0, 78);
   voltagePerc = map(voltagePerc, 668, 876, 0, 100);
   voltagePerc = constrain(voltagePerc, 0, 100);
