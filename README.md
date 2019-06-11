@@ -6,7 +6,7 @@ The bluetooth modules used are the HC-05; one for the transmitter and another fo
 
 The signal path is as follows:
 
-Arduino Tx -> HC-05 emitter (slave) Rx -> (((BT signal))) -> HC-05 receiver (master) Tx -> MIDI USB Rx -> PC
+Arduino Tx -> Rx HC-05 emitter (slave) -> (((BT signal))) -> HC-05 receiver (master) Tx -> Rx PIC18F2550 (MIDI USB) -> PC
 
 In order for the MIDI-bluetooth communication to work, a series of software changes need to made to the bluetooth modules, the PIC firmware and the MIDI library.
 
