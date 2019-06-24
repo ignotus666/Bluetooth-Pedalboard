@@ -1,0 +1,6 @@
+Ver 0.81:
+
+Added ResponsiveAnalogRead library for the hall sensor expression pedal. When on battery power the output was very jittery; 
+this library fixes the issue entirely. AnalogSmooth is good for the battery readings (lots of readings over a longer timespan)
+but not so good for returning values quickly. Likewise, ResponsiveAnalogRead isn't good for averaging readings over longer
+periods.
