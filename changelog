@@ -4,3 +4,14 @@ Added ResponsiveAnalogRead library for the hall sensor expression pedal. When on
 this library fixes the issue entirely. AnalogSmooth is good for the battery readings (lots of readings over a longer timespan)
 but not so good for returning values quickly. Likewise, ResponsiveAnalogRead isn't good for averaging readings over longer
 periods.
+
+...
+
+Ver 0.86:
+
+Cleaned up code a bit with arrays for LEDs and some other minor stuff (learning slowly...).
+Added wah .bmp icon to replace arc. Redrawing the arc every time the wah value changed caused a gap between each MIDI note
+sent, meaning that a fast transition only sent a handful of MIDI values. It now sends a faster stream of values making it more
+accurate.
+Added battery icon to replace arc.
+Reduced number of preset banks to 5. I have no need for that many presets so for now it's staying at 5 banks.
