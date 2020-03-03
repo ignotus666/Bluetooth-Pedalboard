@@ -48,14 +48,6 @@ ILI9341_due tft = ILI9341_due(TFT_CS, TFT_DC, TFT_RST);
 //LED pin assignment:
 const byte led[8] = {24, 25, 22, 23, 20, 21, 18, 19};
 const byte ledCnt = 8;
-/*const byte led1 = 24;
-const byte led2 = 25;
-const byte led3 = 22;
-const byte led4 = 23;
-const byte led5 = 20;
-const byte led6 = 21;
-const byte led7 = 18;
-const byte led8 = 19;*/
 
 //Button definitions and pins:
 #define pressed1 digitalRead(5)
@@ -241,14 +233,6 @@ void setup()
    {
        pinMode(led[p], OUTPUT);
    }
-  /*pinMode(led1, OUTPUT); // set up LED pin as output.
-  pinMode(led2, OUTPUT); // etc...
-  pinMode(led3, OUTPUT);
-  pinMode(led4, OUTPUT);
-  pinMode(led5, OUTPUT);
-  pinMode(led6, OUTPUT);
-  pinMode(led7, OUTPUT);
-  pinMode(led8, OUTPUT);*/
 
   tft.begin(); //Initialise TFT;
 
