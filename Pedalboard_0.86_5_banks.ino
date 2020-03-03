@@ -280,7 +280,7 @@ void loop()
 
   tft.setFont(Arial_bold_14);
 
-  //See which mode is active for bank buttons:
+  //See which mode is active for bank buttons 7 & 8). Press wah and button 7 to cycle through controller bank change mode (no MIDI), and bank & preset up/down in software (MIDI sent).
 
   if (key7Pressed == HIGH && loopStatus == false && stompStatus == false && wahVal < 100)
   {
@@ -340,9 +340,11 @@ void loop()
 
   if (bankButtonState == 3)
   {
-    nextPreset();
+    softwarePreset();
   }
 
+  //What happens when cycling through banks:
+  
   // BANK 1:
 
   if (bankNumber != oldBankNumber && bankNumber == 1)
@@ -566,24 +568,6 @@ void loop()
   {
     clearLargeName();
     bankButtonNames();
-  }
-}
-
-//MIDI ACTIVITY LEDS:
-void midiLed()
-{
-  if (stompStatus == LOW)
-  {
-    digitalWrite(led[6], HIGH);
-    delay(5);
-    digitalWrite(led[6], LOW);
-  }
-
-  if (stompStatus == HIGH)
-  {
-    digitalWrite(led[7], HIGH);
-    delay(5);
-    digitalWrite(led[7], LOW);
   }
 }
 
