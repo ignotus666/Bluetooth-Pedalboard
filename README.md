@@ -10,7 +10,7 @@ Arduino Tx -> Rx HC-05 emitter (slave) -> (((BT signal))) -> HC-05 receiver (mas
 
 In order for the MIDI-bluetooth communication to work, a series of software changes need to made to the bluetooth modules, the PIC firmware and the MIDI library.
 
-A small guide is included on what changes need to be made to the bluetooth modules and how to do them. Also included is the modified firmware for the PIC18F2550 in the receiver. Instructions on how to upload this firmware to the PIC are in the project linked to above. The other change needed is to the baud rate in the MIDI library. Open the 'midi_settings.h' file (in my case it's in /home/*username*/Arduino/libraries/arduino_midi_library-master/src/midi_settings.h) and in line 73 change the baudrate to 115200.
+A small guide is included on what changes need to be made to the bluetooth modules and how to do them. Also included is the modified firmware for the PIC18F2550 in the receiver. Instructions on how to upload this firmware to the PIC if you don't have a programmer are included in the bluetooth_files folder. The other change needed is to the baud rate in the MIDI library. Open the 'midi_settings.h' file (in my case it's in /home/*username*/Arduino/libraries/arduino_midi_library-master/src/midi_settings.h) and in line 73 change the baudrate to 115200.
 
 When the pedalboard is powered off, the line going from the battery + terminal to the analog pin should be cut off. I use a 2PDT switch to switch off power and also this line.
 
