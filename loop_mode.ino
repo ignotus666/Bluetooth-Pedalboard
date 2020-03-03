@@ -19,7 +19,7 @@ void loopActive()
       ledFlashOff();
     }
 
-    digitalWrite(Led8, HIGH);
+    digitalWrite(led[7], HIGH);
     
     led1On = false;
     led2On = false;
@@ -49,11 +49,6 @@ void loopActive()
     bank3Status = false;
     bank4Status = false;
     bank5Status = false;
-    bank6Status = false;
-    bank7Status = false;
-    bank8Status = false;
-    bank9Status = false;
-    bank10Status = false;
     stompStatus = false;
   }
 
@@ -80,7 +75,7 @@ void loopActive()
     tft.printAt("PRESET MODE", 200, 158);
 
     digitalWrite(lastLed, HIGH);
-    digitalWrite(Led8, LOW);
+    digitalWrite(led[7], LOW);
   }
 }
 
@@ -118,10 +113,10 @@ void loopMode()
       tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
       tft.setTextScale(1);
       tft.printAt("PLAY", 281, 90);
-      digitalWrite(Led3, HIGH);
+      digitalWrite(led[2], HIGH);
 
       led1Status = LOW;
-      digitalWrite(Led1, led1Status);
+      digitalWrite(led[0], led1Status);
     }
     key1Pressed = false;
   }
@@ -155,7 +150,7 @@ void loopMode()
         tft.setTextScale(2);
         tft.printAlignedOffseted("MULTIPLY", gTextAlignMiddleCenter, 0, -65);
       }
-      digitalWrite(Led1, led1Status);
+      digitalWrite(led[0], led1Status);
     }
   }
 
@@ -188,10 +183,10 @@ void loopMode()
       tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
       tft.setTextScale(1);
       tft.printAt("PLAY", 281, 90);
-      digitalWrite(Led3, HIGH);
+      digitalWrite(led[2], HIGH);
 
       led2Status = LOW;
-      digitalWrite(Led2, led2Status);
+      digitalWrite(led[1], led2Status);
     }
     key2Pressed = false;
   }
@@ -224,7 +219,7 @@ void loopMode()
         tft.setTextScale(2);
         tft.printAlignedOffseted("OVERDUB", gTextAlignMiddleCenter, 0, -65);
       }
-      digitalWrite(Led2, led2Status);
+      digitalWrite(led[1], led2Status);
     }
   }
 
@@ -259,7 +254,7 @@ void loopMode()
       tft.printAt("PLAY", 281, 90);
 
       led3Status = LOW;
-      digitalWrite(Led3, HIGH);
+      digitalWrite(led[2], HIGH);
     }
     key3Pressed = false;
   }
@@ -292,7 +287,7 @@ void loopMode()
         tft.setTextScale(2);
         tft.printAlignedOffseted("RECORD", gTextAlignMiddleCenter, 0, -65);
       }
-      digitalWrite(Led3, led3Status);
+      digitalWrite(led[2], led3Status);
     }
   }
 
@@ -325,10 +320,10 @@ void loopMode()
       tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
       tft.setTextScale(1);
       tft.printAt("PLAY", 281, 90);
-      digitalWrite(Led3, HIGH);
+      digitalWrite(led[2], HIGH);
 
       led4Status = LOW;
-      digitalWrite(Led4, led4Status);
+      digitalWrite(led[3], led4Status);
     }
     key4Pressed = false;
   }
@@ -361,7 +356,7 @@ void loopMode()
         tft.setTextScale(2);
         tft.printAlignedOffseted("INSERT", gTextAlignMiddleCenter, 0, -65);
       }
-      digitalWrite(Led4, led4Status);
+      digitalWrite(led[3], led4Status);
     }
   }
 
@@ -394,10 +389,10 @@ void loopMode()
       tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
       tft.setTextScale(1);
       tft.printAt("PLAY", 281, 90);
-      digitalWrite(Led3, HIGH);
+      digitalWrite(led[2], HIGH);
 
       led5Status = LOW;
-      digitalWrite(Led5, led5Status);
+      digitalWrite(led[4], led5Status);
     }
     key5Pressed = false;
   }
@@ -430,7 +425,7 @@ void loopMode()
         tft.setTextScale(2);
         tft.printAlignedOffseted("REPLACE", gTextAlignMiddleCenter, 0, -65);
       }
-      digitalWrite(Led5, led5Status);
+      digitalWrite(led[4], led5Status);
     }
   }
 
@@ -463,10 +458,10 @@ void loopMode()
       tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
       tft.setTextScale(1);
       tft.printAt("PLAY", 281, 90);
-      digitalWrite(Led3, HIGH);
+      digitalWrite(led[2], HIGH);
 
       led6Status = LOW;
-      digitalWrite(Led6, led6Status);
+      digitalWrite(led[5], led6Status);
     }
     key6Pressed = false;
   }
@@ -499,7 +494,7 @@ void loopMode()
         tft.setTextScale(2);
         tft.printAlignedOffseted("PAUSE", gTextAlignMiddleCenter, 0, -65);
       }
-      digitalWrite(Led6, led6Status);
+      digitalWrite(led[5], led6Status);
     }
   }
 
@@ -509,12 +504,7 @@ void loopMode()
     MIDI.sendControlChange(18, 127, 1);
     loopTime = millis();
     midiLed();
-    digitalWrite(Led1, LOW);
-    digitalWrite(Led2, LOW);
-    digitalWrite(Led3, LOW);
-    digitalWrite(Led4, LOW);
-    digitalWrite(Led5, LOW);
-    digitalWrite(Led6, LOW);
+    digitalWrite(led[0,1,2,3,4,5], LOW);
     led1On = false;
     led2On = false;
     led3On = false;
@@ -542,12 +532,7 @@ void loopMode()
     MIDI.sendControlChange(19, 127, 1);
     loopTime = millis();
     midiLed();
-    digitalWrite(Led1, LOW);
-    digitalWrite(Led2, LOW);
-    digitalWrite(Led3, LOW);
-    digitalWrite(Led4, LOW);
-    digitalWrite(Led5, LOW);
-    digitalWrite(Led6, LOW);
+    digitalWrite(led[0,1,2,3,4,5], LOW);
     led1On = false;
     led2On = false;
     led3On = false;

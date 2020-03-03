@@ -12,19 +12,20 @@ void pedalboardBank()
     key7Pressed = false;
   }
 
-  if (bankNumber > 10)
+  if (bankNumber > 5)
   {
     bankNumber = 1;
   }
 
   if (bankNumber < 1)
   {
-    bankNumber = 10;
+    bankNumber = 5;
   }
 
   if (bankNumber != oldBankNumber)
   {
     activePreset = 0;
+    lastLed = 0;
   }
 }
 

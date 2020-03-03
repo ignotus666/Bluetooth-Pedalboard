@@ -10,11 +10,6 @@ void return2lastBank()
     bank3Status = false;
     bank4Status = false;
     bank5Status = false;
-    bank6Status = false;
-    bank7Status = false;
-    bank8Status = false;
-    bank9Status = false;
-    bank10Status = false;
     stompStatus = false;
     
     bank1Presets();
@@ -28,11 +23,6 @@ void return2lastBank()
     bank3Status = false;
     bank4Status = false;
     bank5Status = false;
-    bank6Status = false;
-    bank7Status = false;
-    bank8Status = false;
-    bank9Status = false;
-    bank10Status = false;
     stompStatus = false;
     
     bank2Presets();
@@ -46,11 +36,6 @@ void return2lastBank()
     bank2Status = false;
     bank4Status = false;
     bank5Status = false;
-    bank6Status = false;
-    bank7Status = false;
-    bank8Status = false;
-    bank9Status = false;
-    bank10Status = false;
     stompStatus = false;
     
     bank3Presets();
@@ -64,11 +49,6 @@ void return2lastBank()
     bank2Status = false;
     bank3Status = false;
     bank5Status = false;
-    bank6Status = false;
-    bank7Status = false;
-    bank8Status = false;
-    bank9Status = false;
-    bank10Status = false;
     stompStatus = false;
     
     bank4Presets();
@@ -82,103 +62,8 @@ void return2lastBank()
     bank2Status = false;
     bank3Status = false;
     bank4Status = false;
-    bank6Status = false;
-    bank7Status = false;
-    bank8Status = false;
-    bank9Status = false;
-    bank10Status = false;
     stompStatus = false;
     
     bank5Presets();
-  }
-
-  if (lastBank == 6)
-  {
-    bank6Status = true;
-
-    bank1Status = false;
-    bank2Status = false;
-    bank3Status = false;
-    bank4Status = false;
-    bank5Status = false;
-    bank7Status = false;
-    bank8Status = false;
-    bank9Status = false;
-    bank10Status = false;
-    stompStatus = false;
-    
-    bank6Presets();
-  }
-
-  if (lastBank == 7)
-  {
-    bank7Status = true;
-
-    bank1Status = false;
-    bank2Status = false;
-    bank3Status = false;
-    bank4Status = false;
-    bank5Status = false;
-    bank6Status = false;
-    bank8Status = false;
-    bank9Status = false;
-    bank10Status = false;
-    stompStatus = false;
-    
-    bank7Presets();
-  }
-
-  if (lastBank == 8)
-  {
-    bank8Status = true;
-
-    bank1Status = false;
-    bank2Status = false;
-    bank3Status = false;
-    bank4Status = false;
-    bank5Status = false;
-    bank6Status = false;
-    bank7Status = false;
-    bank9Status = false;
-    bank10Status = false;
-    stompStatus = false;
-    
-    bank8Presets();
-  }
-
-  if (lastBank == 9)
-  {
-    bank9Status = true;
-
-    bank1Status = false;
-    bank2Status = false;
-    bank3Status = false;
-    bank4Status = false;
-    bank5Status = false;
-    bank6Status = false;
-    bank7Status = false;
-    bank8Status = false;
-    bank10Status = false;
-    stompStatus = false;
-    
-    bank9Presets();
-  }
-
-  if (lastBank == 10)
-  {
-    bank10Status = true;
-
-    bank1Status = false;
-    bank2Status = false;
-    bank3Status = false;
-    bank4Status = false;
-    bank5Status = false;
-    bank6Status = false;
-    bank7Status = false;
-    bank8Status = false;
-    bank9Status = false;
-    stompStatus = false;
-    
-    bank10Presets();
   }
 }

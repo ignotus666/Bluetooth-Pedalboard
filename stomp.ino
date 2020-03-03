@@ -1,4 +1,4 @@
-//STOMP ACTIVE:
+//STOMP ACTIVE/INACTIVE:
 
 void stompActive()
 {
@@ -21,7 +21,7 @@ void stompActive()
       ledFlashOff();
     }
 
-    digitalWrite(Led7, HIGH);
+    digitalWrite(led[6], HIGH);
 
     clearMode();
 
@@ -73,11 +73,6 @@ void stompActive()
     bank3Status = false;
     bank4Status = false;
     bank5Status = false;
-    bank6Status = false;
-    bank7Status = false;
-    bank8Status = false;
-    bank9Status = false;
-    bank10Status = false;
     loopStatus = false;
   }
 
@@ -107,13 +102,13 @@ void stompActive()
 
     digitalWrite(lastLed, HIGH);
 
-    digitalWrite(Led7, LOW);
+    digitalWrite(led[6], LOW);
   }
 }
 
-//STOMP BYPASS:
+//STOMP MODE:
 
-void stompBypass()
+void stompMode()
 {
   tft.setFontMode(gTextFontModeTransparent);
   //Footswitch code:
@@ -125,10 +120,10 @@ void stompBypass()
 
     if (stomp1State == true)
     {
-      MIDI.sendControlChange(2, 127, 1);
+      MIDI.sendControlChange(2, 0, 1);
       midiLed();
 
-      digitalWrite(Led1, LOW);
+      digitalWrite(led[0], LOW);
 
       //Erase red outline:
       tft.drawRoundRect(3, 79, 40, 72, 5, ILI9341_BLACK);
@@ -142,10 +137,10 @@ void stompBypass()
 
     if (stomp1State == false)
     {
-      MIDI.sendControlChange(2, 0, 1);
+      MIDI.sendControlChange(2, 127, 1);
       midiLed();
 
-      digitalWrite(Led1, HIGH);
+      digitalWrite(led[0], HIGH);
 
       //Outline pedals in red:
       tft.drawRoundRect(3, 79, 40, 72, 5, ILI9341_RED);
@@ -166,10 +161,10 @@ void stompBypass()
 
     if (stomp2State == true)
     {
-      MIDI.sendControlChange(3, 127, 1);
+      MIDI.sendControlChange(3, 0, 1);
       midiLed();
 
-      digitalWrite(Led2, LOW);
+      digitalWrite(led[1], LOW);
 
       tft.drawRoundRect(142, 79, 40, 72, 5, ILI9341_BLACK);
       tft.drawRoundRect(141, 78, 42, 74, 5, ILI9341_BLACK);
@@ -181,10 +176,10 @@ void stompBypass()
 
     if (stomp2State == false)
     {
-      MIDI.sendControlChange(3, 0, 1);
+      MIDI.sendControlChange(3, 127, 1);
       midiLed();
 
-      digitalWrite(Led2, HIGH);
+      digitalWrite(led[1], HIGH);
 
       tft.drawRoundRect(142, 79, 40, 72, 5, ILI9341_RED);
       tft.drawRoundRect(141, 78, 42, 74, 5, ILI9341_RED);
@@ -203,10 +198,10 @@ void stompBypass()
 
     if (stomp3State == true)
     {
-      MIDI.sendControlChange(4, 127, 1);
+      MIDI.sendControlChange(4, 0, 1);
       midiLed();
 
-      digitalWrite(Led3, LOW);
+      digitalWrite(led[2], LOW);
 
       tft.drawRoundRect(278, 79, 40, 72, 5, ILI9341_BLACK);
       tft.drawRoundRect(277, 78, 42, 74, 5, ILI9341_BLACK);
@@ -218,10 +213,10 @@ void stompBypass()
 
     if (stomp3State == false)
     {
-      MIDI.sendControlChange(4, 0, 1);
+      MIDI.sendControlChange(4, 127, 1);
       midiLed();
 
-      digitalWrite(Led3, HIGH);
+      digitalWrite(led[2], HIGH);
 
       tft.drawRoundRect(278, 79, 40, 72, 5, ILI9341_RED);
       tft.drawRoundRect(277, 78, 42, 74, 5, ILI9341_RED);
@@ -240,10 +235,10 @@ void stompBypass()
 
     if (stomp4State == true)
     {
-      MIDI.sendControlChange(5, 127, 1);
+      MIDI.sendControlChange(5, 0, 1);
       midiLed();
 
-      digitalWrite(Led4, LOW);
+      digitalWrite(led[3], LOW);
 
       tft.drawRoundRect(3, 2, 40, 72, 5, ILI9341_BLACK);
       tft.drawRoundRect(2, 1, 42, 74, 5, ILI9341_BLACK);
@@ -255,10 +250,10 @@ void stompBypass()
 
     if (stomp4State == false)
     {
-      MIDI.sendControlChange(5, 0, 1);
+      MIDI.sendControlChange(5, 127, 1);
       midiLed();
 
-      digitalWrite(Led4, HIGH);
+      digitalWrite(led[3], HIGH);
 
       tft.drawRoundRect(3, 2, 40, 72, 5, ILI9341_RED);
       tft.drawRoundRect(2, 1, 42, 74, 5, ILI9341_RED);
@@ -277,10 +272,10 @@ void stompBypass()
 
     if (stomp5State == true)
     {
-      MIDI.sendControlChange(6, 127, 1);
+      MIDI.sendControlChange(6, 0, 1);
       midiLed();
 
-      digitalWrite(Led5, LOW);
+      digitalWrite(led[4], LOW);
 
       tft.drawRoundRect(142, 2, 40, 72, 5, ILI9341_BLACK);
       tft.drawRoundRect(141, 1, 42, 74, 5, ILI9341_BLACK);
@@ -292,10 +287,10 @@ void stompBypass()
 
     if (stomp5State == false)
     {
-      MIDI.sendControlChange(6, 0, 1);
+      MIDI.sendControlChange(6, 127, 1);
       midiLed();
 
-      digitalWrite(Led5, HIGH);
+      digitalWrite(led[4], HIGH);
 
       tft.drawRoundRect(142, 2, 40, 72, 5, ILI9341_RED);
       tft.drawRoundRect(141, 1, 42, 74, 5, ILI9341_RED);
@@ -314,10 +309,10 @@ void stompBypass()
 
     if (stomp6State == true)
     {
-      MIDI.sendControlChange(7, 127, 1);
+      MIDI.sendControlChange(7, 0, 1);
       midiLed();
 
-      digitalWrite(Led6, LOW);
+      digitalWrite(led[5], LOW);
 
       tft.drawRoundRect(278, 2, 40, 72, 5, ILI9341_BLACK);
       tft.drawRoundRect(277, 1, 42, 74, 5, ILI9341_BLACK);
@@ -329,10 +324,10 @@ void stompBypass()
 
     if (stomp6State == false)
     {
-      MIDI.sendControlChange(7, 0, 1);
+      MIDI.sendControlChange(7, 127, 1);
       midiLed();
 
-      digitalWrite(Led6, HIGH);
+      digitalWrite(led[5], HIGH);
 
       tft.drawRoundRect(278, 2, 40, 72, 5, ILI9341_RED);
       tft.drawRoundRect(277, 1, 42, 74, 5, ILI9341_RED);
@@ -371,11 +366,11 @@ void stompBypass()
     // convert the reading to a char array
     sensorVal7.toCharArray(sensorPrintout, 4);
 
-    tft.fillArc(160, 200, 20, 8, 0 + (volBar), 78, (100, 100, 100));
+    tft.fillArc(155, 200, 20, 8, 0 + (volBar), 78, ILI9341_BLACK);
 
-    tft.fillArc(160, 200, 20, 8, 0, (volBar), ILI9341_BLUE);
+    tft.fillArc(155, 200, 20, 8, 0, (volBar), ILI9341_RED);
 
-    tft.fillCircle(160, 200, 10, ILI9341_BLACK);
+    tft.fillCircle(155, 200, 10, ILI9341_BLACK);
 
     tft.setFont(SystemFont5x7);
     tft.setFontMode(gTextFontModeSolid);
@@ -384,17 +379,17 @@ void stompBypass()
 
     if (volPerc == 100)
     {
-      tft.printAt(sensorPrintout, 151, 197);
+      tft.printAt(sensorPrintout, 146, 197);
     }
 
     if (volPerc < 100 && volPerc > 9)
     {
-      tft.printAt(sensorPrintout, 155, 197);
+      tft.printAt(sensorPrintout, 150, 197);
     }
 
     if (volPerc < 10)
     {
-      tft.printAt(sensorPrintout, 158, 197);
+      tft.printAt(sensorPrintout, 153, 197);
     }
 
     volVal = lastVolVal;
@@ -427,11 +422,11 @@ void stompBypass()
     // convert the reading to a char array
     sensorVal7.toCharArray(sensorPrintout, 4);
 
-    tft.fillArc(160, 200, 20, 8, 0 + (volBar), 78, (100, 100, 100));
+    tft.fillArc(155, 200, 20, 8, 0 + (volBar), 78, ILI9341_BLACK);
 
-    tft.fillArc(160, 200, 20, 8, 0, (volBar), ILI9341_BLUE);
+    tft.fillArc(155, 200, 20, 8, 0, (volBar), ILI9341_RED);
 
-    tft.fillCircle(160, 200, 10, ILI9341_BLACK);
+    tft.fillCircle(155, 200, 10, ILI9341_BLACK);
 
     tft.setFont(SystemFont5x7);
     tft.setFontMode(gTextFontModeSolid);
@@ -440,17 +435,17 @@ void stompBypass()
 
     if (volPerc == 100)
     {
-      tft.printAt(sensorPrintout, 151, 197);
+      tft.printAt(sensorPrintout, 146, 197);
     }
 
     if (volPerc < 100 && volPerc > 9)
     {
-      tft.printAt(sensorPrintout, 155, 197);
+      tft.printAt(sensorPrintout, 150, 197);
     }
 
     if (volPerc < 10)
     {
-      tft.printAt(sensorPrintout, 158, 197);
+      tft.printAt(sensorPrintout, 153, 197);
     }
 
     volVal = lastVolVal;

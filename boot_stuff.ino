@@ -2,24 +2,24 @@
 
 void ledSequence()
 {
-  digitalWrite(Led1, HIGH);
+  digitalWrite(led[0], HIGH);
   delay(40);
-  digitalWrite(Led1, LOW);
-  digitalWrite(Led2, HIGH);
+  digitalWrite(led[0], LOW);
+  digitalWrite(led[1], HIGH);
   delay(40);
-  digitalWrite(Led2, LOW);
-  digitalWrite(Led3, HIGH);
+  digitalWrite(led[1], LOW);
+  digitalWrite(led[2], HIGH);
   delay(40);
-  digitalWrite(Led3, LOW);
-  digitalWrite(Led6, HIGH);
+  digitalWrite(led[2], LOW);
+  digitalWrite(led[5], HIGH);
   delay(40);
-  digitalWrite(Led6, LOW);
-  digitalWrite(Led5, HIGH);
+  digitalWrite(led[5], LOW);
+  digitalWrite(led[4], HIGH);
   delay(40);
-  digitalWrite(Led5, LOW);
-  digitalWrite(Led4, HIGH);
+  digitalWrite(led[4], LOW);
+  digitalWrite(led[3], HIGH);
   delay(40);
-  digitalWrite(Led4, LOW);
+  digitalWrite(led[3], LOW);
 }
 
 //BOOT SEQUENCE:
@@ -57,26 +57,14 @@ void bootSequence()
 
   tft.setTextColor(ILI9341_CYAN, ILI9341_BLACK);
   tft.setTextScale(1);
-  tft.printAt("Batt:", 11, 223);
-
-  tft.setTextColor(ILI9341_BLUE, ILI9341_BLACK);
-  tft.setTextScale(1);
-  tft.printAt("Vol", 147, 223);
+  tft.printAt("Batt:", 1, 223);
 
   tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
   tft.setTextScale(1);
-  tft.printAt("Wah", 280, 223);
+  tft.printAt("Vol", 144, 223);
 
-  //Draw arc outlines:
-
-  tft.fillArc(25, 200, 21, 1, 0, 78, ILI9341_LIGHTBLUE);//Voltage.
-  tft.fillArc(25, 200, 12, 1, 0, 78, ILI9341_LIGHTBLUE);
-
-  tft.fillArc(295, 200, 21, 1, 0, 78, ILI9341_HOTPINK);//Wah.
-  tft.fillArc(295, 200, 12, 1, 0, 78, ILI9341_HOTPINK);
-
-  tft.fillArc(160, 200, 21, 1, 0, 78, ILI9341_HOTPINK);//Volume.
-  tft.fillArc(160, 200, 12, 1, 0, 78, ILI9341_HOTPINK);
+  tft.fillArc(155, 200, 21, 1, 0, 78, ILI9341_HOTPINK);//Volume arc outline.
+  tft.fillArc(155, 200, 12, 1, 0, 78, ILI9341_HOTPINK);
 
   tft.fillRoundRect(195, 155, 115, 18, 3, ILI9341_GREEN);
   tft.drawRoundRect(194, 154, 117, 20, 3, ILI9341_RED);
@@ -90,24 +78,26 @@ void bootSequence()
   tft.setFont(SystemFont5x7);
   tft.setTextColor(ILI9341_WHITE);
   tft.setTextScale(1);
-  tft.printAt("50", 155, 197);
-  tft.fillArc(160, 200, 20, 8, 0 + (volBar), 78, (100, 100, 100));
+  tft.printAt("50", 150, 197);
+  tft.fillArc(155, 200, 20, 8, 0 + (volBar), 78, ILI9341_BLACK);
+  tft.fillArc(155, 200, 20, 8, 0, (volBar), ILI9341_RED);
+  
+  tft.drawImage(Wah, 230, 184, WahWidth, WahHeight);
 
-  tft.fillArc(160, 200, 20, 8, 0, (volBar), ILI9341_BLUE);
 }
 
 void bootTextSequence()
 {
   tft.fillScreen(ILI9341_BLACK);
 
-  tft.drawImage(logo1, 112, 20, logo1Width, logo1Height);//MEGA
-  tft.drawImage(logo2, 50, 60, logo2Width, logo2Height);//Pedalboard
+  tft.drawImage(logo1, 122, 20, logo1Width, logo1Height);//MEGA
+  tft.drawImage(logo2, 60, 60, logo2Width, logo2Height);//Pedalboard
   tft.drawImage(logo3, 140, 120, logo3Width, logo3Height);//By
-  tft.drawImage(logo4, 113, 150, logo4Width, logo4Height);//Daryl H.
+  tft.drawImage(logo4, 120, 150, logo4Width, logo4Height);//Daryl H.
 
   tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
   tft.setTextScale(1);
-  tft.printAt("Ver 0.80", 120, 210);
+  tft.printAt("Ver 0.86", 120, 210);
 
   tft.drawImage(guitar, 210, 110, guitarWidth, guitarHeight);
   tft.drawImage(guitar2, 42, 110, guitar2Width, guitar2Height);

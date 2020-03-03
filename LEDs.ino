@@ -2,183 +2,163 @@
 
 void foot1()
 {
-  digitalWrite(Led1, HIGH);
-  digitalWrite(Led2, LOW);
-  digitalWrite(Led3, LOW);
-  digitalWrite(Led4, LOW);
-  digitalWrite(Led5, LOW);
-  digitalWrite(Led6, LOW);
+  for (int i = 0; i < 6; i++)
+  {
+    digitalWrite(led[i], LOW);
+  }
+  digitalWrite(led[0], HIGH);
 
-  lastLed = Led1;
+  lastLed = led[0];
 
   clearLargeName();
 }
 
 void foot2()
 {
-  digitalWrite(Led1, LOW);
-  digitalWrite(Led2, HIGH);
-  digitalWrite(Led3, LOW);
-  digitalWrite(Led4, LOW);
-  digitalWrite(Led5, LOW);
-  digitalWrite(Led6, LOW);
+  for (int i = 0; i < 6; i++)
+  {
+    digitalWrite(led[i], LOW);
+  }
+  digitalWrite(led[1], HIGH);
 
-  lastLed = Led2;
+  lastLed = led[1];
 
   clearLargeName();
 }
 
 void foot3()
 {
-  digitalWrite(Led1, LOW);
-  digitalWrite(Led2, LOW);
-  digitalWrite(Led3, HIGH);
-  digitalWrite(Led4, LOW);
-  digitalWrite(Led5, LOW);
-  digitalWrite(Led6, LOW);
+  for (int i = 0; i < 6; i++)
+  {
+    digitalWrite(led[i], LOW);
+  }
+  digitalWrite(led[2], HIGH);
 
-  lastLed = Led3;
+  lastLed = led[2];
 
   clearLargeName();
 }
 
 void foot4()
 {
-  digitalWrite(Led1, LOW);
-  digitalWrite(Led2, LOW);
-  digitalWrite(Led3, LOW);
-  digitalWrite(Led4, HIGH);
-  digitalWrite(Led5, LOW);
-  digitalWrite(Led6, LOW);
+  for (int i = 0; i < 6; i++)
+  {
+    digitalWrite(led[i], LOW);
+  }
+  digitalWrite(led[3], HIGH);
 
-  lastLed = Led4;
+  lastLed = led[3];
 
   clearLargeName();
 }
 
 void foot5()
 {
-  digitalWrite(Led1, LOW);
-  digitalWrite(Led2, LOW);
-  digitalWrite(Led3, LOW);
-  digitalWrite(Led4, LOW);
-  digitalWrite(Led5, HIGH);
-  digitalWrite(Led6, LOW);
+  for (int i = 0; i < 6; i++)
+  {
+    digitalWrite(led[i], LOW);
+  }
+  digitalWrite(led[4], HIGH);
 
-  lastLed = Led5;
+  lastLed = led[4];
 
   clearLargeName();
 }
 
 void foot6()
 {
-  digitalWrite(Led1, LOW);
-  digitalWrite(Led2, LOW);
-  digitalWrite(Led3, LOW);
-  digitalWrite(Led4, LOW);
-  digitalWrite(Led5, LOW);
-  digitalWrite(Led6, HIGH);
+  for (int i = 0; i < 6; i++)
+  {
+    digitalWrite(led[i], LOW);
+  }
+  digitalWrite(led[5], HIGH);
 
-  lastLed = Led6;
+  lastLed = led[5];
 
   clearLargeName();
 }
 
 void loopFoot1()
 {
-  digitalWrite(Led1, HIGH);
-  digitalWrite(Led2, LOW);
-  digitalWrite(Led3, LOW);
-  digitalWrite(Led4, LOW);
-  digitalWrite(Led5, LOW);
-  digitalWrite(Led6, LOW);
+  for (int i = 0; i < 6; i++)
+  {
+    digitalWrite(led[i], LOW);
+  }
+  digitalWrite(led[0], HIGH);
 
   clearLargeName();
 }
 
 void loopFoot2()
 {
-  digitalWrite(Led1, LOW);
-  digitalWrite(Led2, HIGH);
-  digitalWrite(Led3, LOW);
-  digitalWrite(Led4, LOW);
-  digitalWrite(Led5, LOW);
-  digitalWrite(Led6, LOW);
+  for (int i = 0; i < 6; i++)
+  {
+    digitalWrite(led[i], LOW);
+  }
+  digitalWrite(led[1], HIGH);
 
   clearLargeName();
 }
 
 void loopFoot3()
 {
-  digitalWrite(Led1, LOW);
-  digitalWrite(Led2, LOW);
-  digitalWrite(Led3, HIGH);
-  digitalWrite(Led4, LOW);
-  digitalWrite(Led5, LOW);
-  digitalWrite(Led6, LOW);
+  for (int i = 0; i < 6; i++)
+  {
+    digitalWrite(led[i], LOW);
+  }
+  digitalWrite(led[2], HIGH);
 
   clearLargeName();
 }
 
 void loopFoot4()
 {
-  digitalWrite(Led1, LOW);
-  digitalWrite(Led2, LOW);
-  digitalWrite(Led3, LOW);
-  digitalWrite(Led4, HIGH);
-  digitalWrite(Led5, LOW);
-  digitalWrite(Led6, LOW);
+  for (int i = 0; i < 6; i++)
+  {
+    digitalWrite(led[i], LOW);
+  }
+  digitalWrite(led[3], HIGH);
 
   clearLargeName();
 }
 
 void loopFoot5()
 {
-  digitalWrite(Led1, LOW);
-  digitalWrite(Led2, LOW);
-  digitalWrite(Led3, LOW);
-  digitalWrite(Led4, LOW);
-  digitalWrite(Led5, HIGH);
-  digitalWrite(Led6, LOW);
+  for (int i = 0; i < 6; i++)
+  {
+    digitalWrite(led[i], LOW);
+  }
+  digitalWrite(led[4], HIGH);
 
   clearLargeName();
 }
 
 void loopFoot6()
 {
-  digitalWrite(Led1, LOW);
-  digitalWrite(Led2, LOW);
-  digitalWrite(Led3, LOW);
-  digitalWrite(Led4, LOW);
-  digitalWrite(Led5, LOW);
-  digitalWrite(Led6, HIGH);
+  for (int i = 0; i < 6; i++)
+  {
+    digitalWrite(led[i], LOW);
+  }
+  digitalWrite(led[5], HIGH);
 
   clearLargeName();
 }
 void ledFlashOn()
 {
-  digitalWrite(Led1, HIGH);
-  digitalWrite(Led2, HIGH);
-  digitalWrite(Led3, HIGH);
-  digitalWrite(Led4, HIGH);
-  digitalWrite(Led5, HIGH);
-  digitalWrite(Led6, HIGH);
-  digitalWrite(Led7, HIGH);
-  digitalWrite(Led8, HIGH);
+  for (int i = 0; i < 8; i++)
+  {
+    digitalWrite(led[i], HIGH);
+  }
 
   delay(30);
 }
 
 void ledFlashOff()
 {
-  digitalWrite(Led1, LOW);
-  digitalWrite(Led2, LOW);
-  digitalWrite(Led3, LOW);
-  digitalWrite(Led4, LOW);
-  digitalWrite(Led5, LOW);
-  digitalWrite(Led6, LOW);
-  digitalWrite(Led7, LOW);
-  digitalWrite(Led8, LOW);
+  for (int i = 0; i < 8; i++)
+  {
+    digitalWrite(led[i], LOW);
+  }
 
   delay(30);
 }
