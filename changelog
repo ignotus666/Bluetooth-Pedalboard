@@ -1,6 +1,42 @@
+ver 0.69:
+- Some code optimisation.
+- Preset names changed via find/replace will automatically be displayed in the right position without the need to modify
+screen coordinates.
+
+ver 0.70:
+- Added possibility of sending additional MIDI events by pressing expression pedal + pushing bankUp and bankDown buttons.
+Can be used to scroll through banks in software that uses them (TH-U or others) or as next/previous preset.
+
+ver 0.71:
+- Fixed some bugs.
+
+ver 0.72:
+- Some changes to code.
+- (Replaces new function in ver 0.70): When in preset mode, by pressing the expression pedal + bankDown you can scroll through 
+3 different functions for the bankUP and bankDown buttons. In default mode they scroll through the pedalboard's banks (no MIDI 
+sent). The next function sets them to send MIDI messages for 'Next Bank' and 'Previous Bank'. The last function sends MIDI 
+messages for 'Next Preset' and 'Previous Preset'. 
+
+ver 0.73:
+- Cleaned up some code.
+
+ver 0.74:
+- Added MIDI activity display using the 'Pedalboard mode' and 'Loop mode' LEDs. Whenever a MIDI message is sent one of these
+LEDs flickers. If 'Pedalboard mode' is not activated, its LED is used; if it's active, the 'Loop mode' LED is used. Useful for
+debugging - if a pot isn't connected properly somewhere or they're picking up noise, this gives you visual feeback.
+
+ver 0.75:
+- Implemented button debounce code and got rid of (almost) all delays. Switches no longer cycle through states or 
+repeatedly send MIDI messages if accidentally held down for too long.
+
+- Made Loop Mode functions more adequately reflect the behaviour of Sooperlooper. LEDs now blink when an operation is active 
+and then default to 'Play' when pressed again.
+
+...
+
 Ver 0.81:
 
-Added ResponsiveAnalogRead library for the hall sensor expression pedal. When on battery power the output was very jittery; 
+- Added ResponsiveAnalogRead library for the hall sensor expression pedal. When on battery power the output was very jittery; 
 this library fixes the issue entirely. AnalogSmooth is good for the battery readings (lots of readings over a longer timespan)
 but not so good for returning values quickly. Likewise, ResponsiveAnalogRead isn't good for averaging readings over longer
 periods.
@@ -9,9 +45,10 @@ periods.
 
 Ver 0.86:
 
-Cleaned up code a bit with arrays for LEDs and some other minor stuff (learning slowly...).
-Added wah .bmp icon to replace arc. Redrawing the arc every time the wah value changed caused a gap between each MIDI note
+- Cleaned up code a bit with arrays for LEDs and some other minor stuff (learning slowly...).
+- Added wah .bmp icon to replace arc. Redrawing the arc every time the wah value changed caused a gap between each MIDI note
 sent, meaning that a fast transition only sent a handful of MIDI values. It now sends a faster stream of values making it more
 accurate.
-Added battery icon to replace arc.
-Reduced number of preset banks to 5. I have no need for that many presets so for now it's staying at 5 banks.
+- Added battery icon to replace arc.
+- Reduced number of preset banks to 5. I have no need for that many presets so for now it's staying at 5 banks.
+- Changed MIDI activity LED code to not use delay(). Should also help slightly with wah CC stream speed and accuracy.
