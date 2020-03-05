@@ -166,17 +166,14 @@ void ledFlashOff()
 //MIDI ACTIVITY LEDS:
 void midiLed()
 {
+  midiLedTime = millis();
   if (stompStatus == LOW)
   {
     digitalWrite(led[6], HIGH);
-    delay(5);
-    digitalWrite(led[6], LOW);
   }
 
   if (stompStatus == HIGH)
   {
     digitalWrite(led[7], HIGH);
-    delay(5);
-    digitalWrite(led[7], LOW);
   }
 }
