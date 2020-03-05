@@ -569,6 +569,20 @@ void loop()
     clearLargeName();
     bankButtonNames();
   }
+
+  if (millis() - midiLedTime >= 5) //Turn off MIDI LED.
+  {
+
+    if (stompStatus == LOW)
+    {
+      digitalWrite(led[6], LOW);
+    }
+
+    if (stompStatus == HIGH)
+    {
+      digitalWrite(led[7], LOW);
+    }
+  }
 }
 
 //CLEAR SPACES:
