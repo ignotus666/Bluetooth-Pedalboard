@@ -52,3 +52,12 @@ accurate.
 - Added battery icon to replace arc.
 - Reduced number of preset banks to 5. I have no need for that many presets so for now it's staying at 5 banks.
 - Changed MIDI activity LED code to not use delay(). Should also help slightly with wah CC stream speed and accuracy.
+
+...
+
+Ver 0.90:
+
+- Made some major changes to code, using arrays for lots more things. Managed to get rid of almost 800 lines of redundant
+code... Probably lots more could be improved but it's a learning process. Also combined all .bmp images into one file; no 
+need to have them scattered all over the place.
+- Fixed a couple of bugs.
