@@ -11,18 +11,18 @@ void return2ActivePreset()
     tft.printAlignedOffseted("MAST. PUP", gTextAlignMiddleLeft, 0, -20);
   }
 
-  if (activePreset == 2)
+  else if (activePreset == 2)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
-    tft.printAlignedOffseted("BACK IN BLACK",gTextAlignMiddleCenter, 0, -65);
+    tft.printAlignedOffseted("BACK IN BLACK", gTextAlignMiddleCenter, 0, -65);
 
     tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
     tft.setTextScale(1);
     tft.printAlignedOffseted("B in BLACK", gTextAlignMiddleCenter, 0, -20);
   }
 
-  if (activePreset == 3)
+  else if (activePreset == 3)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -33,7 +33,7 @@ void return2ActivePreset()
     tft.printAlignedOffseted("STONER", gTextAlignMiddleRight, 0, -20);
   }
 
-  if (activePreset == 4)
+  else if (activePreset == 4)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -44,7 +44,7 @@ void return2ActivePreset()
     tft.printAligned("CLEAN", gTextAlignTopLeft);
   }
 
-  if (activePreset == 5)
+  else if (activePreset == 5)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -55,7 +55,7 @@ void return2ActivePreset()
     tft.printAligned("CLEANw/EFF", gTextAlignTopCenter);
   }
 
-  if (activePreset == 6)
+  else if (activePreset == 6)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -66,7 +66,7 @@ void return2ActivePreset()
     tft.printAligned("ECHOEY", gTextAlignTopRight);
   }
 
-  if (activePreset == 7)
+  else if (activePreset == 7)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -77,7 +77,7 @@ void return2ActivePreset()
     tft.printAlignedOffseted("TOOL", gTextAlignMiddleLeft, 0, -20);
   }
 
-  if (activePreset == 8)
+  else if (activePreset == 8)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -88,7 +88,7 @@ void return2ActivePreset()
     tft.printAlignedOffseted("KYUSS", gTextAlignMiddleCenter, 0, -20);
   }
 
-  if (activePreset == 9)
+  else if (activePreset == 9)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -99,7 +99,7 @@ void return2ActivePreset()
     tft.printAlignedOffseted("CYCO", gTextAlignMiddleRight, 0, -20);
   }
 
-  if (activePreset == 10)
+  else if (activePreset == 10)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -110,7 +110,7 @@ void return2ActivePreset()
     tft.printAligned("OCTA", gTextAlignTopLeft);
   }
 
-  if (activePreset == 11)
+  else if (activePreset == 11)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -121,7 +121,7 @@ void return2ActivePreset()
     tft.printAligned("SANDMAN", gTextAlignTopCenter);
   }
 
-  if (activePreset == 12)
+  else if (activePreset == 12)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -132,7 +132,7 @@ void return2ActivePreset()
     tft.printAligned("NEUROSIS", gTextAlignTopRight);
   }
 
-  if (activePreset == 13)
+  else if (activePreset == 13)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -143,7 +143,7 @@ void return2ActivePreset()
     tft.printAlignedOffseted("TRIP.DEL", gTextAlignMiddleLeft, 0, -20);
   }
 
-  if (activePreset == 14)
+  else if (activePreset == 14)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -154,7 +154,7 @@ void return2ActivePreset()
     tft.printAlignedOffseted("CRUNCH", gTextAlignMiddleCenter, 0, -20);
   }
 
-  if (activePreset == 15)
+  else if (activePreset == 15)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -165,7 +165,7 @@ void return2ActivePreset()
     tft.printAlignedOffseted("FUZZY", gTextAlignMiddleRight, 0, -20);
   }
 
-  if (activePreset == 16)
+  else if (activePreset == 16)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -176,7 +176,7 @@ void return2ActivePreset()
     tft.printAligned("EXTREME", gTextAlignTopLeft);
   }
 
-  if (activePreset == 17)
+  else if (activePreset == 17)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -187,7 +187,7 @@ void return2ActivePreset()
     tft.printAligned("SLUDGE", gTextAlignTopCenter);
   }
 
-  if (activePreset == 18)
+  else if (activePreset == 18)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -198,7 +198,7 @@ void return2ActivePreset()
     tft.printAligned("DOOM", gTextAlignTopRight);
   }
 
-  if (activePreset == 19)
+  else if (activePreset == 19)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -209,7 +209,7 @@ void return2ActivePreset()
     tft.printAlignedOffseted("PRES.19", gTextAlignMiddleLeft, 0, -20);
   }
 
-  if (activePreset == 20)
+  else if (activePreset == 20)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -220,7 +220,7 @@ void return2ActivePreset()
     tft.printAlignedOffseted("PRES.20", gTextAlignMiddleCenter, 0, -20);
   }
 
-  if (activePreset == 21)
+  else if (activePreset == 21)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -231,7 +231,7 @@ void return2ActivePreset()
     tft.printAlignedOffseted("PRES.21", gTextAlignMiddleRight, 0, -20);
   }
 
-  if (activePreset == 22)
+  else if (activePreset == 22)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -242,7 +242,7 @@ void return2ActivePreset()
     tft.printAligned("PRES.22", gTextAlignTopLeft);
   }
 
-  if (activePreset == 23)
+  else if (activePreset == 23)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -253,7 +253,7 @@ void return2ActivePreset()
     tft.printAligned("PRES.23", gTextAlignTopCenter);
   }
 
-  if (activePreset == 24)
+  else if (activePreset == 24)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -264,7 +264,7 @@ void return2ActivePreset()
     tft.printAligned("PRES.24", gTextAlignTopRight);
   }
 
-  if (activePreset == 25)
+  else if (activePreset == 25)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -275,7 +275,7 @@ void return2ActivePreset()
     tft.printAlignedOffseted("PRES.25", gTextAlignMiddleLeft, 0, -20);
   }
 
-  if (activePreset == 26)
+  else if (activePreset == 26)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -286,7 +286,7 @@ void return2ActivePreset()
     tft.printAlignedOffseted("PRES.26", gTextAlignMiddleCenter, 0, -20);
   }
 
-  if (activePreset == 27)
+  else if (activePreset == 27)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -297,7 +297,7 @@ void return2ActivePreset()
     tft.printAlignedOffseted("PRES.27", gTextAlignMiddleRight, 0, -20);
   }
 
-  if (activePreset == 28)
+  else if (activePreset == 28)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -308,7 +308,7 @@ void return2ActivePreset()
     tft.printAligned("PRES.28", gTextAlignTopLeft);
   }
 
-  if (activePreset == 29)
+  else if (activePreset == 29)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
@@ -319,7 +319,8 @@ void return2ActivePreset()
     tft.printAligned("PRES.29", gTextAlignTopCenter);
   }
 
-  if (activePreset == 30)
+
+  else if (activePreset == 30)
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);

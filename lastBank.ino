@@ -2,68 +2,36 @@
 
 void return2lastBank()
 {
-  if (lastBank == 1)
+  for (int b = 1; b < 5; b++)
   {
-    bank1Status = true;
-
-    bank2Status = false;
-    bank3Status = false;
-    bank4Status = false;
-    bank5Status = false;
-    stompStatus = false;
-    
-    bank1Presets();
+    if (b !=  (lastBank - 1))           //It's lastBank -1 because of the array index starting at 0 but bank numbers starting at 1.
+    {
+      statusBank[b] = false;
+      statusBank[lastBank - 1] = true;
+    }
   }
+  stompStatus = false;
 
-  if (lastBank == 2)
+  switch (lastBank)
   {
-    bank2Status = true;
+    case 1:
+      bank1Presets();
+      break;
 
-    bank1Status = false;
-    bank3Status = false;
-    bank4Status = false;
-    bank5Status = false;
-    stompStatus = false;
-    
-    bank2Presets();
-  }
+    case 2:
+      bank2Presets();
+      break;
 
-  if (lastBank == 3)
-  {
-    bank3Status = true;
+    case 3:
+      bank3Presets();
+      break;
 
-    bank1Status = false;
-    bank2Status = false;
-    bank4Status = false;
-    bank5Status = false;
-    stompStatus = false;
-    
-    bank3Presets();
-  }
+    case 4:
+      bank4Presets();
+      break;
 
-  if (lastBank == 4)
-  {
-    bank4Status = true;
-
-    bank1Status = false;
-    bank2Status = false;
-    bank3Status = false;
-    bank5Status = false;
-    stompStatus = false;
-    
-    bank4Presets();
-  }
-
-  if (lastBank == 5)
-  {
-    bank5Status = true;
-
-    bank1Status = false;
-    bank2Status = false;
-    bank3Status = false;
-    bank4Status = false;
-    stompStatus = false;
-    
-    bank5Presets();
+    case 5:
+      bank5Presets();
+      break;
   }
 }

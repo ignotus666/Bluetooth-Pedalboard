@@ -2,14 +2,12 @@ void loopActive()
 {
   loopStatus = !loopStatus;
 
-  loopTime = millis();//Start counting, to clear some messages off the screen after a couple of seconds.
+  loopTime = millis();                 //Start counting, to clear some messages off the screen after a couple of seconds.
 
-  loop1State = true;
-  loop2State = true;
-  loop3State = true;
-  loop4State = true;
-  loop5State = true;
-  loop6State = true;
+  for (int l = 0; l < 6; l++)          //Set loopStates to true.
+  {
+    loopState[l] = true;
+  }
 
   if (loopStatus == true)
   {
@@ -20,13 +18,11 @@ void loopActive()
     }
 
     digitalWrite(led[7], HIGH);
-    
-    led1On = false;
-    led2On = false;
-    led3On = false;
-    led4On = false;
-    led5On = false;
-    led6On = false;
+
+    for (int l = 0; l < 6; l++)
+    {
+      ledOn[l] = false;
+    }
 
     clearTopHalf();
     clearMode();
@@ -44,11 +40,10 @@ void loopActive()
     tft.setTextScale(1);
     tft.printAt("LOOPER MODE", 200, 158);
 
-    bank1Status = false;
-    bank2Status = false;
-    bank3Status = false;
-    bank4Status = false;
-    bank5Status = false;
+    for (int b = 0; b < 5; b++)
+    {
+      statusBank[b] = false;
+    }
     stompStatus = false;
   }
 
@@ -64,7 +59,12 @@ void loopActive()
     clearMode();
 
     return2lastBank();
-    return2ActivePreset();
+
+    if (bankButtonState == 1 || presetChanged == 0) //If next/prev preset or next/prev bank have been pressed, it's presumed the last active preset is no longer active; if not, it's still active.
+    {
+      return2ActivePreset();
+      digitalWrite(led[lastLed], HIGH);
+    }
     bankButtonNames();
 
     tft.fillRoundRect(195, 155, 115, 18, 3, ILI9341_GREEN);
@@ -74,7 +74,6 @@ void loopActive()
     tft.setTextScale(1);
     tft.printAt("PRESET MODE", 200, 158);
 
-    digitalWrite(lastLed, HIGH);
     digitalWrite(led[7], LOW);
   }
 }
@@ -86,25 +85,28 @@ void loopMode()
   //Footswitch code:
 
   //Footswitch 1:
-  if (key1Pressed)
+  if (keyPressed[0] == true)
   {
-    MIDI.sendControlChange(12, 127, 1);     //(control number, controller value, channel).Send the same message whenever the switch is pressed.
+    MIDI.sendControlChange(12, 127, 1);     //(control number, controller value, channel. Send the same message whenever the switch is pressed.
     midiLed();
     loopNames();
-    loopFoot1();
-    led2On = false;
-    led3On = false;
-    led4On = false;
-    led5On = false;
-    led6On = false;
-    // turn on or turn off the blinking LED
-    if ( led1On == false)
+    loopLed = 0;
+    loopLeds();
+    for (int l = 0; l < 6; l++)
     {
-      led1On = true;
+      if (l != (loopLed))                  //Set all ledOn states to false but don't change the state of the current led used (I just use the loopLed number as a handy reference).
+      {
+        ledOn[l] = false;
+      }
+    }
+    // turn on or turn off the blinking LED
+    if ( ledOn[0] == false)
+    {
+      ledOn[0] = true;
     }
     else
     {
-      led1On = false;
+      ledOn[0] = false;
 
       tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
       tft.setTextScale(2);
@@ -115,22 +117,22 @@ void loopMode()
       tft.printAt("PLAY", 281, 90);
       digitalWrite(led[2], HIGH);
 
-      led1Status = LOW;
-      digitalWrite(led[0], led1Status);
+      ledStatus[0] = LOW;
+      digitalWrite(led[0], ledStatus[0]);
     }
-    key1Pressed = false;
+    keyPressed[0] = false;
   }
 
   //See if it is time to blink the LED:
-  if ( led1On == true )
+  if ( ledOn[0] == true )
   {
     timeNow = millis();
     if (timeNow - timePrev >= timeWait )
     {
       timePrev = timeNow;
-      if (led1Status == LOW)
+      if (ledStatus[0] == LOW)
       {
-        led1Status = HIGH;
+        ledStatus[0] = HIGH;
         tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
         tft.setTextScale(1);
         tft.printAt("MULTI", 1, 90);
@@ -141,7 +143,7 @@ void loopMode()
       }
       else
       {
-        led1Status = LOW;
+        ledStatus[0] = LOW;
         tft.setTextColor(ILI9341_CYAN, ILI9341_BLACK);
         tft.setTextScale(1);
         tft.printAt("MULTI", 1, 90);
@@ -150,31 +152,34 @@ void loopMode()
         tft.setTextScale(2);
         tft.printAlignedOffseted("MULTIPLY", gTextAlignMiddleCenter, 0, -65);
       }
-      digitalWrite(led[0], led1Status);
+      digitalWrite(led[0], ledStatus[0]);
     }
   }
 
   //Footswitch 2:
 
-  if (key2Pressed)
+  if (keyPressed[1] == true)
   {
     MIDI.sendControlChange(13, 127, 1);
     midiLed();
     loopNames();
-    loopFoot2();
-    led1On = false;
-    led3On = false;
-    led4On = false;
-    led5On = false;
-    led6On = false;
-
-    if ( led2On == false)
+    loopLed = 1;
+    loopLeds();
+    for (int l = 0; l < 6; l++)
     {
-      led2On = true;
+      if (l != (loopLed))
+      {
+        ledOn[l] = false;
+      }
+    }
+
+    if ( ledOn[1] == false)
+    {
+      ledOn[1] = true;
     }
     else
     {
-      led2On = false;
+      ledOn[1] = false;
 
       tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
       tft.setTextScale(2);
@@ -185,21 +190,21 @@ void loopMode()
       tft.printAt("PLAY", 281, 90);
       digitalWrite(led[2], HIGH);
 
-      led2Status = LOW;
-      digitalWrite(led[1], led2Status);
+      ledStatus[1] = LOW;
+      digitalWrite(led[1], ledStatus[1]);
     }
-    key2Pressed = false;
+    keyPressed[1] = false;
   }
 
-  if ( led2On == true )
+  if ( ledOn[1] == true )
   {
     timeNow = millis();
     if (timeNow - timePrev >= timeWait )
     {
       timePrev = timeNow;
-      if (led2Status == LOW)
+      if (ledStatus[1] == LOW)
       {
-        led2Status = HIGH;
+        ledStatus[1] = HIGH;
         tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
         tft.setTextScale(1);
         tft.printAt("OVERDUB", 120, 90);
@@ -210,7 +215,7 @@ void loopMode()
       }
       else
       {
-        led2Status = LOW;
+        ledStatus[1] = LOW;
         tft.setTextColor(ILI9341_CYAN, ILI9341_BLACK);
         tft.setTextScale(1);
         tft.printAt("OVERDUB", 120, 90);
@@ -219,31 +224,34 @@ void loopMode()
         tft.setTextScale(2);
         tft.printAlignedOffseted("OVERDUB", gTextAlignMiddleCenter, 0, -65);
       }
-      digitalWrite(led[1], led2Status);
+      digitalWrite(led[1], ledStatus[1]);
     }
   }
 
   //Footswitch 3:
 
-  if (key3Pressed)
+  if (keyPressed[2] == true)
   {
     MIDI.sendControlChange(14, 127, 1);
     midiLed();
     loopNames();
-    loopFoot3();
-    led1On = false;
-    led2On = false;
-    led4On = false;
-    led5On = false;
-    led6On = false;
-
-    if ( led3On == false)
+    loopLed = 2;
+    loopLeds();
+    for (int l = 0; l < 6; l++)
     {
-      led3On = true;
+      if (l != (loopLed))
+      {
+        ledOn[l] = false;
+      }
+    }
+
+    if ( ledOn[2] == false)
+    {
+      ledOn[2] = true;
     }
     else
     {
-      led3On = false;
+      ledOn[2] = false;
 
       tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
       tft.setTextScale(2);
@@ -253,21 +261,21 @@ void loopMode()
       tft.setTextScale(1);
       tft.printAt("PLAY", 281, 90);
 
-      led3Status = LOW;
+      ledStatus[2] = LOW;
       digitalWrite(led[2], HIGH);
     }
-    key3Pressed = false;
+    keyPressed[2] = false;
   }
 
-  if ( led3On == true )
+  if ( ledOn[2] == true )
   {
     timeNow = millis();
     if (timeNow - timePrev >= timeWait )
     {
       timePrev = timeNow;
-      if (led3Status == LOW)
+      if (ledStatus[2] == LOW)
       {
-        led3Status = HIGH;
+        ledStatus[2] = HIGH;
         tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
         tft.setTextScale(1);
         tft.printAt("REC", 245, 90);
@@ -278,7 +286,7 @@ void loopMode()
       }
       else
       {
-        led3Status = LOW;
+        ledStatus[2] = LOW;
         tft.setTextColor(ILI9341_CYAN, ILI9341_BLACK);
         tft.setTextScale(1);
         tft.printAt("REC", 245, 90);
@@ -287,31 +295,34 @@ void loopMode()
         tft.setTextScale(2);
         tft.printAlignedOffseted("RECORD", gTextAlignMiddleCenter, 0, -65);
       }
-      digitalWrite(led[2], led3Status);
+      digitalWrite(led[2], ledStatus[2]);
     }
   }
 
   //Footswitch 4:
 
-  if (key4Pressed)
+  if (keyPressed[3] == true)
   {
     MIDI.sendControlChange(15, 127, 1);
     midiLed();
     loopNames();
-    loopFoot4();
-    led1On = false;
-    led2On = false;
-    led3On = false;
-    led5On = false;
-    led6On = false;
-
-    if ( led4On == false)
+    loopLed = 3;
+    loopLeds();
+    for (int l = 0; l < 6; l++)
     {
-      led4On = true;
+      if (l != (loopLed))
+      {
+        ledOn[l] = false;
+      }
+    }
+
+    if ( ledOn[3] == false)
+    {
+      ledOn[3] = true;
     }
     else
     {
-      led4On = false;
+      ledOn[3] = false;
 
       tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
       tft.setTextScale(2);
@@ -322,21 +333,21 @@ void loopMode()
       tft.printAt("PLAY", 281, 90);
       digitalWrite(led[2], HIGH);
 
-      led4Status = LOW;
-      digitalWrite(led[3], led4Status);
+      ledStatus[3] = LOW;
+      digitalWrite(led[3], ledStatus[3]);
     }
-    key4Pressed = false;
+    keyPressed[3] = false;
   }
 
-  if ( led4On == true )
+  if ( ledOn[3] == true )
   {
     timeNow = millis();
     if (timeNow - timePrev >= timeWait )
     {
       timePrev = timeNow;
-      if (led4Status == LOW)
+      if (ledStatus[3] == LOW)
       {
-        led4Status = HIGH;
+        ledStatus[3] = HIGH;
         tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
         tft.setTextScale(1);
         tft.printAligned("INSERT", gTextAlignTopLeft);
@@ -347,7 +358,7 @@ void loopMode()
       }
       else
       {
-        led4Status = LOW;
+        ledStatus[3] = LOW;
         tft.setTextColor(ILI9341_CYAN, ILI9341_BLACK);
         tft.setTextScale(1);
         tft.printAligned("INSERT", gTextAlignTopLeft);
@@ -356,31 +367,34 @@ void loopMode()
         tft.setTextScale(2);
         tft.printAlignedOffseted("INSERT", gTextAlignMiddleCenter, 0, -65);
       }
-      digitalWrite(led[3], led4Status);
+      digitalWrite(led[3], ledStatus[3]);
     }
   }
 
   //Footswitch 5:
 
-  if (key5Pressed)
+  if (keyPressed[4] == true)
   {
     MIDI.sendControlChange(16, 127, 1);
     midiLed();
     loopNames();
-    loopFoot5();
-    led1On = false;
-    led2On = false;
-    led3On = false;
-    led4On = false;
-    led6On = false;
-
-    if ( led5On == false)
+    loopLed = 4;
+    loopLeds();
+    for (int l = 0; l < 6; l++)
     {
-      led5On = true;
+      if (l != (loopLed))
+      {
+        ledOn[l] = false;
+      }
+    }
+
+    if ( ledOn[4] == false)
+    {
+      ledOn[4] = true;
     }
     else
     {
-      led5On = false;
+      ledOn[4] = false;
 
       tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
       tft.setTextScale(2);
@@ -391,21 +405,21 @@ void loopMode()
       tft.printAt("PLAY", 281, 90);
       digitalWrite(led[2], HIGH);
 
-      led5Status = LOW;
-      digitalWrite(led[4], led5Status);
+      ledStatus[4] = LOW;
+      digitalWrite(led[4], ledStatus[4]);
     }
-    key5Pressed = false;
+    keyPressed[4] = false;
   }
 
-  if ( led5On == true )
+  if ( ledOn[4] == true )
   {
     timeNow = millis();
     if (timeNow - timePrev >= timeWait )
     {
       timePrev = timeNow;
-      if (led5Status == LOW)
+      if (ledStatus[4] == LOW)
       {
-        led5Status = HIGH;
+        ledStatus[4] = HIGH;
         tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
         tft.setTextScale(1);
         tft.printAligned("REPLACE", gTextAlignTopCenter);
@@ -416,7 +430,7 @@ void loopMode()
       }
       else
       {
-        led5Status = LOW;
+        ledStatus[4] = LOW;
         tft.setTextColor(ILI9341_CYAN, ILI9341_BLACK);
         tft.setTextScale(1);
         tft.printAligned("REPLACE", gTextAlignTopCenter);
@@ -425,31 +439,34 @@ void loopMode()
         tft.setTextScale(2);
         tft.printAlignedOffseted("REPLACE", gTextAlignMiddleCenter, 0, -65);
       }
-      digitalWrite(led[4], led5Status);
+      digitalWrite(led[4], ledStatus[4]);
     }
   }
 
   //Footswitch 6:
 
-  if (key6Pressed)
+  if (keyPressed[5] == true)
   {
     MIDI.sendControlChange(17, 127, 1);
     midiLed();
     loopNames();
-    loopFoot6();
-    led1On = false;
-    led2On = false;
-    led3On = false;
-    led4On = false;
-    led5On = false;
-
-    if ( led6On == false)
+    loopLed = 5;
+    loopLeds();
+    for (int l = 0; l < 6; l++)
     {
-      led6On = true;
+      if (l != (loopLed))
+      {
+        ledOn[l] = false;
+      }
+    }
+
+    if ( ledOn[5] == false)
+    {
+      ledOn[5] = true;
     }
     else
     {
-      led6On = false;
+      ledOn[5] = false;
 
       tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
       tft.setTextScale(2);
@@ -460,21 +477,21 @@ void loopMode()
       tft.printAt("PLAY", 281, 90);
       digitalWrite(led[2], HIGH);
 
-      led6Status = LOW;
-      digitalWrite(led[5], led6Status);
+      ledStatus[5] = LOW;
+      digitalWrite(led[5], ledStatus[5]);
     }
-    key6Pressed = false;
+    keyPressed[5] = false;
   }
 
-  if ( led6On == true )
+  if ( ledOn[5] == true )
   {
     timeNow = millis();
     if (timeNow - timePrev >= timeWait )
     {
       timePrev = timeNow;
-      if (led6Status == LOW)
+      if (ledStatus[5] == LOW)
       {
-        led6Status = HIGH;
+        ledStatus[5] = HIGH;
         tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
         tft.setTextScale(1);
         tft.printAligned("PAUSE", gTextAlignTopRight);
@@ -485,7 +502,7 @@ void loopMode()
       }
       else
       {
-        led6Status = LOW;
+        ledStatus[5] = LOW;
         tft.setTextColor(ILI9341_CYAN, ILI9341_BLACK);
         tft.setTextScale(1);
         tft.printAligned("PAUSE", gTextAlignTopRight);
@@ -494,23 +511,22 @@ void loopMode()
         tft.setTextScale(2);
         tft.printAlignedOffseted("PAUSE", gTextAlignMiddleCenter, 0, -65);
       }
-      digitalWrite(led[5], led6Status);
+      digitalWrite(led[5], ledStatus[5]);
     }
   }
 
   //For footswitch 7:
-  if (key7Pressed && loopStatus == true)
+  if (keyPressed[6] == true && loopStatus == true)
   {
     MIDI.sendControlChange(18, 127, 1);
     loopTime = millis();
     midiLed();
-    digitalWrite(led[0,1,2,3,4,5], LOW);
-    led1On = false;
-    led2On = false;
-    led3On = false;
-    led4On = false;
-    led5On = false;
-    led6On = false;
+    digitalWrite(led[lastLed], LOW);
+
+    for (int l = 0; l < 6; l++)
+    {
+      ledOn[l] = false;
+    }
 
     loopNames();
 
@@ -523,22 +539,21 @@ void loopMode()
     tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
     tft.setTextScale(1);
     tft.printAt("UNDO", 1, 130);
-    key7Pressed = false;
+    keyPressed[6] = false;
   }
 
   //For footswitch 8:
-  if (key8Pressed && loopStatus == true)
+  if (keyPressed[7] == true && loopStatus == true)
   {
     MIDI.sendControlChange(19, 127, 1);
     loopTime = millis();
     midiLed();
-    digitalWrite(led[0,1,2,3,4,5], LOW);
-    led1On = false;
-    led2On = false;
-    led3On = false;
-    led4On = false;
-    led5On = false;
-    led6On = false;
+    digitalWrite(led[lastLed], LOW);
+
+    for (int l = 0; l < 6; l++)
+    {
+      ledOn[l] = false;
+    }
 
     loopNames();
 
@@ -551,7 +566,7 @@ void loopMode()
     tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
     tft.setTextScale(1);
     tft.printAt("REDO", 80, 130);
-    key8Pressed = false;
+    keyPressed[7] = false;
   }
 
   if (millis() - loopTime > 1000 && millis() - loopTime < 1050)

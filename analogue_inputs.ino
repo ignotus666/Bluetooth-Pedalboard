@@ -127,3 +127,12 @@ void batteryIndicator()
   }
   lastVoltagePerc = voltagePerc;
 }
+
+void readBattery()
+{
+  if (millis() - lastReading >= 30000 && usbOn == false)
+  {
+    batteryIndicator();
+    lastReading = currentReading;
+  }
+}

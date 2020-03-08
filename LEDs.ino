@@ -1,145 +1,20 @@
 //Return LEDs to last state before toggling looper/stomp and preset mode.
 
-void foot1()
+void toggleLeds()
 {
-  for (int i = 0; i < 6; i++)
-  {
-    digitalWrite(led[i], LOW);
-  }
-  digitalWrite(led[0], HIGH);
-
-  lastLed = led[0];
+  digitalWrite(led[lastLed], LOW);
+  digitalWrite(led[activeLed], HIGH);
 
   clearLargeName();
 }
 
-void foot2()
+void loopLeds()
 {
   for (int i = 0; i < 6; i++)
   {
     digitalWrite(led[i], LOW);
   }
-  digitalWrite(led[1], HIGH);
-
-  lastLed = led[1];
-
-  clearLargeName();
-}
-
-void foot3()
-{
-  for (int i = 0; i < 6; i++)
-  {
-    digitalWrite(led[i], LOW);
-  }
-  digitalWrite(led[2], HIGH);
-
-  lastLed = led[2];
-
-  clearLargeName();
-}
-
-void foot4()
-{
-  for (int i = 0; i < 6; i++)
-  {
-    digitalWrite(led[i], LOW);
-  }
-  digitalWrite(led[3], HIGH);
-
-  lastLed = led[3];
-
-  clearLargeName();
-}
-
-void foot5()
-{
-  for (int i = 0; i < 6; i++)
-  {
-    digitalWrite(led[i], LOW);
-  }
-  digitalWrite(led[4], HIGH);
-
-  lastLed = led[4];
-
-  clearLargeName();
-}
-
-void foot6()
-{
-  for (int i = 0; i < 6; i++)
-  {
-    digitalWrite(led[i], LOW);
-  }
-  digitalWrite(led[5], HIGH);
-
-  lastLed = led[5];
-
-  clearLargeName();
-}
-
-void loopFoot1()
-{
-  for (int i = 0; i < 6; i++)
-  {
-    digitalWrite(led[i], LOW);
-  }
-  digitalWrite(led[0], HIGH);
-
-  clearLargeName();
-}
-
-void loopFoot2()
-{
-  for (int i = 0; i < 6; i++)
-  {
-    digitalWrite(led[i], LOW);
-  }
-  digitalWrite(led[1], HIGH);
-
-  clearLargeName();
-}
-
-void loopFoot3()
-{
-  for (int i = 0; i < 6; i++)
-  {
-    digitalWrite(led[i], LOW);
-  }
-  digitalWrite(led[2], HIGH);
-
-  clearLargeName();
-}
-
-void loopFoot4()
-{
-  for (int i = 0; i < 6; i++)
-  {
-    digitalWrite(led[i], LOW);
-  }
-  digitalWrite(led[3], HIGH);
-
-  clearLargeName();
-}
-
-void loopFoot5()
-{
-  for (int i = 0; i < 6; i++)
-  {
-    digitalWrite(led[i], LOW);
-  }
-  digitalWrite(led[4], HIGH);
-
-  clearLargeName();
-}
-
-void loopFoot6()
-{
-  for (int i = 0; i < 6; i++)
-  {
-    digitalWrite(led[i], LOW);
-  }
-  digitalWrite(led[5], HIGH);
+  digitalWrite(led[loopLed], HIGH);
 
   clearLargeName();
 }
@@ -172,8 +47,25 @@ void midiLed()
     digitalWrite(led[6], HIGH);
   }
 
-  if (stompStatus == HIGH)
+  else
   {
     digitalWrite(led[7], HIGH);
+  }
+}
+
+void midiLedOff()
+{
+  if (millis() - midiLedTime >= 5 && millis() - midiLedTime <= 200) //Turn off MIDI LED.
+  {
+
+    if (stompStatus == LOW)
+    {
+      digitalWrite(led[6], LOW);
+    }
+
+    else
+    {
+      digitalWrite(led[7], LOW);
+    }
   }
 }
