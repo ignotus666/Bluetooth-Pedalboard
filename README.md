@@ -18,7 +18,7 @@ Li-ion batteries can be dangerous and should be handled with care. I take NO res
 
 FUNCTIONS:
 
-Default mode when booting is 'Preset Mode'. You get 6 presets to choose from using the 'keyPressed[0]' to 'keyPressed[5]' switches. The 'keyPressed[6]' (Bank down) and 'keyPressed[7]' (Bank up) switches scroll through up to 10 banks, each with a set of 6 presets. This mode sends Program Change MIDI messages, each preset with its own note (from 0 to 59, channel 1).
+Default mode when booting is 'Preset Mode'. You get 6 presets to choose from using the 'keyPressed[0]' to 'keyPressed[5]' switches. The 'keyPressed[6]' (Bank down) and 'keyPressed[7]' (Bank up) switches scroll through 5 preset banks (more can be added relatively easily; I just don't need that many), each with a set of 6 presets. This mode sends Program Change MIDI messages, each preset with its own note (from 0 to 29, channel 1).
 
 When in preset mode, by pressing the expression pedal + Bank down you can scroll through 3 different functions for the bank change buttons. In default mode they scroll through the pedalboard's banks (no MIDI sent). The next function sets them to send MIDI messages for 'Next Bank' and 'Previous Bank'. The last function sends MIDI messages for 'Next Preset' and 'Previous Preset'.
 
