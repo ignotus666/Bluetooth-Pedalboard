@@ -90,7 +90,7 @@ void bootTextSequence()
 {
   tft.fillScreen(ILI9341_BLACK);
 
-  tft.drawImage(logo1, 122, 20, logo1Width, logo1Height);//MEGA
+  tft.drawImage(logo1, 122, 20, logo1Width, logo1Height);//MIDI
   tft.drawImage(logo2, 60, 60, logo2Width, logo2Height);//Pedalboard
   tft.drawImage(logo3, 140, 120, logo3Width, logo3Height);//By
   tft.drawImage(logo4, 120, 150, logo4Width, logo4Height);//Daryl H.
