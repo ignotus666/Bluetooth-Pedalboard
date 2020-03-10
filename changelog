@@ -61,3 +61,11 @@ Ver 0.90:
 code... Probably lots more could be improved but it's a learning process. Also combined all .bmp images into one file; no 
 need to have them scattered all over the place.
 - Fixed a couple of bugs.
+
+Ver 0.91:
+
+- Added 'calibration mode'. Pressing buttons 3 and 4 at the same time puts the pedalboard into calibration mode and gives you
+5 seconds to move the pedal across its range at least once to get min and max levels. These levels are stored in eeprom so
+calibration should only need to be performed once.
+
+- Some more tidying up of code.
