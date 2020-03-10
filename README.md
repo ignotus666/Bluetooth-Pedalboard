@@ -32,4 +32,4 @@ It is possible to calibrate an expression pedal connected to A0 (change accordin
 
 To change preset names or notes, do a find and replace in the sketch (all tabs). For preset names, make sure you also replace the (sometimes) shortened name displayed in the position relative to the buttons. The new names should be displayed in the correct position on the screen without the need to enter their coordinates.
 
-The TFT library used is ILI9341_due by Marek Buriak. For some reason the pedals.h, guitar.h and logo.h files need to be copied to the root directory of this library for the sketch to pick them up properly.
+The TFT library used is ILI9341_due by Marek Buriak. For some reason the image.h file needs to be copied to the root directory of this library for the sketch to pick it up properly.
