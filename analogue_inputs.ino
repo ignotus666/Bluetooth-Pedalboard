@@ -5,24 +5,26 @@ void wah()
   tft.setFontMode(gTextFontModeSolid);
 
   //Hall-effect wah pedal code:
+
   wahWah.update();
   wahRead = wahWah.getValue();
-  wahVal = wahRead;                         //Assign A0 value to wahVal.
-  wahVal = map(wahVal, 310, 470, 0, 127);   //Map the range of the hall sensor to a range of 0-127 for MIDI.
-  wahVal = constrain(wahVal, 0, 127);       //Prevent wahVal value from escaping from range permitted by MIDI protocol.
+  wahRead = constrain(wahRead, pedalMin, pedalMax);
+  wahVal = wahRead;                                            //Assign A0 value to wahVal.
+  wahVal = map(wahVal, pedalMin + 25, pedalMax - 10, 0, 127);  //Map to range of 0-127 for MIDI. Slightly padded max and min values.
+  wahVal = constrain(wahVal, 0, 127);                          //Prevent wahVal value from escaping from range permitted by MIDI protocol.
 
-  String sensorVal = String(wahVal);        //Print MIDI value.
-  String oldSensorVal = String(lastwahVal); 
+  String sensorVal = String(wahVal);                           //Print MIDI value.
+  String oldSensorVal = String(lastwahVal);
 
   //convert the reading to a char array
   sensorVal.toCharArray(sensorPrintout, 4);
   oldSensorVal.toCharArray(oldSensorPrintout, 4);
 
-  if (wahVal != lastwahVal)                   // If value has changed...
+  if (wahVal != lastwahVal)                                    // If value has changed...
   {
-    if (millis() > 6000)                      //Dirty hack that prevents analog inputs from sending unwanted MIDI data right after booting.
+    if (millis() > 6000)                                       //Dirty hack preventing unwanted MIDI data sent right after booting.
     {
-      MIDI.sendControlChange(1, wahVal, 1);   // Send MIDI CC message (control number, controller value, channel).
+      MIDI.sendControlChange(1, wahVal, 1);                    // Send MIDI CC message (control number, controller value, channel).
       midiLed();
     }
 
@@ -35,7 +37,7 @@ void wah()
     tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
     tft.printAt(sensorPrintout, 255, 222);
   }
-  lastwahVal = wahVal;                        //Assign wahVal value to lastwahVal at the end of each cycle.
+  lastwahVal = wahVal;                                        //Assign wahVal value to lastwahVal at the end of each cycle.
 }
 
 void batteryIndicator()

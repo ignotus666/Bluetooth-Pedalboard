@@ -87,7 +87,7 @@ void loopMode()
   //Footswitch 1:
   if (keyPressed[0] == true)
   {
-    MIDI.sendControlChange(12, 127, 1);     //(control number, controller value, channel. Send the same message whenever the switch is pressed.
+    MIDI.sendControlChange(12, 127, 1);     //(control number, controller value, channel). Send the same message whenever the switch is pressed.
     midiLed();
     loopNames();
     loopLed = 0;

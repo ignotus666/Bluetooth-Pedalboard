@@ -25,6 +25,12 @@ void bankMode()
       softwarePreset();
       break;
   }
+  
+//Press buttons 3 and 4 in preset mode to start calibration:
+  if (keyPressed[2] == HIGH && keyPressed[3] == HIGH && stompStatus == false && loopStatus == false)
+  {
+    calibrate();
+  }
 }
 
 void bankButtons()
