@@ -112,6 +112,8 @@ void stompActive()
 
 void stompMode()
 {
+  unsigned int pedalOutline = 0;
+  unsigned int numberColour = 0;
   tft.setFontMode(gTextFontModeTransparent);
   //Footswitch code:
 
@@ -125,140 +127,82 @@ void stompMode()
       {
         MIDI.sendControlChange(s + 2, 0, 1);
         midiLed();
-
+        pedalOutline = ILI9341_BLACK;
+        numberColour = ILI9341_WHITE;
         digitalWrite(led[s], LOW);
+      }
+
+      else
+      {
+        MIDI.sendControlChange(s + 2, 127, 1);
+        midiLed();
+        pedalOutline = ILI9341_RED;
+        numberColour = ILI9341_RED;
+        digitalWrite(led[s], HIGH);        
+      } 
 
         switch (s)                                              //Draw pedal outlines and numbers accordingly.
         {
           case 0:
 
             //Erase red outline:
-            tft.drawRoundRect(3, 79, 40, 72, 5, ILI9341_BLACK);
-            tft.drawRoundRect(2, 78, 42, 74, 5, ILI9341_BLACK);
+            tft.drawRoundRect(3, 79, 40, 72, 5, pedalOutline);
+            tft.drawRoundRect(2, 78, 42, 74, 5, pedalOutline);
 
             //Revert number to white:
-            tft.setTextColor(ILI9341_WHITE);
+            tft.setTextColor(numberColour);
             tft.setTextScale(1);
             tft.printAt("1", 20, 128);
             break;
 
           case 1:
-            tft.drawRoundRect(142, 79, 40, 72, 5, ILI9341_BLACK);
-            tft.drawRoundRect(141, 78, 42, 74, 5, ILI9341_BLACK);
+            tft.drawRoundRect(142, 79, 40, 72, 5, pedalOutline);
+            tft.drawRoundRect(141, 78, 42, 74, 5, pedalOutline);
 
-            tft.setTextColor(ILI9341_WHITE);
+            tft.setTextColor(numberColour);
             tft.setTextScale(1);
             tft.printAt("2", 158, 128);
             break;
 
           case 2:
-            tft.drawRoundRect(278, 79, 40, 72, 5, ILI9341_BLACK);
-            tft.drawRoundRect(277, 78, 42, 74, 5, ILI9341_BLACK);
+            tft.drawRoundRect(278, 79, 40, 72, 5, pedalOutline);
+            tft.drawRoundRect(277, 78, 42, 74, 5, pedalOutline);
 
-            tft.setTextColor(ILI9341_WHITE);
+            tft.setTextColor(numberColour);
             tft.setTextScale(1);
             tft.printAt("3", 295, 128);
             break;
 
           case 3:
-            tft.drawRoundRect(3, 2, 40, 72, 5, ILI9341_BLACK);
-            tft.drawRoundRect(2, 1, 42, 74, 5, ILI9341_BLACK);
+            tft.drawRoundRect(3, 2, 40, 72, 5, pedalOutline);
+            tft.drawRoundRect(2, 1, 42, 74, 5, pedalOutline);
 
-            tft.setTextColor(ILI9341_WHITE);
+            tft.setTextColor(numberColour);
             tft.setTextScale(1);
             tft.printAt("4", 20, 52);
             break;
 
           case 4:
-            tft.drawRoundRect(142, 2, 40, 72, 5, ILI9341_BLACK);
-            tft.drawRoundRect(141, 1, 42, 74, 5, ILI9341_BLACK);
+            tft.drawRoundRect(142, 2, 40, 72, 5, pedalOutline);
+            tft.drawRoundRect(141, 1, 42, 74, 5, pedalOutline);
 
-            tft.setTextColor(ILI9341_WHITE);
+            tft.setTextColor(numberColour);
             tft.setTextScale(1);
             tft.printAt("5", 158, 52);
             break;
 
           case 5:
-            tft.drawRoundRect(278, 2, 40, 72, 5, ILI9341_BLACK);
-            tft.drawRoundRect(277, 1, 42, 74, 5, ILI9341_BLACK);
+            tft.drawRoundRect(278, 2, 40, 72, 5, pedalOutline);
+            tft.drawRoundRect(277, 1, 42, 74, 5, pedalOutline);
 
-            tft.setTextColor(ILI9341_WHITE);
+            tft.setTextColor(numberColour);
             tft.setTextScale(1);
             tft.printAt("6", 295, 52);
             break;
         }
-      }
-
-      else
-      {
-        MIDI.sendControlChange(s+2, 127, 1);
-        midiLed();
-
-        digitalWrite(led[s], HIGH);
-
-        switch (s)
-        {
-          case 0:
-
-            //Outline pedals in red:
-            tft.drawRoundRect(3, 79, 40, 72, 5, ILI9341_RED);
-            tft.drawRoundRect(2, 78, 42, 74, 5, ILI9341_RED);
-
-            //Turn number in pedal red:
-            tft.setTextColor(ILI9341_RED);
-            tft.setTextScale(1);
-            tft.printAt("1", 20, 128);
-            break;
-
-          case 1:
-            tft.drawRoundRect(142, 79, 40, 72, 5, ILI9341_RED);
-            tft.drawRoundRect(141, 78, 42, 74, 5, ILI9341_RED);
-
-            tft.setTextColor(ILI9341_RED);
-            tft.setTextScale(1);
-            tft.printAt("2", 158, 128);
-            break;
-
-          case 2:
-            tft.drawRoundRect(278, 79, 40, 72, 5, ILI9341_RED);
-            tft.drawRoundRect(277, 78, 42, 74, 5, ILI9341_RED);
-
-            tft.setTextColor(ILI9341_RED);
-            tft.setTextScale(1);
-            tft.printAt("3", 295, 128);
-            break;
-
-          case 3:
-            tft.drawRoundRect(3, 2, 40, 72, 5, ILI9341_RED);
-            tft.drawRoundRect(2, 1, 42, 74, 5, ILI9341_RED);
-
-            tft.setTextColor(ILI9341_RED);
-            tft.setTextScale(1);
-            tft.printAt("4", 20, 52);
-            break;
-
-          case 4:
-            tft.drawRoundRect(142, 2, 40, 72, 5, ILI9341_RED);
-            tft.drawRoundRect(141, 1, 42, 74, 5, ILI9341_RED);
-
-            tft.setTextColor(ILI9341_RED);
-            tft.setTextScale(1);
-            tft.printAt("5", 158, 52);
-            break;
-
-          case 5:
-            tft.drawRoundRect(278, 2, 40, 72, 5, ILI9341_RED);
-            tft.drawRoundRect(277, 1, 42, 74, 5, ILI9341_RED);
-
-            tft.setTextColor(ILI9341_RED);
-            tft.setTextScale(1);
-            tft.printAt("6", 295, 52);
-            break;
-        }
-      }
       keyPressed[s] = false;
+      }
     }
-  }
 
     //Switches 7 & 8 control volume when stomp mode is active:
 
