@@ -115,343 +115,262 @@ void stompMode()
   tft.setFontMode(gTextFontModeTransparent);
   //Footswitch code:
 
-  //For footswitch 1:
-  if (keyPressed[0] == true)
+  for (int s = 0; s < 6; s++)
   {
-    stompState[0] = !stompState[0];
-
-    if (stompState[0] == true)
+    if (keyPressed[s] == true)
     {
-      MIDI.sendControlChange(2, 0, 1);
+      stompState[s] = !stompState[s];
+
+      if (stompState[s] == true)
+      {
+        MIDI.sendControlChange(s + 2, 0, 1);
+        midiLed();
+
+        digitalWrite(led[s], LOW);
+
+        switch (s)                                              //Draw pedal outlines and numbers accordingly.
+        {
+          case 0:
+
+            //Erase red outline:
+            tft.drawRoundRect(3, 79, 40, 72, 5, ILI9341_BLACK);
+            tft.drawRoundRect(2, 78, 42, 74, 5, ILI9341_BLACK);
+
+            //Revert number to white:
+            tft.setTextColor(ILI9341_WHITE);
+            tft.setTextScale(1);
+            tft.printAt("1", 20, 128);
+            break;
+
+          case 1:
+            tft.drawRoundRect(142, 79, 40, 72, 5, ILI9341_BLACK);
+            tft.drawRoundRect(141, 78, 42, 74, 5, ILI9341_BLACK);
+
+            tft.setTextColor(ILI9341_WHITE);
+            tft.setTextScale(1);
+            tft.printAt("2", 158, 128);
+            break;
+
+          case 2:
+            tft.drawRoundRect(278, 79, 40, 72, 5, ILI9341_BLACK);
+            tft.drawRoundRect(277, 78, 42, 74, 5, ILI9341_BLACK);
+
+            tft.setTextColor(ILI9341_WHITE);
+            tft.setTextScale(1);
+            tft.printAt("3", 295, 128);
+            break;
+
+          case 3:
+            tft.drawRoundRect(3, 2, 40, 72, 5, ILI9341_BLACK);
+            tft.drawRoundRect(2, 1, 42, 74, 5, ILI9341_BLACK);
+
+            tft.setTextColor(ILI9341_WHITE);
+            tft.setTextScale(1);
+            tft.printAt("4", 20, 52);
+            break;
+
+          case 4:
+            tft.drawRoundRect(142, 2, 40, 72, 5, ILI9341_BLACK);
+            tft.drawRoundRect(141, 1, 42, 74, 5, ILI9341_BLACK);
+
+            tft.setTextColor(ILI9341_WHITE);
+            tft.setTextScale(1);
+            tft.printAt("5", 158, 52);
+            break;
+
+          case 5:
+            tft.drawRoundRect(278, 2, 40, 72, 5, ILI9341_BLACK);
+            tft.drawRoundRect(277, 1, 42, 74, 5, ILI9341_BLACK);
+
+            tft.setTextColor(ILI9341_WHITE);
+            tft.setTextScale(1);
+            tft.printAt("6", 295, 52);
+            break;
+        }
+      }
+
+      else
+      {
+        MIDI.sendControlChange(s+2, 127, 1);
+        midiLed();
+
+        digitalWrite(led[s], HIGH);
+
+        switch (s)
+        {
+          case 0:
+
+            //Outline pedals in red:
+            tft.drawRoundRect(3, 79, 40, 72, 5, ILI9341_RED);
+            tft.drawRoundRect(2, 78, 42, 74, 5, ILI9341_RED);
+
+            //Turn number in pedal red:
+            tft.setTextColor(ILI9341_RED);
+            tft.setTextScale(1);
+            tft.printAt("1", 20, 128);
+            break;
+
+          case 1:
+            tft.drawRoundRect(142, 79, 40, 72, 5, ILI9341_RED);
+            tft.drawRoundRect(141, 78, 42, 74, 5, ILI9341_RED);
+
+            tft.setTextColor(ILI9341_RED);
+            tft.setTextScale(1);
+            tft.printAt("2", 158, 128);
+            break;
+
+          case 2:
+            tft.drawRoundRect(278, 79, 40, 72, 5, ILI9341_RED);
+            tft.drawRoundRect(277, 78, 42, 74, 5, ILI9341_RED);
+
+            tft.setTextColor(ILI9341_RED);
+            tft.setTextScale(1);
+            tft.printAt("3", 295, 128);
+            break;
+
+          case 3:
+            tft.drawRoundRect(3, 2, 40, 72, 5, ILI9341_RED);
+            tft.drawRoundRect(2, 1, 42, 74, 5, ILI9341_RED);
+
+            tft.setTextColor(ILI9341_RED);
+            tft.setTextScale(1);
+            tft.printAt("4", 20, 52);
+            break;
+
+          case 4:
+            tft.drawRoundRect(142, 2, 40, 72, 5, ILI9341_RED);
+            tft.drawRoundRect(141, 1, 42, 74, 5, ILI9341_RED);
+
+            tft.setTextColor(ILI9341_RED);
+            tft.setTextScale(1);
+            tft.printAt("5", 158, 52);
+            break;
+
+          case 5:
+            tft.drawRoundRect(278, 2, 40, 72, 5, ILI9341_RED);
+            tft.drawRoundRect(277, 1, 42, 74, 5, ILI9341_RED);
+
+            tft.setTextColor(ILI9341_RED);
+            tft.setTextScale(1);
+            tft.printAt("6", 295, 52);
+            break;
+        }
+      }
+      keyPressed[s] = false;
+    }
+  }
+
+    //Switches 7 & 8 control volume when stomp mode is active:
+
+    //For footswitch 7 (volume down):
+    if ((keyPressed[6] == true) && (stompStatus == true))
+    {
+      lastVolVal = volVal - 4; //Change by increments of 4.
+
+      if (lastVolVal <= 0)
+      {
+        lastVolVal = 0;
+      }
+
+      MIDI.sendControlChange(0, lastVolVal, 1);
       midiLed();
 
-      digitalWrite(led[0], LOW);
+      volBar = lastVolVal;
+      volBar = map(volBar, 0, 127, 0, 78);
+      volBar = constrain(volBar, 0, 78);
+      volPerc = lastVolVal;
+      volPerc = map(volPerc, 0, 127, 0, 100);
+      volPerc = constrain(volPerc, 0, 100);
 
-      //Erase red outline:
-      tft.drawRoundRect(3, 79, 40, 72, 5, ILI9341_BLACK);
-      tft.drawRoundRect(2, 78, 42, 74, 5, ILI9341_BLACK);
+      String sensorVal7 = String(volPerc);
 
-      //Revert number to white:
+      // convert the reading to a char array
+      sensorVal7.toCharArray(sensorPrintout, 4);
+
+      tft.fillArc(155, 200, 20, 8, 0 + (volBar), 78, ILI9341_BLACK);
+
+      tft.fillArc(155, 200, 20, 8, 0, (volBar), ILI9341_RED);
+
+      tft.fillCircle(155, 200, 10, ILI9341_BLACK);
+
+      tft.setFont(SystemFont5x7);
+      tft.setFontMode(gTextFontModeSolid);
       tft.setTextColor(ILI9341_WHITE);
       tft.setTextScale(1);
-      tft.printAt("1", 20, 128);
+
+      if (volPerc == 100)
+      {
+        tft.printAt(sensorPrintout, 146, 197);
+      }
+
+      else if (volPerc < 100 && volPerc > 9)
+      {
+        tft.printAt(sensorPrintout, 150, 197);
+      }
+
+      else if (volPerc < 10)
+      {
+        tft.printAt(sensorPrintout, 153, 197);
+      }
+
+      volVal = lastVolVal;
+
+      delay(60); //Delay for increments while holding switch down.
     }
 
-    else
+    //For footswitch 8 (volume up):
+    if ((keyPressed[7] == true) && (stompStatus == true))
     {
-      MIDI.sendControlChange(2, 127, 1);
+      lastVolVal = volVal + 4;
+
+      if (lastVolVal >= 127)
+      {
+        lastVolVal = 127;
+      }
+
+      MIDI.sendControlChange(0, lastVolVal, 1);
       midiLed();
 
-      digitalWrite(led[0], HIGH);
+      volBar = lastVolVal;
+      volBar = map(volBar, 0, 127, 0, 78);
+      volBar = constrain(volBar, 0, 78);
+      volPerc = lastVolVal;
+      volPerc = map(volPerc, 0, 127, 0, 100);
+      volPerc = constrain(volPerc, 0, 100);
 
-      //Outline pedals in red:
-      tft.drawRoundRect(3, 79, 40, 72, 5, ILI9341_RED);
-      tft.drawRoundRect(2, 78, 42, 74, 5, ILI9341_RED);
+      String sensorVal7 = String(volPerc);
 
-      //Turn number in pedal red:
-      tft.setTextColor(ILI9341_RED);
-      tft.setTextScale(1);
-      tft.printAt("1", 20, 128);
-    }
-    keyPressed[0] = false;
-  }
+      // convert the reading to a char array
+      sensorVal7.toCharArray(sensorPrintout, 4);
 
-  //For footswitch 2:
-  if (keyPressed[1] == true)
-  {
-    stompState[1] = !stompState[1];
+      tft.fillArc(155, 200, 20, 8, 0 + (volBar), 78, ILI9341_BLACK);
 
-    if (stompState[1] == true)
-    {
-      MIDI.sendControlChange(3, 0, 1);
-      midiLed();
+      tft.fillArc(155, 200, 20, 8, 0, (volBar), ILI9341_RED);
 
-      digitalWrite(led[1], LOW);
+      tft.fillCircle(155, 200, 10, ILI9341_BLACK);
 
-      tft.drawRoundRect(142, 79, 40, 72, 5, ILI9341_BLACK);
-      tft.drawRoundRect(141, 78, 42, 74, 5, ILI9341_BLACK);
-
+      tft.setFont(SystemFont5x7);
+      tft.setFontMode(gTextFontModeSolid);
       tft.setTextColor(ILI9341_WHITE);
       tft.setTextScale(1);
-      tft.printAt("2", 158, 128);
+
+      if (volPerc == 100)
+      {
+        tft.printAt(sensorPrintout, 146, 197);
+      }
+
+      else if (volPerc < 100 && volPerc > 9)
+      {
+        tft.printAt(sensorPrintout, 150, 197);
+      }
+
+      else if (volPerc < 10)
+      {
+        tft.printAt(sensorPrintout, 153, 197);
+      }
+
+      volVal = lastVolVal;
+
+      delay(60);
     }
-
-    else
-    {
-      MIDI.sendControlChange(3, 127, 1);
-      midiLed();
-
-      digitalWrite(led[1], HIGH);
-
-      tft.drawRoundRect(142, 79, 40, 72, 5, ILI9341_RED);
-      tft.drawRoundRect(141, 78, 42, 74, 5, ILI9341_RED);
-
-      tft.setTextColor(ILI9341_RED);
-      tft.setTextScale(1);
-      tft.printAt("2", 158, 128);
-    }
-    keyPressed[1] = false;
   }
-
-  //For footswitch 3:
-  if (keyPressed[2] == true)
-  {
-    stompState[2] = !stompState[2];
-
-    if (stompState[2] == true)
-    {
-      MIDI.sendControlChange(4, 0, 1);
-      midiLed();
-
-      digitalWrite(led[2], LOW);
-
-      tft.drawRoundRect(278, 79, 40, 72, 5, ILI9341_BLACK);
-      tft.drawRoundRect(277, 78, 42, 74, 5, ILI9341_BLACK);
-
-      tft.setTextColor(ILI9341_WHITE);
-      tft.setTextScale(1);
-      tft.printAt("3", 295, 128);
-    }
-
-    else
-    {
-      MIDI.sendControlChange(4, 127, 1);
-      midiLed();
-
-      digitalWrite(led[2], HIGH);
-
-      tft.drawRoundRect(278, 79, 40, 72, 5, ILI9341_RED);
-      tft.drawRoundRect(277, 78, 42, 74, 5, ILI9341_RED);
-
-      tft.setTextColor(ILI9341_RED);
-      tft.setTextScale(1);
-      tft.printAt("3", 295, 128);
-    }
-    keyPressed[2] = false;
-  }
-
-  //For footswitch 4:
-  if (keyPressed[3] == true)
-  {
-    stompState[3] = !stompState[3];
-
-    if (stompState[3] == true)
-    {
-      MIDI.sendControlChange(5, 0, 1);
-      midiLed();
-
-      digitalWrite(led[3], LOW);
-
-      tft.drawRoundRect(3, 2, 40, 72, 5, ILI9341_BLACK);
-      tft.drawRoundRect(2, 1, 42, 74, 5, ILI9341_BLACK);
-
-      tft.setTextColor(ILI9341_WHITE);
-      tft.setTextScale(1);
-      tft.printAt("4", 20, 52);
-    }
-
-    else
-    {
-      MIDI.sendControlChange(5, 127, 1);
-      midiLed();
-
-      digitalWrite(led[3], HIGH);
-
-      tft.drawRoundRect(3, 2, 40, 72, 5, ILI9341_RED);
-      tft.drawRoundRect(2, 1, 42, 74, 5, ILI9341_RED);
-
-      tft.setTextColor(ILI9341_RED);
-      tft.setTextScale(1);
-      tft.printAt("4", 20, 52);
-    }
-    keyPressed[3] = false;
-  }
-
-  //For footswitch 5:
-  if (keyPressed[4] == true)
-  {
-    stompState[4] = !stompState[4];
-
-    if (stompState[4] == true)
-    {
-      MIDI.sendControlChange(6, 0, 1);
-      midiLed();
-
-      digitalWrite(led[4], LOW);
-
-      tft.drawRoundRect(142, 2, 40, 72, 5, ILI9341_BLACK);
-      tft.drawRoundRect(141, 1, 42, 74, 5, ILI9341_BLACK);
-
-      tft.setTextColor(ILI9341_WHITE);
-      tft.setTextScale(1);
-      tft.printAt("5", 158, 52);
-    }
-
-    else
-    {
-      MIDI.sendControlChange(6, 127, 1);
-      midiLed();
-
-      digitalWrite(led[4], HIGH);
-
-      tft.drawRoundRect(142, 2, 40, 72, 5, ILI9341_RED);
-      tft.drawRoundRect(141, 1, 42, 74, 5, ILI9341_RED);
-
-      tft.setTextColor(ILI9341_RED);
-      tft.setTextScale(1);
-      tft.printAt("5", 158, 52);
-    }
-    keyPressed[4] = false;
-  }
-
-  //For footswitch 6:
-  if (keyPressed[5] == true)
-  {
-    stompState[5] = !stompState[5];
-
-    if (stompState[5] == true)
-    {
-      MIDI.sendControlChange(7, 0, 1);
-      midiLed();
-
-      digitalWrite(led[5], LOW);
-
-      tft.drawRoundRect(278, 2, 40, 72, 5, ILI9341_BLACK);
-      tft.drawRoundRect(277, 1, 42, 74, 5, ILI9341_BLACK);
-
-      tft.setTextColor(ILI9341_WHITE);
-      tft.setTextScale(1);
-      tft.printAt("6", 295, 52);
-    }
-
-    else
-    {
-      MIDI.sendControlChange(7, 127, 1);
-      midiLed();
-
-      digitalWrite(led[5], HIGH);
-
-      tft.drawRoundRect(278, 2, 40, 72, 5, ILI9341_RED);
-      tft.drawRoundRect(277, 1, 42, 74, 5, ILI9341_RED);
-
-      tft.setTextColor(ILI9341_RED);
-      tft.setTextScale(1);
-      tft.printAt("6", 295, 52);
-    }
-    keyPressed[5] = false;
-  }
-
-  //Switches 7 & 8 control volume when stomp mode is active:
-
-  //For footswitch 7 (volume down):
-  if ((keyPressed[6] == true) && (stompStatus == true))
-  {
-    lastVolVal = volVal - 4; //Change by increments of 4.
-
-    if (lastVolVal <= 0)
-    {
-      lastVolVal = 0;
-    }
-
-    MIDI.sendControlChange(0, lastVolVal, 1);
-    midiLed();
-
-    volBar = lastVolVal;
-    volBar = map(volBar, 0, 127, 0, 78);
-    volBar = constrain(volBar, 0, 78);
-    volPerc = lastVolVal;
-    volPerc = map(volPerc, 0, 127, 0, 100);
-    volPerc = constrain(volPerc, 0, 100);
-
-    String sensorVal7 = String(volPerc);
-
-    // convert the reading to a char array
-    sensorVal7.toCharArray(sensorPrintout, 4);
-
-    tft.fillArc(155, 200, 20, 8, 0 + (volBar), 78, ILI9341_BLACK);
-
-    tft.fillArc(155, 200, 20, 8, 0, (volBar), ILI9341_RED);
-
-    tft.fillCircle(155, 200, 10, ILI9341_BLACK);
-
-    tft.setFont(SystemFont5x7);
-    tft.setFontMode(gTextFontModeSolid);
-    tft.setTextColor(ILI9341_WHITE);
-    tft.setTextScale(1);
-
-    if (volPerc == 100)
-    {
-      tft.printAt(sensorPrintout, 146, 197);
-    }
-
-    if (volPerc < 100 && volPerc > 9)
-    {
-      tft.printAt(sensorPrintout, 150, 197);
-    }
-
-    if (volPerc < 10)
-    {
-      tft.printAt(sensorPrintout, 153, 197);
-    }
-
-    volVal = lastVolVal;
-
-    delay(60); //Delay for increments while holding switch down.
-  }
-
-  //For footswitch 8 (volume up):
-  if ((keyPressed[7] == true) && (stompStatus == true))
-  {
-    lastVolVal = volVal + 4;
-
-    if (lastVolVal >= 127)
-    {
-      lastVolVal = 127;
-    }
-
-    MIDI.sendControlChange(0, lastVolVal, 1);
-    midiLed();
-
-    volBar = lastVolVal;
-    volBar = map(volBar, 0, 127, 0, 78);
-    volBar = constrain(volBar, 0, 78);
-    volPerc = lastVolVal;
-    volPerc = map(volPerc, 0, 127, 0, 100);
-    volPerc = constrain(volPerc, 0, 100);
-
-    String sensorVal7 = String(volPerc);
-
-    // convert the reading to a char array
-    sensorVal7.toCharArray(sensorPrintout, 4);
-
-    tft.fillArc(155, 200, 20, 8, 0 + (volBar), 78, ILI9341_BLACK);
-
-    tft.fillArc(155, 200, 20, 8, 0, (volBar), ILI9341_RED);
-
-    tft.fillCircle(155, 200, 10, ILI9341_BLACK);
-
-    tft.setFont(SystemFont5x7);
-    tft.setFontMode(gTextFontModeSolid);
-    tft.setTextColor(ILI9341_WHITE);
-    tft.setTextScale(1);
-
-    if (volPerc == 100)
-    {
-      tft.printAt(sensorPrintout, 146, 197);
-    }
-
-    if (volPerc < 100 && volPerc > 9)
-    {
-      tft.printAt(sensorPrintout, 150, 197);
-    }
-
-    if (volPerc < 10)
-    {
-      tft.printAt(sensorPrintout, 153, 197);
-    }
-
-    volVal = lastVolVal;
-
-    delay(60);
-  }
-}

@@ -1,5 +1,7 @@
 void calibrate()
 {
+  pedalMin = 1023;          //Reset them to 0 before calibrating in case previous calibrations conflict.
+  pedalMax = 0;
   calibrateTime = millis();
   clearLargeName();
 
@@ -33,8 +35,8 @@ void calibrate()
   delay(100);
   EEPROM.put(ADDR_MAX_VAL, pedalMax);
   delay(100);
-  
-  clearLargeName();  
+
+  clearLargeName();
   tft.printAlignedOffseted("DONE", gTextAlignMiddleCenter, 0, -65);
   delay(1000);
 }

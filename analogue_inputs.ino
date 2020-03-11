@@ -10,7 +10,7 @@ void wah()
   wahRead = wahWah.getValue();
   wahRead = constrain(wahRead, pedalMin, pedalMax);
   wahVal = wahRead;                                            //Assign A0 value to wahVal.
-  wahVal = map(wahVal, pedalMin + 25, pedalMax - 10, 0, 127);  //Map to range of 0-127 for MIDI. Slightly padded max and min values.
+  wahVal = map(wahVal, pedalMin + 10, pedalMax - 5, 0, 127);  //Map to range of 0-127 for MIDI. Slightly padded max and min values to keep them within range.
   wahVal = constrain(wahVal, 0, 127);                          //Prevent wahVal value from escaping from range permitted by MIDI protocol.
 
   String sensorVal = String(wahVal);                           //Print MIDI value.
@@ -31,9 +31,8 @@ void wah()
     tft.setFont(Arial_bold_14);
     tft.setTextScale(1);
     tft.setFontMode(gTextFontModeSolid);
-    //tft.printAt("    ", 255, 222);
     tft.setTextColor(ILI9341_BLACK, ILI9341_BLACK);
-    tft.printAt(oldSensorPrintout, 255, 222);
+    tft.printAt(oldSensorPrintout, 255, 222);                 //Print old sensor value in black to erase it before printing new one.
     tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
     tft.printAt(sensorPrintout, 255, 222);
   }
@@ -51,34 +50,34 @@ void batteryIndicator()
   voltagePerc = map(voltagePerc, 640, 838, 0, 100);
   voltagePerc = constrain(voltagePerc, 0, 100);
 
-  unsigned int color = 0;
+  unsigned int colour = 0;
 
-  if (voltagePerc != lastVoltagePerc)
+  if (voltagePerc != lastVoltagePerc)                  //If voltage percentage has changed, write new value and apply appropriate colour.
   {
     tft.setTextScale(1);
     tft.fillRoundRect(22, 187, 49, 21, 3, ILI9341_BLACK);
 
-    if (voltage >= 3.85)
+    if (voltagePerc >= 75)
     {
-      color = ILI9341_GREEN;
+      colour = ILI9341_GREEN;
     }
 
-    if (voltage >= 3.50 && voltage <= 3.84)
+    if (voltagePerc >= 56 && voltagePerc <= 74)
     {
-      color = ILI9341_YELLOW;
+      colour = ILI9341_YELLOW;
     }
 
-    if (voltage >= 3.35 && voltage <= 3.49)
+    if (voltagePerc >= 31 && voltagePerc <= 55)
     {
-      color = ILI9341_ORANGE;
+      colour = ILI9341_ORANGE;
     }
 
-    if (voltage <= 3.34)
+    if (voltagePerc <= 30)
     {
-      color = ILI9341_RED;
+      colour = ILI9341_RED;
     }
 
-    tft.fillRoundRect(22, 187, 0 + (voltageBar), 21, 3, (color));
+    tft.fillRoundRect(22, 187, 0 + (voltageBar), 21, 3, (colour));
 
     String voltageVal = String(voltage);
 
@@ -86,7 +85,7 @@ void batteryIndicator()
     voltageVal.toCharArray(voltagePrintout, 5);
 
     tft.setFont(Arial_bold_14);
-    tft.setTextColor(ILI9341_CYAN, ILI9341_BLACK);
+    tft.setTextColor(ILI9341_CYAN, ILI9341_BLACK);   
     tft.setTextScale(1);
     tft.setFontMode(gTextFontModeSolid);
     tft.fillRect(42, 223, 32, 16, ILI9341_BLACK);
@@ -98,7 +97,17 @@ void batteryIndicator()
     voltageVal2.toCharArray(volPercPrintout, 4);
 
     tft.setFont(SystemFont5x7);
-    tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
+    
+    if (colour == ILI9341_YELLOW)
+    {
+      tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
+    }
+    
+    if (colour == ILI9341_GREEN || colour == ILI9341_ORANGE || colour == ILI9341_RED)
+    {
+      tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
+    }
+    
     tft.setTextScale(1);
     tft.setFontMode(gTextFontModeTransparent);
     if (voltagePerc >= 100)
