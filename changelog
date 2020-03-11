@@ -69,3 +69,7 @@ Ver 0.91:
 calibration should only need to be performed once.
 
 - Some more tidying up of code.
+
+Ver 0.92:
+
+- Got rid of a few more hundred lines of code. Corrected bug in calibration mode.
