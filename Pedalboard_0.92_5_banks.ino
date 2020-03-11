@@ -116,9 +116,6 @@ bool loopStatus = false;
 
 long unsigned loopTime = 0;
 
-//Char strings for loop mode:
-char *loopStringBig[] = {"PLAY", "MULTIPLY", "OVERDUB", "RECORD", "INSERT", "REPLACE", "PAUSE"};
-
 //Variables to toggle loop buttons:
 bool loopState[6] = {true, true, true, true, true, true};
 
