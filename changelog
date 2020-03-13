@@ -81,3 +81,7 @@ comments to explain what's happening. Adding more banks is much easier now and c
 would be necessary. Changing preset names is also clearer as they are all grouped together in arrays.
 
 - Fixed a few bugs related to LEDs and active presets being on/off when they shouldn't when switching between modes.
+
+Ver 0.94:
+
+- Fixed calibration mode that was broken in previous version. Sorted out a couple of other bugs.
