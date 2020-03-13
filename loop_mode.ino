@@ -84,7 +84,7 @@ void loopMode()
 {
   //Footswitch code:
   //Char strings for loop mode:
-  char *loopStringBig[] = {"MULTIPLY", "OVERDUB", "RECORD", "INSERT", "REPLACE", "PAUSE"};
+  const char *loopStringBig[] = {"MULTIPLY", "OVERDUB", "RECORD", "INSERT", "REPLACE", "PAUSE"};
   unsigned int smallLoopColour = 0;
   unsigned int bigLoopColour = 0;
 

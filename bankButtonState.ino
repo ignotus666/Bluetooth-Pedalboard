@@ -1,6 +1,7 @@
+//Set the mode the bank buttons are in, pressing expression pedal and the bank/preset down button:
 void bankMode()
 {
-  if (keyPressed[6] == HIGH && loopStatus == false && stompStatus == false && wahVal < 100) //Pressing button 7 while also pressing wah to change bank mode.
+  if (keyPressed[6] == HIGH && loopStatus == false && stompStatus == false && wahVal < 100)
   {
     bankButtonState++;
     clearBankMode();
@@ -13,39 +14,39 @@ void bankMode()
 
   switch (bankButtonState)
   {
+    case 0:
+      pedalboardBank();   //To scroll through pedalboard banks.
+      break;
+
     case 1:
-      pedalboardBank();
+      softwareBank();     //Send MIDI to change banks in software.
       break;
 
     case 2:
-      softwareBank();
-      break;
-
-    case 3:
-      softwarePreset();
+      softwarePreset();   //Send MIDI to change presets in software.
       break;
   }
   
-//Press buttons 3 and 4 in preset mode to start calibration:
+//Press buttons 3 and 4 simultaneously in preset mode to start calibration:
   if (keyPressed[2] == HIGH && keyPressed[3] == HIGH && stompStatus == false && loopStatus == false)
   {
     calibrate();
   }
 }
 
-void bankButtons()
+void bankButtons()  //Determine what text to print ("BANK", "PRES" or nothing), depending on what mode the bank buttons are in.
 {
-  if (bankButtonState > 3)
+  if (bankButtonState > 2)
   {
-    bankButtonState = 1;
+    bankButtonState = 0;
+  }
+
+  if (bankButtonState == 0)
+  {
+    lastBankButton = 0;
   }
 
   if (bankButtonState == 1)
-  {
-    lastBankButton = 1;
-  }
-
-  if (bankButtonState == 2)
   {
     tft.setTextColor(ILI9341_YELLOWGREEN, ILI9341_BLACK);
     tft.setTextScale(1);
@@ -55,10 +56,10 @@ void bankButtons()
     tft.setTextScale(1);
     tft.printAt("BANK>>", 90, 130);
 
-    lastBankButton = 2;
+    lastBankButton = 1;
   }
 
-  if (bankButtonState == 3)
+  if (bankButtonState == 2)
   {
     tft.setTextColor(ILI9341_YELLOWGREEN, ILI9341_BLACK);
     tft.setTextScale(1);
@@ -68,7 +69,7 @@ void bankButtons()
     tft.setTextScale(1);
     tft.printAt("PRES>>", 90, 130);
 
-    lastBankButton = 3;
+    lastBankButton = 2;
 
     return2lastBank();
   }
@@ -79,7 +80,7 @@ void pedalboardBank()
 {
   if (keyPressed[7] && loopStatus == false && stompStatus == false && wahVal > 100) //If in Preset Mode button 8 is pressed.
   {
-    bankNumber++;                                                                //Move to next bank.
+    bankNumber++;                                                                   //Move to next bank.
     keyPressed[7] = false;
   }
 
@@ -89,17 +90,17 @@ void pedalboardBank()
     keyPressed[6] = false;
   }
 
-  if (bankNumber > 5)                                                             //Bank 5 loops back to 1.
+  if (bankNumber > 4)                                                                //Bank 5 (zero indexed) loops back to 1. Increase number for more banks.
   {
-    bankNumber = 1;
+    bankNumber = 0;
   }
 
-  if (bankNumber < 1)
+  if (bankNumber < 0)
   {
-    bankNumber = 5;
+    bankNumber = 4;                                                                  //Increase number for more banks.
   }
 
-  if (bankNumber != oldBankNumber)                                                //If banks change, reset preset names and last LED to 0.
+  if (bankNumber != oldBankNumber)                                                   //If banks change, reset preset names and last LED to 0.
   {
     activePreset = 0;
     lastLed = 0;
@@ -108,7 +109,7 @@ void pedalboardBank()
 
 void softwareBank()
 {
-  if (keyPressed[7] && loopStatus == false && stompStatus == false && wahVal > 100) //If in software bank change mode send MIDI notes for bank up/down in software.
+  if (keyPressed[7] && loopStatus == false && stompStatus == false && wahVal > 100)  //If in software bank change mode send MIDI notes for bank up/down in software.
   {
     MIDI.sendControlChange(22, 127, 1);
     stompTime = millis();
@@ -148,7 +149,7 @@ void softwareBank()
     keyPressed[6] = false;
   }
 
-  if (millis() - stompTime > 600 && millis() - stompTime < 700)
+  if (millis() - stompTime > 600 && millis() - stompTime < 700)                    //After some time, return the red names to yellow and erase large central text.
   {
     clearLargeName();
     bankButtonNames();
@@ -208,7 +209,7 @@ void softwarePreset()
 
 void bankButtonNames()
 {
-  if (lastBankButton == 2)
+  if (lastBankButton == 1)
   {
     tft.setTextColor(ILI9341_YELLOWGREEN, ILI9341_BLACK);
     tft.setTextScale(1);
@@ -219,7 +220,7 @@ void bankButtonNames()
     tft.printAt("BANK>>", 90, 130);
   }
 
-  else if (lastBankButton == 3)
+  else if (lastBankButton == 2)
   {
     tft.setTextColor(ILI9341_YELLOWGREEN, ILI9341_BLACK);
     tft.setTextScale(1);

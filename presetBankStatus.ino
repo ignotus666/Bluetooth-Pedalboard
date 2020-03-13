@@ -1,31 +1,11 @@
+//Activate the appropriate bank number (determined in pedalboardBank()) or if loop or stomp mode are active:
 void presetBankStatus()
 {
-  for (int b = 0; b < 5; b++)
+  for (int b = 0; b < 5; b++)        //Increase number for more banks.
   {
-    if (statusBank[b] == true)
+    if (statusBank[b] == true)       //b is bankNumber.
     {
-      switch (b)
-      {
-        case 0:
-          bank1();
-          break;
-
-        case 1:
-          bank2();
-          break;
-
-        case 2:
-          bank3();
-          break;
-
-        case 3:
-          bank4();
-          break;
-
-        case 4:
-          bank5();
-          break;
-      }
+      banks();
     }
   }
 
@@ -40,178 +20,41 @@ void presetBankStatus()
   }
 }
 
-void presetBanks()
+//Change statuses of non-active banks and modes and print bank numbers and ranges:
+void presetBanks()                  
 {
-  // BANK 1:
+  const char *bank[] = {"BANK 1", "BANK 2", "BANK 3", "BANK 4", "BANK 5"};        //Add more banks and ranges if increasing number of banks.
+  const char *bankRange[] = {"(1-6)", "(7-12)", "(13-18)", "(19-24)", "(25-30)"};
 
   if (bankNumber != oldBankNumber)
   {
-    switch (bankNumber)
+    statusBank[bankNumber] = true;
+
+    clearSmallPresets();
+
+    bankNames();
+
+    statusBank[bankNumber + 1] = false; //Only adjacent bank numbers need to be changed to 'false'.
+    statusBank[bankNumber - 1] = false;
+    stompStatus = false;
+    loopStatus = false;
+
+    for ( int x = 0; x < 2; x++ )       //Loop 2 times.
     {
-      case 1:
-        statusBank[0] = true;
-
-        clearSmallPresets();
-
-        bank1Presets();
-
-        statusBank[1] = false; //Only adjacent bank numbers need to be changed to 'false'.
-        statusBank[4] = false;
-        stompStatus = false;
-        loopStatus = false;
-
-        for ( int x = 0; x < 2; x++ )       //Loop 2 times.
-        {
-          ledFlashOn();
-          ledFlashOff();
-        }
-
-        clearBankSpace();
-
-        tft.setTextColor(ILI9341_HOTPINK);
-        tft.setTextScale(2);
-        tft.printAt("BANK 1", 1, 152);
-
-        tft.setTextColor(ILI9341_WHITE);
-        tft.setTextScale(1);
-        tft.printAt("(1-6)", 125, 160);
-        lastBank = 1;
-
-        break;
-
-
-      // BANK 2:
-
-      case 2:
-        statusBank[1] = true;
-
-        clearSmallPresets();
-
-        bank2Presets();
-
-        statusBank[0] = false;
-        statusBank[2] = false;
-        stompStatus = false;
-        loopStatus = false;
-
-        for ( int x = 0; x < 2; x++ )
-        {
-          ledFlashOn();
-          ledFlashOff();
-        }
-
-        clearBankSpace();
-
-        tft.setTextColor(ILI9341_HOTPINK);
-        tft.setTextScale(2);
-        tft.printAt("BANK 2", 1, 152);
-
-        tft.setTextColor(ILI9341_WHITE);
-        tft.setTextScale(1);
-        tft.printAt("(7-12)", 125, 160);
-        lastBank = 2;
-
-        break;
-
-      // BANK 3:
-
-      case 3:
-        statusBank[2] = true;
-
-        clearSmallPresets();
-
-        bank3Presets();
-
-        statusBank[1] = false;
-        statusBank[3] = false;
-        stompStatus = false;
-        loopStatus = false;
-
-        for ( int x = 0; x < 2; x++ )
-        {
-          ledFlashOn();
-          ledFlashOff();
-        }
-
-        clearBankSpace();
-
-        tft.setTextColor(ILI9341_HOTPINK);
-        tft.setTextScale(2);
-        tft.printAt("BANK 3", 1, 152);
-
-        tft.setTextColor(ILI9341_WHITE);
-        tft.setTextScale(1);
-        tft.printAt("(13-18)", 125, 160);
-        lastBank = 3;
-
-        break;
-
-      // BANK 4:
-
-      case 4:
-        statusBank[3] = true;
-
-        clearSmallPresets();
-
-        bank4Presets();
-
-        statusBank[2] = false;
-        statusBank[4] = false;
-        stompStatus = false;
-        loopStatus = false;
-
-        for ( int x = 0; x < 2; x++ )
-        {
-          ledFlashOn();
-          ledFlashOff();
-        }
-
-        clearBankSpace();
-
-        tft.setTextColor(ILI9341_HOTPINK);
-        tft.setTextScale(2);
-        tft.printAt("BANK 4", 1, 152);
-
-        tft.setTextColor(ILI9341_WHITE);
-        tft.setTextScale(1);
-        tft.printAt("(19-24)", 125, 160);
-        lastBank = 4;
-
-        break;
-
-      // BANK 5:
-
-      case 5:
-        statusBank[4] = true;
-
-        clearSmallPresets();
-
-        bank5Presets();
-
-        statusBank[3] = false;
-        statusBank[0] = false;
-        stompStatus = false;
-        loopStatus = false;
-
-        for ( int x = 0; x < 2; x++ )
-        {
-          ledFlashOn();
-          ledFlashOff();
-        }
-
-        clearBankSpace();
-
-        tft.setTextColor(ILI9341_HOTPINK);
-        tft.setTextScale(2);
-        tft.printAt("BANK 5", 1, 152);
-
-        tft.setTextColor(ILI9341_WHITE);
-        tft.setTextScale(1);
-        tft.printAt("(25-30)", 125, 160);
-        lastBank = 5;
-
-        break;
+      ledFlashOn();
+      ledFlashOff();
     }
-    oldBankNumber = bankNumber;
+
+    clearBankSpace();
+
+    tft.setTextColor(ILI9341_HOTPINK);
+    tft.setTextScale(2);
+    tft.printAt(bank[bankNumber], 1, 152);
+
+    tft.setTextColor(ILI9341_WHITE);
+    tft.setTextScale(1);
+    tft.printAt(bankRange[bankNumber], 125, 160);
+    lastBank = bankNumber;
   }
+  oldBankNumber = bankNumber;
 }

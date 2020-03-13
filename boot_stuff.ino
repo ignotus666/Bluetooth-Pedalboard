@@ -25,7 +25,6 @@ void ledSequence()
 //BOOT SEQUENCE:
 
 void bootSequence()
-
 {
   tft.setFont(Arial_bold_14);
 
@@ -83,7 +82,6 @@ void bootSequence()
   tft.fillArc(155, 200, 20, 8, 0, (volBar), ILI9341_RED);
   
   tft.drawImage(Wah, 230, 184, WahWidth, WahHeight);
-
 }
 
 void bootTextSequence()
@@ -97,7 +95,7 @@ void bootTextSequence()
 
   tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
   tft.setTextScale(1);
-  tft.printAt("Ver 0.92", 120, 210);
+  tft.printAt("Ver 0.93", 120, 210);
 
   tft.drawImage(guitar, 210, 110, guitarWidth, guitarHeight);
   tft.drawImage(guitar2, 42, 110, guitar2Width, guitar2Height);
