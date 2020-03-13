@@ -73,3 +73,9 @@ calibration should only need to be performed once.
 Ver 0.92:
 
 - Got rid of a few more hundred lines of code. Corrected bug in calibration mode.
+
+Ver 0.93:
+
+- Another push to get rid of redundant code and make it more readable (within my limited possibilities...). Added more 
+comments to explain what's happening. Adding more banks is much easier now and comments are added to the lines where changes
+would be necessary. Changing preset names is also clearer as they are all in the same tab now and grouped together.
