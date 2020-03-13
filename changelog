@@ -84,4 +84,5 @@ would be necessary. Changing preset names is also clearer as they are all groupe
 
 Ver 0.94:
 
-- Fixed calibration mode that was broken in previous version. Sorted out a couple of other bugs.
+- Fixed calibration mode that was broken in previous version. Calibration mode is now activated by pressing the expression 
+pedal and button 4 (keyPressed[3]). Sorted out a couple of other bugs.
