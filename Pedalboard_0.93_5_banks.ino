@@ -99,7 +99,7 @@ byte oldBankNumber = 1;
 byte bankButtonState = 0;
 byte lastBankButton = 0;
 
-byte presetChanged = 0;
+bool presetChanged = false;
 
 byte lastBank = 0; //Variable to enable returning to last bank active before leaving preset mode.
 byte b = bankNumber;
@@ -144,9 +144,9 @@ unsigned long timeNow = 0;
 unsigned long timePrev = 0;
 unsigned int timeWait = 400;
 
-byte activeLed = 0; //Currently active LED.
-byte lastLed = 0;   //LED to turn off when another one becomes active.
-byte activePreset = 0; //To return to the last preset active before leaving preset mode.
+int activeLed = -1;    //Currently active LED. Set at boot to a value not corresponding to any LED.
+int lastLed = -1;      //LED to turn off when another one becomes active.
+int activePreset = -1; //To return to the last preset active before leaving preset mode.
 
 byte presetNumber = 0;
 

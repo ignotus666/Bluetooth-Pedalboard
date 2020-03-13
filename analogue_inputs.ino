@@ -10,7 +10,7 @@ void wah()
   wahRead = wahWah.getValue();                                 //Get the smoothed analog value.
   wahRead = constrain(wahRead, pedalMin, pedalMax);
   wahVal = wahRead;                                            //Assign A0 value to wahVal.
-  wahVal = map(wahVal, pedalMin + 10, pedalMax - 5, 0, 127);   //Map to range of 0-127 for MIDI. Slightly padded max and min values to keep them within range.
+  wahVal = map(wahVal, pedalMin + 10, pedalMax - 10, 0, 127);   //Map to range of 0-127 for MIDI. Slightly padded max and min values to keep them within range.
   wahVal = constrain(wahVal, 0, 127);                          //Prevent wahVal value from escaping from range permitted by MIDI protocol.
 
   String sensorVal = String(wahVal);                           //Print MIDI value.

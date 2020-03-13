@@ -60,7 +60,7 @@ void loopActive()
 
     return2lastBank();
 
-    if (bankButtonState == 1 || presetChanged == 0) //If next/prev preset or next/prev bank have been pressed, it's presumed the last active preset is no longer active; if not, it's still active.
+    if (presetChanged == false) //If bank buttons have been pressed, it's presumed the last active preset is no longer active; if not, it's still active.
     {
       return2ActivePreset();
       digitalWrite(led[lastLed], HIGH);

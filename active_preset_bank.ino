@@ -13,7 +13,7 @@ void banks()
       activeLed = k;
       toggleLeds();                         //Turn LEDs on/off for footswitch 1 active.
       bankNames();                          //Reset preset names to blue
-      presetChanged = 0;
+      presetChanged = false;
 
       activePreset = (k + (b*6));           //The preset to return to later if preset mode is exited.
       return2ActivePreset();                //Print active set of preset names with appropriate one highlighted in red.
@@ -28,7 +28,7 @@ void return2lastBank()
 {
   for (int b = 1; b < 5; b++)       //Increase number of banks here (optional)
   {
-    if (b !=  (lastBank))           //It's lastBank -1 because of the array index starting at 0 but bank numbers starting at 1.
+    if (b !=  (lastBank))
     {
       statusBank[b] = false;
       statusBank[lastBank] = true;

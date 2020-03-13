@@ -6,7 +6,7 @@ void bankMode()
     bankButtonState++;
     clearBankMode();
     bankButtons();
-    presetChanged = 0;     //Reset counter to store preset or bank changes.
+    presetChanged = true;     //Reset counter to store preset or bank changes.
 
     ledFlashOn();
     ledFlashOff();
@@ -26,8 +26,8 @@ void bankMode()
       softwarePreset();   //Send MIDI to change presets in software.
       break;
   }
-  
-//Press buttons 3 and 4 simultaneously in preset mode to start calibration:
+
+  //Press buttons 3 and 4 simultaneously in preset mode to start calibration:
   if (keyPressed[2] == HIGH && keyPressed[3] == HIGH && stompStatus == false && loopStatus == false)
   {
     calibrate();
@@ -80,14 +80,28 @@ void pedalboardBank()
 {
   if (keyPressed[7] && loopStatus == false && stompStatus == false && wahVal > 100) //If in Preset Mode button 8 is pressed.
   {
-    bankNumber++;                                                                   //Move to next bank.
+    bankNumber++;
+    presetChanged = true;                                                                   //Move to next bank.
     keyPressed[7] = false;
+
+    if (bankNumber != oldBankNumber)                                                   //If banks change, reset preset names and last LED to -1.
+    {
+      activePreset = -1;
+      lastLed = -1;
+    }
   }
 
   if (keyPressed[6] && loopStatus == false && stompStatus == false && wahVal > 100) //Move to previous bank with button 7.
   {
     bankNumber--;
+    presetChanged = true;
     keyPressed[6] = false;
+
+    if (bankNumber != oldBankNumber)
+    {
+      activePreset = -1;
+      lastLed = -1;
+    }
   }
 
   if (bankNumber > 4)                                                                //Bank 5 (zero indexed) loops back to 1. Increase number for more banks.
@@ -98,12 +112,6 @@ void pedalboardBank()
   if (bankNumber < 0)
   {
     bankNumber = 4;                                                                  //Increase number for more banks.
-  }
-
-  if (bankNumber != oldBankNumber)                                                   //If banks change, reset preset names and last LED to 0.
-  {
-    activePreset = 0;
-    lastLed = 0;
   }
 }
 
@@ -119,6 +127,7 @@ void softwareBank()
     ledFlashOff();
 
     clearLargeName();
+    bankNames();
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
     tft.printAlignedOffseted("NEXT BANK", gTextAlignMiddleCenter, 0, -65);
@@ -139,6 +148,7 @@ void softwareBank()
     ledFlashOff();
 
     clearLargeName();
+    bankNames();
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
     tft.printAlignedOffseted("PREV. BANK", gTextAlignMiddleCenter, 0, -65);
@@ -168,6 +178,7 @@ void softwarePreset()
     ledFlashOff();
 
     clearLargeName();
+    bankNames();
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
     tft.printAlignedOffseted("NEXT PRESET", gTextAlignMiddleCenter, 0, -65);
@@ -189,6 +200,7 @@ void softwarePreset()
     ledFlashOff();
 
     clearLargeName();
+    bankNames();
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
     tft.printAlignedOffseted("PREV. PRESET", gTextAlignMiddleCenter, 0, -65);

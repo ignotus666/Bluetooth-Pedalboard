@@ -89,7 +89,7 @@ void stompActive()
 
     return2lastBank();
 
-    if (bankButtonState == 1 || presetChanged == 0)
+    if (presetChanged == false)
     {
       return2ActivePreset();
       digitalWrite(led[lastLed], HIGH);
