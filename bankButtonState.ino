@@ -27,8 +27,8 @@ void bankMode()
       break;
   }
 
-  //Press buttons 3 and 4 simultaneously in preset mode to start calibration:
-  if (keyPressed[2] == HIGH && keyPressed[3] == HIGH && stompStatus == false && loopStatus == false)
+  //Press buttons 3 and expression pedal simultaneously in preset mode to start calibration:
+  if (keyPressed[3] == HIGH && loopStatus == false && stompStatus == false && wahVal < 100)
   {
     calibrate();
   }
