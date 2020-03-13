@@ -6,10 +6,10 @@ void bankMode()
     bankButtonState++;
     clearBankMode();
     bankButtons();
-    presetChanged = true;     //Reset counter to store preset or bank changes.
 
     ledFlashOn();
     ledFlashOff();
+    digitalWrite(led[lastLed], HIGH);
   }
 
   switch (bankButtonState)
