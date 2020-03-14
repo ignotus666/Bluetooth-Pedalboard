@@ -86,3 +86,8 @@ Ver 0.94:
 
 - Fixed calibration mode that was broken in previous version. Calibration mode is now activated by pressing the expression 
 pedal and button 4 (keyPressed[3]). Sorted out a couple of other bugs.
+
+Ver 0.95:
+
+- Cleaned up a bit more code and fixed a persistent bug where exiting stomp/loop mode after boot kept returning to preset 30.
+After some extensive testing I reckon it's pretty much bug-free at this point.
