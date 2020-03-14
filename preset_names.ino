@@ -7,7 +7,7 @@ void bankNames()
   tft.setTextColor(ILI9341_CYAN, ILI9341_BLACK);
   tft.setTextScale(1);
   tft.printAlignedOffseted(presetNames[b][0], gTextAlignMiddleLeft, 0, -20);
-  
+
   tft.printAlignedOffseted(presetNames[b][1], gTextAlignMiddleCenter, 0, -20);
 
   tft.printAlignedOffseted(presetNames[b][2], gTextAlignMiddleRight, 0, -20);
@@ -34,9 +34,9 @@ void loopNames()
   tft.printAligned("REPLACE", gTextAlignTopCenter);
 
   tft.printAligned("PAUSE", gTextAlignTopRight);
-  
+
   tft.printAt("UNDO", 1, 130);
-  
+
   tft.printAt("REDO", 80, 130);
 }
 
@@ -45,9 +45,12 @@ void return2ActivePreset()
 {
   b = bankNumber;
 
-  tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
-  tft.setTextScale(2);
-  tft.printAlignedOffseted(bigNames[activePreset], gTextAlignMiddleCenter, 0, -65); //Large preset name, offset 55 px upwards from centre.
+  if (activePreset > -2)              //So it doesn't print wrong preset if entering and leaving stomp/loop mode first thing after booting.
+  {
+    tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
+    tft.setTextScale(2);
+    tft.printAlignedOffseted(bigNames[activePreset], gTextAlignMiddleCenter, 0, -65); //Large preset name, offset 65 px upwards from centre.
+  }
 
   tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
   tft.setTextScale(1);
@@ -66,7 +69,7 @@ void return2ActivePreset()
   {
     tft.printAlignedOffseted(presetNames[b][2], gTextAlignMiddleRight, 0, -20);
   }
-  
+
   else if (activePreset == (b * 6) + 3)
   {
     tft.printAligned(presetNames[b][3], gTextAlignTopLeft);

@@ -11,11 +11,7 @@ void loopActive()
 
   if (loopStatus == true)
   {
-    for ( int x = 0; x < 2; x++ )
-    {
-      ledFlashOn();
-      ledFlashOff();
-    }
+    ledFlash();
 
     digitalWrite(led[7], HIGH);
 
@@ -49,11 +45,7 @@ void loopActive()
 
   else
   {
-    for ( int x = 0; x < 2; x++ )
-    {
-      ledFlashOn();
-      ledFlashOff();
-    }
+    ledFlash();
 
     clearTopHalf();
     clearMode();

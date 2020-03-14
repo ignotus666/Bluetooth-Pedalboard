@@ -1,27 +1,3 @@
-//LED SEQUENCE:
-
-void ledSequence()
-{
-  digitalWrite(led[0], HIGH);
-  delay(40);
-  digitalWrite(led[0], LOW);
-  digitalWrite(led[1], HIGH);
-  delay(40);
-  digitalWrite(led[1], LOW);
-  digitalWrite(led[2], HIGH);
-  delay(40);
-  digitalWrite(led[2], LOW);
-  digitalWrite(led[5], HIGH);
-  delay(40);
-  digitalWrite(led[5], LOW);
-  digitalWrite(led[4], HIGH);
-  delay(40);
-  digitalWrite(led[4], LOW);
-  digitalWrite(led[3], HIGH);
-  delay(40);
-  digitalWrite(led[3], LOW);
-}
-
 //BOOT SEQUENCE:
 
 void bootSequence()
@@ -30,17 +6,10 @@ void bootSequence()
 
   bootTextSequence();
 
-  // LED light sequence at boot:
-
-  if ( fHasLooped == false )
-  {
-    for ( int x = 0; x < 3; x++ ) //Loop 3 times.
+  for ( int x = 0; x < 2; x++ )
     {
-      ledSequence();
+      ledFlash();
     }
-
-    fHasLooped = true;
-  }
 
   delay(3000);
 
@@ -95,7 +64,7 @@ void bootTextSequence()
 
   tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
   tft.setTextScale(1);
-  tft.printAt("Ver 0.94", 120, 210);
+  tft.printAt("Ver 0.95", 120, 210);
 
   tft.drawImage(guitar, 210, 110, guitarWidth, guitarHeight);
   tft.drawImage(guitar2, 42, 110, guitar2Width, guitar2Height);

@@ -7,8 +7,7 @@ void bankMode()
     clearBankMode();
     bankButtons();
 
-    ledFlashOn();
-    ledFlashOff();
+    ledFlash();
     digitalWrite(led[lastLed], HIGH);
   }
 
@@ -121,8 +120,7 @@ void softwareBank()
     stompTime = millis();
     presetChanged = true;
 
-    ledFlashOn();
-    ledFlashOff();
+    ledFlash();
 
     clearLargeName();
     bankNames();
@@ -144,8 +142,7 @@ void softwareBank()
     stompTime = millis();
     presetChanged = true;
 
-    ledFlashOn();
-    ledFlashOff();
+    ledFlash();
 
     clearLargeName();
     bankNames();
@@ -176,8 +173,7 @@ void softwarePreset()
     stompTime = millis();
     presetChanged = true;
 
-    ledFlashOn();
-    ledFlashOff();
+    ledFlash();
 
     clearLargeName();
     bankNames();
@@ -200,8 +196,7 @@ void softwarePreset()
     stompTime = millis();
     presetChanged = true;
 
-    ledFlashOn();
-    ledFlashOff();
+    ledFlash();
 
     clearLargeName();
     bankNames();

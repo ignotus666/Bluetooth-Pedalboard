@@ -39,11 +39,7 @@ void presetBanks()
     stompStatus = false;
     loopStatus = false;
 
-    for ( int x = 0; x < 2; x++ )       //Loop 2 times.
-    {
-      ledFlashOn();
-      ledFlashOff();
-    }
+    ledFlash();
 
     clearBankSpace();
 

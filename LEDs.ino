@@ -18,24 +18,17 @@ void loopLeds()
 
   clearLargeName();
 }
-void ledFlashOn()
+void ledFlash()
+{
+  for (int l = 0; l < 2; l++)
 {
   for (int i = 0; i < 8; i++)
-  {
-    digitalWrite(led[i], HIGH);
+    {
+      digitalWrite(led[i], HIGH);
+      delay(15);
+      digitalWrite(led[i], LOW);
+    }
   }
-
-  delay(30);
-}
-
-void ledFlashOff()
-{
-  for (int i = 0; i < 8; i++)
-  {
-    digitalWrite(led[i], LOW);
-  }
-
-  delay(30);
 }
 
 //MIDI ACTIVITY LEDS:
