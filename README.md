@@ -10,7 +10,7 @@ Arduino Tx -> Rx HC-05 emitter (slave) -> (((BT signal))) -> HC-05 receiver (mas
 
 In order for the MIDI-bluetooth communication to work, a series of software changes need to made to the bluetooth modules, the PIC firmware and the MIDI library.
 
-A small guide is included on what changes need to be made to the bluetooth modules and how to do them. Also included is the modified firmware for the PIC18F2550 in the receiver. I've also included the zipped AnalogSmooth (modified), Arduino_MIDI (modified), marekburiak-ILI9341_due and ResponsiveAnalogRead libraries in a .zip folder so you just have to open that and then import them using the Arduino IDE. The marekburiak-ILI9341_due library folder has the images.h file included so the sketch picks it up.
+A small guide is included on what changes need to be made to the bluetooth modules and how to do them. Also included is the modified firmware for the PIC18F2550 in the receiver. I've also included the zipped AnalogSmooth (modified), Arduino_MIDI (modified), marekburiak-ILI9341_due and ResponsiveAnalogRead libraries in a .zip folder so you just have to open that and then import them using the Arduino IDE. The marekburiak-ILI9341_due library folder has the images.h file included so the sketch picks it up. The MIDI library is the same as the standard available from the library manager but with the name changed so updates don't screw it up and revert it to the standard MIDI baud rate, as it's modified to use 115200.
 
 When the pedalboard is powered off, the line going from the battery + terminal to the analog pin should be cut off. I use a 2PDT switch to switch off power and also this line.
 
