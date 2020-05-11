@@ -10,7 +10,7 @@ Arduino Tx -> Rx HC-05 emitter (slave) -> (((BT signal))) -> HC-05 receiver (mas
 
 In order for the MIDI-bluetooth communication to work, a series of software changes need to made to the bluetooth modules, the PIC firmware and the MIDI library.
 
-A small guide is included on what changes need to be made to the bluetooth modules and how to do them. Also included is the modified firmware for the PIC18F2550 in the receiver. Instructions on how to upload this firmware to the PIC if you don't have a programmer are included in the bluetooth_files folder. The other change needed is to the baud rate in the MIDI library. Open the 'midi_settings.h' file (in my case it's in /home/*username*/Arduino/libraries/arduino_midi_library-master/src/midi_settings.h) and in line 73 change the baudrate to 115200.
+A small guide is included on what changes need to be made to the bluetooth modules and how to do them. Also included is the modified firmware for the PIC18F2550 in the receiver. I've also included the zipped AnalogSmooth (modified), Arduino_MIDI (modified), marekburiak-ILI9341_due and ResponsiveAnalogRead libraries in a .zip folder so you just have to open that and then import them using the Arduino IDE. The marekburiak-ILI9341_due library folder has the images.h file included so the sketch picks it up.
 
 When the pedalboard is powered off, the line going from the battery + terminal to the analog pin should be cut off. I use a 2PDT switch to switch off power and also this line.
 
@@ -30,8 +30,6 @@ Pressing the 'Stomp Mode' or 'Loop Mode' switch again returns it to 'Preset Mode
 
 It is possible to calibrate an expression pedal connected to A0 (change accordingly if using another input). By pressing the expression pedal and 'keyPressed[3]' at the same time it enters calibration mode and you have 5 seconds to move the pedal across its entire range. The min and max levels are stored in eeprom so calibration should only be needed once.
 
-To change preset names or notes, do a find and replace in the sketch (all tabs). For preset names, make sure you also replace the (sometimes) shortened name displayed in the position relative to the buttons. The new names should be displayed in the correct position on the screen without the need to enter their coordinates.
-
-The TFT library used is ILI9341_due by Marek Buriak. For some reason the image.h file needs to be copied to the root directory of this library for the sketch to pick it up properly.
+To change preset names, there are 2 arrays of names in the Pedalboard_x.xx_5_banks.ino file, in the global variables. The first array is for the small names printed relative to the button positions; keep these short or abbreviated so they fit. The second array is for the full name of the active preset printed large in the centre of the screen. Names are displayed centred in their position on the screen without the need to enter coordinates.
 
 This video shows most of the functions: https://www.youtube.com/watch?v=eDRC17XOzQg&t=9s. Some aspects of the display have changed since.
