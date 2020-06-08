@@ -75,7 +75,6 @@ void stompActive()
     tft.setTextScale(1);
     tft.printAt("PRESET MODE", 200, 158);
 
-
     digitalWrite(led[6], LOW);
   }
 }
@@ -87,8 +86,8 @@ void stompMode()
   unsigned int pedalOutline = 0;
   unsigned int numberColour = 0;
   tft.setFontMode(gTextFontModeTransparent);
-
   //Footswitch code:
+
   for (int s = 0; s < 6; s++)
   {
     if (keyPressed[s] == true)
@@ -98,7 +97,7 @@ void stompMode()
       if (stompState[s] == true)
       {
         MIDI.sendControlChange(s + 2, 0, 1);
-        midiLed();
+        midiLedOn();
         pedalOutline = ILI9341_BLACK;
         numberColour = ILI9341_WHITE;
         digitalWrite(led[s], LOW);
@@ -107,22 +106,20 @@ void stompMode()
       else
       {
         MIDI.sendControlChange(s + 2, 127, 1);
-        midiLed();
+        midiLedOn();
         pedalOutline = ILI9341_RED;
         numberColour = ILI9341_RED;
         digitalWrite(led[s], HIGH);
       }
 
       //Draw pedal outlines and numbers accordingly:
-      switch (s)
+      switch (s)                                              
       {
         case 0:
 
-          //Erase red outline:
           tft.drawRoundRect(3, 79, 40, 72, 5, pedalOutline);
           tft.drawRoundRect(2, 78, 42, 74, 5, pedalOutline);
 
-          //Revert number to white:
           tft.setTextColor(numberColour);
           tft.setTextScale(1);
           tft.printAt("1", 20, 128);
@@ -190,7 +187,7 @@ void stompMode()
     }
 
     MIDI.sendControlChange(0, lastVolVal, 1);
-    midiLed();
+    midiLedOn();
 
     volBar = lastVolVal;
     volBar = map(volBar, 0, 127, 0, 78);
@@ -214,7 +211,8 @@ void stompMode()
     tft.setFontMode(gTextFontModeSolid);
     tft.setTextColor(ILI9341_WHITE);
     tft.setTextScale(1);
-
+    
+    //Keep number centred in arc:
     if (volPerc == 100)
     {
       tft.printAt(sensorPrintout, 146, 197);
@@ -246,7 +244,7 @@ void stompMode()
     }
 
     MIDI.sendControlChange(0, lastVolVal, 1);
-    midiLed();
+    midiLedOn();
 
     volBar = lastVolVal;
     volBar = map(volBar, 0, 127, 0, 78);

@@ -23,7 +23,7 @@ void presetBankStatus()
 //Change statuses of non-active banks and modes and print bank numbers and ranges:
 void presetBanks()                  
 {
-  const char *bank[] = {"BANK 1", "BANK 2", "BANK 3", "BANK 4", "BANK 5"};        //Add more banks and ranges if increasing number of banks.
+  const char *bank[] = {"1", "2", "3", "4", "5"};        //Add more banks and ranges if increasing number of banks.
   const char *bankRange[] = {"(1-6)", "(7-12)", "(13-18)", "(19-24)", "(25-30)"};
 
   if (bankNumber != oldBankNumber)
@@ -34,10 +34,8 @@ void presetBanks()
 
     bankNames();
 
-    //Only adjacent bank numbers need to be changed to 'false'.
-    statusBank[bankNumber + 1] = false;
+    statusBank[bankNumber + 1] = false; //Only adjacent bank numbers need to be changed to 'false'.
     statusBank[bankNumber - 1] = false;
-
     stompStatus = false;
     loopStatus = false;
 
@@ -47,7 +45,7 @@ void presetBanks()
 
     tft.setTextColor(ILI9341_HOTPINK);
     tft.setTextScale(2);
-    tft.printAt(bank[bankNumber], 1, 152);
+    tft.printAt(bank[bankNumber], 95, 152);
 
     tft.setTextColor(ILI9341_WHITE);
     tft.setTextScale(1);
