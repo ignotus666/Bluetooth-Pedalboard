@@ -29,7 +29,7 @@ The 'keyPressed[9]' (Loop Mode) switch activates 'Loop Mode'. You get 8 loop fun
 
 Pressing the 'Stomp Mode' or 'Loop Mode' switch again returns it to 'Preset Mode'.
 
-It is possible to calibrate an expression pedal connected to A0 (change accordingly if using another input). By pressing the expression pedal and 'keyPressed[3]' at the same time it enters calibration mode and you have 5 seconds to move the pedal across its entire range. The min and max levels are stored in eeprom so calibration should only be needed once.
+It is possible to calibrate an expression pedal connected to A0 (change accordingly if using another input). By holding down the expression pedal and pressing 'keyPressed[3]' it enters calibration mode and you have 5 seconds to move the pedal across its entire range. The min and max levels are stored in eeprom so calibration should only be needed once.
 
 To change preset names, there are 2 arrays of names in the Pedalboard_x.xx_5_banks.ino file, in the global variables. The first array is for the small names printed relative to the button positions; keep these short or abbreviated so they fit. The second array is for the full name of the active preset printed large in the centre of the screen. Names are displayed centred in their position on the screen without the need to enter coordinates.
 
