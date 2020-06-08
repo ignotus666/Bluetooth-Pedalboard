@@ -34,8 +34,10 @@ void presetBanks()
 
     bankNames();
 
-    statusBank[bankNumber + 1] = false; //Only adjacent bank numbers need to be changed to 'false'.
+    //Only adjacent bank numbers need to be changed to 'false'.
+    statusBank[bankNumber + 1] = false;
     statusBank[bankNumber - 1] = false;
+
     stompStatus = false;
     loopStatus = false;
 

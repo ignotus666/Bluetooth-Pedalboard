@@ -9,19 +9,19 @@ void calibrate()
   tft.setTextScale(2);
   tft.printAlignedOffseted("CALIBRATING", gTextAlignMiddleCenter, 0, -65);
 
-  // Calibrate during five seconds
+  //Calibrate during five seconds
   while (millis() - calibrateTime < 5000)
   {
     wahWah.update();
     wahRead = wahWah.getValue();
 
-    // record the maximum sensor value
+  //Record the maximum sensor value:
     if (wahRead > pedalMax)
     {
       pedalMax = wahRead;
     }
 
-    // record the minimum sensor value
+    //Record the minimum sensor value:
     if (wahRead < pedalMin)
     {
       pedalMin = wahRead;

@@ -91,7 +91,7 @@ void loopMode()
       loopLeds();
       for (int l = 0; l < 6; l++)
       {
-        if (l != (loopLed))                //Set all ledOn states to false but don't change the state of the current led used (I just use the loopLed number as a handy reference).
+        if (l != (loopLed))                   //Set all ledOn states to false but don't change the state of the current led used (I just use the loopLed number as a handy reference).
         {
           ledOn[l] = false;
         }
@@ -112,7 +112,7 @@ void loopMode()
         tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
         tft.setTextScale(1);
         tft.printAt("PLAY", 281, 90);
-        if (k != 2)                       //LED on/off sequence slightly different for REC/PLAY button.
+        if (k != 2)                            //LED on/off sequence slightly different for REC/PLAY button.
         {
           digitalWrite(led[2], HIGH);
           ledStatus[k] = LOW;

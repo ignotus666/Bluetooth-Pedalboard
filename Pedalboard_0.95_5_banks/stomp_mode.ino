@@ -87,8 +87,8 @@ void stompMode()
   unsigned int pedalOutline = 0;
   unsigned int numberColour = 0;
   tft.setFontMode(gTextFontModeTransparent);
-  //Footswitch code:
 
+  //Footswitch code:
   for (int s = 0; s < 6; s++)
   {
     if (keyPressed[s] == true)
@@ -113,7 +113,8 @@ void stompMode()
         digitalWrite(led[s], HIGH);
       }
 
-      switch (s)                                              //Draw pedal outlines and numbers accordingly.
+      //Draw pedal outlines and numbers accordingly:
+      switch (s)
       {
         case 0:
 
@@ -200,7 +201,7 @@ void stompMode()
 
     String sensorVal7 = String(volPerc);
 
-    // convert the reading to a char array
+    //Convert the reading to a char array
     sensorVal7.toCharArray(sensorPrintout, 4);
 
     tft.fillArc(155, 200, 20, 8, 0 + (volBar), 78, ILI9341_BLACK);
@@ -256,7 +257,6 @@ void stompMode()
 
     String sensorVal7 = String(volPerc);
 
-    // convert the reading to a char array
     sensorVal7.toCharArray(sensorPrintout, 4);
 
     tft.fillArc(155, 200, 20, 8, 0 + (volBar), 78, ILI9341_BLACK);

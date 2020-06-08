@@ -7,7 +7,7 @@ void banks()
   {
     if (keyPressed[k] == true)              //Check which button has been pressed.
     {
-      MIDI.sendProgramChange(k + (b*6), 1); //Send a MIDI Program Change message (value, channel). Multiply bank No. by 6 and add to k to get note.
+      MIDI.sendProgramChange(k + (b*6), 1); //Send a MIDI Program Change message (value, channel). Multiply bank No. by 6 (no. of preset buttons) and add to k to get note.
       midiLed();                            //Flash MIDI LED.
 
       activeLed = k;
@@ -26,7 +26,7 @@ void banks()
 
 void return2lastBank()
 {
-  for (int b = 1; b < 5; b++)       //Increase number of banks here (optional)
+  for (int b = 1; b < 5; b++)               //Increase number of banks here (optional)
   {
     if (b !=  (lastBank))
     {

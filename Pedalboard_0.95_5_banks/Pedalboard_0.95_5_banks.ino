@@ -57,15 +57,15 @@ const byte pressCount = 10;
 const int wahPin = A0;
 ResponsiveAnalogRead wahWah(wahPin, true, 0.01);
 int wahVal = 0;
-int lastwahVal = 0;   //Initial wah values. One for the first value and another to test if there's been a change.
+int lastwahVal = 0;     //Initial wah values. One for the first value and another to test if there's been a change.
 int wahRead = 0;
 int pedalMin = 1023;    // Reference minimum pedal value for calibration.
 int pedalMax = 0;       // Maximum pedal value for calibration.
 long unsigned calibrateTime = 0;
 //eeprom address locations:
-#define ADDR_MIN_VAL         0 //Starts at address zero.
-#define ADDR_MAX_VAL         ADDR_MIN_VAL + sizeof(pedalMin) // Use the next free space.
-//#define ADDR_X  ADDR_MAX_VAL + sizeof(pedalMax)            // For hypothetical use of more eeprom for something else.
+#define ADDR_MIN_VAL         0                               //Starts at address zero.
+#define ADDR_MAX_VAL         ADDR_MIN_VAL + sizeof(pedalMin) //Use the next free space.
+//#define ADDR_X  ADDR_MAX_VAL + sizeof(pedalMax)            //Address for hypothetical use of more eeprom for something else.
 
 //Digital volume:
 int volVal = 64;
@@ -77,10 +77,10 @@ int volPerc = 0;
 int battPin = 15; //Analog pin to read battery voltage.
 AnalogSmooth as200 = AnalogSmooth(200); //Average value of 200 readings (library modified).
 float battRead = 0;
-char sensorPrintout[4]; //Char array to print wah values.
+char sensorPrintout[4];    //Char array to print wah values.
 char oldSensorPrintout[4]; //Char array to print wah values.
-char voltagePrintout[5];//Char array for battery voltage.
-char volPercPrintout[4];//Char array for battery percentage.
+char voltagePrintout[5];   //Char array for battery voltage.
+char volPercPrintout[4];   //Char array for battery percentage.
 int voltageBar = 0;
 int voltagePerc = 0;
 int lastVoltagePerc = 0;
@@ -114,7 +114,8 @@ const char *bigNames[] =                                                        
   "PRESET 25", "PRESET 26", "PRESET 27", "PRESET 28", "PRESET 29", "PRESET 30"        //5
 };                                                                                    //Add more names if increasing no. of banks.
 
-byte lastBank = 0; //Variable to enable returning to last bank active before leaving preset mode.
+//Variable to enable returning to last bank active before leaving preset mode.
+byte lastBank = 0;
 byte b = bankNumber;
 
 //Pedalboard mode variable:
@@ -133,13 +134,13 @@ long unsigned loopTime = 0;
 //Variables to toggle loop buttons:
 bool loopState[6] = {true, true, true, true, true, true};
 
-// variables used to control blinking LEDs:
+//Variables used to control blinking LEDs:
 bool ledOn[6] = {false, false, false, false, false, false};
 bool ledStatus[6] = {LOW, LOW, LOW, LOW, LOW, LOW};
 
 byte loopLed = 0;
 
-// variables to hold the new and old switch states for debouncing:
+//Variables to hold the new and old switch states for debouncing:
 bool newSwitchState[30] = {LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW,
                            LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW,
                            LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW};
@@ -152,7 +153,7 @@ long unsigned lastDebounceTime = 0;
 //Switch states for debouncing:
 bool keyPressed[10] = {false, false, false, false, false, false, false, false, false, false};
 
-// variables to hold the times for blinking LEDs:
+//Variables to hold the times for blinking LEDs:
 unsigned long timeNow = 0;
 unsigned long timePrev = 0;
 unsigned int timeWait = 400;
@@ -176,9 +177,11 @@ void setup()
     pinMode(pressed[b], INPUT);
   }
 
-  tft.begin(); //Initialise TFT;
+  //Initialise TFT:
+  tft.begin();
 
-  tft.setRotation(iliRotation270); //Flip screen upside down because of interfering wires.
+  //Flip screen upside down because of interfering wires:
+  tft.setRotation(iliRotation270);
 
   bootSequence();
 
@@ -216,25 +219,22 @@ void loop()
   debounceTime();
   wah();
 
-  float analogSmooth200 = as200.analogReadSmooth(battPin); //Every 200 readings of the analog pin connected to the battery's + terminal, average them.
+  //Every 200 readings of the analog pin connected to the battery's + terminal, average them:
+  float analogSmooth200 = as200.analogReadSmooth(battPin);
   battRead = analogSmooth200;
 
   tft.setFont(Arial_bold_14);
 
-  //See which mode is active for bank buttons 7 & 8). Press wah and button 7 to cycle through controller bank change mode (no MIDI), and bank & preset up/down in software (MIDI sent).
-
+  //See which mode is active for bank buttons 7 & 8). Press wah and button 7 to cycle through controller bank change mode (no MIDI), and bank & preset up/down in software (MIDI sent):
   bankMode();
 
   //What happens when cycling through preset banks (not software banks):
-
   presetBanks();
 
   //Determine which bank is active:
-
   presetBankStatus();
 
   //Check if pedalboard mode has been activated:
-
   if (keyPressed[8])
   {
     stompActive();
@@ -242,7 +242,6 @@ void loop()
   }
 
   //Check if loop mode has been activated:
-
   if (keyPressed[9])
   {
     loopActive();
@@ -276,22 +275,22 @@ void clearTopHalf()
   tft.fillRect(0, 1, 320, 152, ILI9341_BLACK);
 }
 
-void clearLargeName()     //Clear large preset name.
+void clearLargeName()    //Clear large preset name.
 {
   tft.fillRect(1, 40, 320, 40, ILI9341_BLACK);
 }
 
-void clearBankSpace()     //Clear bank number space.
+void clearBankSpace()    //Clear bank number space.
 {
   tft.fillRect(1, 152, 185, 22, ILI9341_BLACK);
 }
 
-void clearMode() //Clear loop/stomp/preset mode on message.
+void clearMode()         //Clear loop/stomp/preset mode on message.
 {
   tft.fillRect(194, 154, 120, 20, ILI9341_BLACK);
 }
 
-void clearBankMode() //Bank up/down buttons' status space.
+void clearBankMode()     //Bank up/down buttons' status space.
 {
   tft.fillRect(1, 130, 190, 20, ILI9341_BLACK);
 }

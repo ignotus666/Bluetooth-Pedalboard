@@ -31,7 +31,7 @@ void bootSequence()
   tft.setTextScale(1);
   tft.printAt("Vol", 144, 223);
 
-  tft.fillArc(155, 200, 21, 1, 0, 78, ILI9341_HOTPINK);//Volume arc outline.
+  tft.fillArc(155, 200, 21, 1, 0, 78, ILI9341_HOTPINK);    //Volume arc outline.
   tft.fillArc(155, 200, 12, 1, 0, 78, ILI9341_HOTPINK);
 
   tft.fillRoundRect(195, 155, 115, 18, 3, ILI9341_GREEN);
@@ -57,10 +57,10 @@ void bootTextSequence()
 {
   tft.fillScreen(ILI9341_BLACK);
 
-  tft.drawImage(logo1, 122, 20, logo1Width, logo1Height);//MIDI
-  tft.drawImage(logo2, 60, 60, logo2Width, logo2Height);//Pedalboard
-  tft.drawImage(logo3, 140, 120, logo3Width, logo3Height);//By
-  tft.drawImage(logo4, 120, 150, logo4Width, logo4Height);//Daryl H.
+  tft.drawImage(logo1, 122, 20, logo1Width, logo1Height);  //MIDI
+  tft.drawImage(logo2, 60, 60, logo2Width, logo2Height);   //Pedalboard
+  tft.drawImage(logo3, 140, 120, logo3Width, logo3Height); //By
+  tft.drawImage(logo4, 120, 150, logo4Width, logo4Height); //Daryl H.
 
   tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
   tft.setTextScale(1);

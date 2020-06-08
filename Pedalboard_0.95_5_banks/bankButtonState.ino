@@ -75,20 +75,20 @@ void bankButtons()  //Determine what text to print ("BANK", "PRES" or nothing), 
 
 void pedalboardBank()
 {
-  if (keyPressed[7] && loopStatus == false && stompStatus == false && wahVal > 100) //If in Preset Mode button 8 is pressed.
+  if (keyPressed[7] && loopStatus == false && stompStatus == false)        //If in Preset Mode button 8 is pressed.
   {
     bankNumber++;
-    presetChanged = true;                                                                   //Move to next bank.
+    presetChanged = true;                                                  //Move to next bank.
     keyPressed[7] = false;
 
-    if (bankNumber != oldBankNumber)                                                   //If banks change, reset preset names and last LED to -1.
+    if (bankNumber != oldBankNumber)                                       //If banks change, reset preset names and last LED to -1.
     {
       activePreset = -1;
       activeLed = -1;
     }
   }
 
-  if (keyPressed[6] && loopStatus == false && stompStatus == false && wahVal > 100) //Move to previous bank with button 7.
+  if (keyPressed[6] && loopStatus == false && stompStatus == false)        //Move to previous bank with button 7.
   {
     bankNumber--;
     presetChanged = true;
@@ -101,20 +101,20 @@ void pedalboardBank()
     }
   }
 
-  if (bankNumber > 4)                                                                //Bank 5 (zero indexed) loops back to 1. Increase number for more banks.
+  if (bankNumber > 4)                                                       //Bank 5 (zero indexed) loops back to 1. Increase number for more banks.
   {
     bankNumber = 0;
   }
 
   if (bankNumber < 0)
   {
-    bankNumber = 4;                                                                  //Increase number for more banks.
+    bankNumber = 4;                                                         //Increase number for more banks.
   }
 }
 
 void softwareBank()
 {
-  if (keyPressed[7] && loopStatus == false && stompStatus == false && wahVal > 100)  //If in software bank change mode send MIDI notes for bank up/down in software.
+  if (keyPressed[7] && loopStatus == false && stompStatus == false)         //If in software bank change mode send MIDI notes for bank up/down in software.
   {
     MIDI.sendControlChange(22, 127, 1);
     stompTime = millis();
@@ -136,7 +136,7 @@ void softwareBank()
     activeLed = -1;
   }
 
-  if (keyPressed[6] && loopStatus == false && stompStatus == false && wahVal > 100)
+  if (keyPressed[6] && loopStatus == false && stompStatus == false)
   {
     MIDI.sendControlChange(21, 127, 1);
     stompTime = millis();
@@ -167,7 +167,7 @@ void softwareBank()
 
 void softwarePreset()
 {
-  if (keyPressed[7] && loopStatus == false && stompStatus == false && wahVal > 100) //If in software preset change mode send MIDI notes for preset up/down in software.
+  if (keyPressed[7] && loopStatus == false && stompStatus == false)                //If in software preset change mode send MIDI notes for preset up/down in software.
   {
     MIDI.sendControlChange(24, 127, 1);
     stompTime = millis();
@@ -190,7 +190,7 @@ void softwarePreset()
     activeLed = -1;
   }
 
-  if (keyPressed[6] && loopStatus == false && stompStatus == false && wahVal > 100)
+  if (keyPressed[6] && loopStatus == false && stompStatus == false)
   {
     MIDI.sendControlChange(23, 127, 1);
     stompTime = millis();

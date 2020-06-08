@@ -40,12 +40,12 @@ void loopNames()
   tft.printAt("REDO", 80, 130);
 }
 
-//Small reset names printed in red and large names in green when active. Also used when returning to preset mode from stomp or loop mode:
+//Small preset names printed in red and large names in green when active. Also used when returning to preset mode from stomp or loop mode:
 void return2ActivePreset()
 {
   b = bankNumber;
 
-  if (activePreset > -2)              //So it doesn't print wrong preset if entering and leaving stomp/loop mode first thing after booting.
+  if (activePreset > -2)              //Set at -2 so it doesn't print wrong preset if entering and leaving stomp/loop mode first thing after booting.
   {
     tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
     tft.setTextScale(2);
