@@ -21,19 +21,19 @@ FUNCTIONS:
 
 Default mode when booting is 'Preset Mode'. You get 6 presets to choose from using the 'keyPressed[0]' to 'keyPressed[5]' switches. The 'keyPressed[6]' (Bank down) and 'keyPressed[7]' (Bank up) switches scroll through 5 preset banks (more can be added relatively easily; I just don't need that many), each with a set of 6 presets. This mode sends Program Change MIDI messages, each preset with its own note (from 0 to 29, channel 1).
 
-<img src="https://user-images.githubusercontent.com/4263412/84315665-4920f080-ab6a-11ea-848f-3b2405ac3df0.jpg" width="90%"></img>  
+<img src="https://user-images.githubusercontent.com/4263412/84315665-4920f080-ab6a-11ea-848f-3b2405ac3df0.jpg" width="50%"></img>  
 
 When in preset mode, by pressing the expression pedal + Bank down you can scroll through 3 different functions for the bank change buttons. In default mode they scroll through the pedalboard's banks (no MIDI sent). The next function sets them to send MIDI messages for 'Next Bank' and 'Previous Bank'. The last function sends MIDI messages for 'Next Preset' and 'Previous Preset'.
 
-<img src="https://user-images.githubusercontent.com/4263412/84315668-49b98700-ab6a-11ea-80f0-90ec02b944c1.jpg" width="90%"></img> <img src="https://user-images.githubusercontent.com/4263412/84315669-4a521d80-ab6a-11ea-91d7-6fb915765abc.jpg" width="90%"></img>
+<img src="https://user-images.githubusercontent.com/4263412/84315668-49b98700-ab6a-11ea-80f0-90ec02b944c1.jpg" width="50%"></img> <img src="https://user-images.githubusercontent.com/4263412/84315669-4a521d80-ab6a-11ea-91d7-6fb915765abc.jpg" width="50%"></img>
 
 The 'keyPressed[8]' (Stomp Mode) switch activates 'Stomp Mode'. You get 6 pedals that can be turned on and off using the 'keyPressed[0]' to 'keyPressed[5]' switches. When in 'Stomp Mode', the 'Bank up' and 'Bank down' switches can be used to raise and lower the volume. Each pedal switch sends a CC message that alternates between values 127 and 0, to turn pedals on and off.
 
-<img src="https://user-images.githubusercontent.com/4263412/84315671-4aeab400-ab6a-11ea-87f8-3227ffdcc02c.jpg" width="90%"></img> 
+<img src="https://user-images.githubusercontent.com/4263412/84315671-4aeab400-ab6a-11ea-87f8-3227ffdcc02c.jpg" width="50%"></img> 
 
 The 'keyPressed[9]' (Loop Mode) switch activates 'Looper Mode'. You get 8 looper functions using the 'keyPressed[0]' to 'keyPressed[5]' switches and the 'Bank up' and 'Bank down' switches. These functions are for operating the Sooperlooper software. CC messages are used.
 
-<img src="https://user-images.githubusercontent.com/4263412/84315661-48885a00-ab6a-11ea-8ec7-9e4e71c14083.jpg" width="90%"></img>
+<img src="https://user-images.githubusercontent.com/4263412/84315661-48885a00-ab6a-11ea-8ec7-9e4e71c14083.jpg" width="50%"></img>
 
 Pressing the 'Stomp Mode' or 'Loop Mode' switch again returns it to 'Preset Mode'.
 
