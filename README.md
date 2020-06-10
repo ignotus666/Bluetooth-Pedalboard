@@ -19,6 +19,8 @@ Li-ion batteries can be dangerous and should be handled with care. I take NO res
 
 FUNCTIONS:
 
+The functions displayed on the screen are arranged so that they are in a position relative to the physical location of the footswitches, to identify what preset each switch activates, what stomp pedal it toggles or what loop function it operates when in each different mode.
+
 Default mode when booting is 'Preset Mode'. You get 6 presets to choose from using the 'keyPressed[0]' to 'keyPressed[5]' switches. The 'keyPressed[6]' (Bank down) and 'keyPressed[7]' (Bank up) switches scroll through 5 preset banks (more can be added relatively easily; I just don't need that many), each with a set of 6 presets. This mode sends Program Change MIDI messages, each preset with its own note (from 0 to 29, channel 1).
 
 <img src="https://user-images.githubusercontent.com/4263412/84315665-4920f080-ab6a-11ea-848f-3b2405ac3df0.jpg" width="30%"></img>  
