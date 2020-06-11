@@ -167,7 +167,7 @@ bool keyPressed[10] = {false, false, false, false, false, false, false, false, f
 
 //Long press variables:
 long buttonTimer = 0;
-long longPressTime = 500;
+long longPressTime = 700;
 
 boolean buttonActive = false;
 boolean longPressActive = false;
