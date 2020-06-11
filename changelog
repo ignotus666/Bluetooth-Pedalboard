@@ -1,3 +1,8 @@
+Ver 0.98:
+
+- It doesn't make much sense to calibrate an expression pedal by having to press it before it has been calibrated...
+Back to pressing switches 3 and 4 to enter calibration mode.
+
 Ver 0.97:
 
 - Changed how to cycle through pedalboard bank, MIDI bank up/down and MIDI preset up/down change modes. Now it's using long

@@ -265,12 +265,6 @@ void loop()
     lastLed = activeLed;
   }
 
-  //Press buttons 3 and expression pedal simultaneously in preset mode to start calibration:
-  if (keyPressed[3] == HIGH && loopStatus == false && stompStatus == false && wahVal < 100)
-  {
-    calibrate();
-  }
-
   //Print averaged battery voltage every 30 seconds:
   currentReading = millis();
   readBattery();
