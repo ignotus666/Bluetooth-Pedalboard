@@ -63,7 +63,7 @@ void stompActive()
 
     if (presetChanged == false)
     {
-      return2ActivePreset();
+      printActivePreset();
       digitalWrite(led[lastLed], HIGH);
     }
     bankButtonNames();

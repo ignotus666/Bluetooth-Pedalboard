@@ -1,6 +1,6 @@
 
 /******************************************************************************
-    Copyright (C) 2019  Daryl Hanlon (ignotus666@hotmail.com)
+    Copyright (C) 2020  Daryl Hanlon (ignotus666@hotmail.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@
 #define TFT_CS   53
 #define TFT_DC   49
 #define TFT_RST  48 //Can also be connected to reset on Arduino board.
+
 /*Hardware MOSI and SCK pins for MEGA (can't be freely assigned):
   MOSI -> pin 51
   SCK -> pin 52.
@@ -97,6 +98,9 @@ byte oldBankNumber = 1;
 byte bankButtonState = 0;
 byte lastBankButton = 0;
 
+byte lastBank = 0; //Variable to enable returning to last bank active before leaving preset mode.
+byte b = bankNumber;
+
 const char *smallPresetName[5][6] =
 {
   {"MAST. PUP", "B in BLACK", "STONER", "CLEAN", "CLEANw/EFF", "ECHOEY"},  //Bank 1.
@@ -114,8 +118,11 @@ const char *bigPresetName[] =                                                   
   "PRESET 25", "PRESET 26", "PRESET 27", "PRESET 28", "PRESET 29", "PRESET 30"        //5
 };                                                                                    //Add more names if increasing no. of banks.
 
-byte lastBank = 0; //Variable to enable returning to last bank active before leaving preset mode.
-byte b = bankNumber;
+int activeLed = -1;    //Currently active LED. Set at boot to a value not corresponding to any LED.
+int lastLed = -1;      //LED to turn off when another one becomes active.
+int activePreset = -2; //To return to the last preset active before leaving preset mode. Set to -2 only at boot to stop it printing wrong preset.
+int lastActivePreset = 0;
+bool presetChanged = false;
 
 //Pedalboard mode variable:
 bool stompStatus = false;
@@ -139,6 +146,11 @@ bool ledStatus[6] = {LOW, LOW, LOW, LOW, LOW, LOW};
 
 byte loopLed = 0;
 
+//Variables to hold the times for blinking LEDs:
+unsigned long timeNow = 0;
+unsigned long timePrev = 0;
+unsigned int timeWait = 400;
+
 //Variables to hold the new and old switch states for debouncing:
 bool newSwitchState[30] = {LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW,
                            LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW,
@@ -153,19 +165,15 @@ long unsigned lastDebounceTime = 0;
 //Switch states for debouncing:
 bool keyPressed[10] = {false, false, false, false, false, false, false, false, false, false};
 
-//Variables to hold the times for blinking LEDs:
-unsigned long timeNow = 0;
-unsigned long timePrev = 0;
-unsigned int timeWait = 400;
+//Long press variables:
+long buttonTimer = 0;
+long longPressTime = 500;
 
-int activeLed = -1;    //Currently active LED. Set at boot to a value not corresponding to any LED.
-int lastLed = -1;      //LED to turn off when another one becomes active.
-int activePreset = -2; //To return to the last preset active before leaving preset mode. Set to -2 only at boot to stop it printing wrong preset.
-int lastActivePreset = 0;
-bool presetChanged = false;
+boolean buttonActive = false;
+boolean longPressActive = false;
 
 //Set up MIDI communication:
-MIDI_CREATE_DEFAULT_INSTANCE(); 
+MIDI_CREATE_DEFAULT_INSTANCE();
 
 void setup()
 {
@@ -180,7 +188,7 @@ void setup()
   }
 
   //Initialise TFT:
-  tft.begin(); 
+  tft.begin();
 
   tft.setRotation(iliRotation270); //Flip screen upside down because of interfering wires.
 
@@ -221,7 +229,7 @@ void loop()
   wah();
 
   //Every 200 readings of the analog pin connected to the battery's + terminal, average them:
-  float analogSmooth200 = as200.analogReadSmooth(battPin); 
+  float analogSmooth200 = as200.analogReadSmooth(battPin);
   battRead = analogSmooth200;
 
   tft.setFont(Arial_bold_14);
@@ -249,11 +257,18 @@ void loop()
     keyPressed[9] = false;
   }
 
+  //Turn MIDI LED off if it's on:
   midiLedOff();
 
   if (loopStatus == false)
   {
     lastLed = activeLed;
+  }
+
+  //Press buttons 3 and expression pedal simultaneously in preset mode to start calibration:
+  if (keyPressed[3] == HIGH && loopStatus == false && stompStatus == false && wahVal < 100)
+  {
+    calibrate();
   }
 
   //Print averaged battery voltage every 30 seconds:

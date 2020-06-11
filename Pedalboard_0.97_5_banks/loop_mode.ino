@@ -52,7 +52,7 @@ void loopActive()
 
     if (presetChanged == false) //If bank buttons have been pressed, it's presumed the last active preset is no longer active; if not, it's still active.
     {
-      return2ActivePreset();
+      printActivePreset();
       digitalWrite(led[lastLed], HIGH);
     }
     bankButtonNames();
@@ -145,8 +145,10 @@ void loopMode()
           bigLoopColour = ILI9341_RED;
           ledStatus[k] = LOW;
         }
+        
         tft.setTextColor(smallLoopColour, ILI9341_BLACK);
         tft.setTextScale(1);
+        
         switch (k)
         {
           case 0:

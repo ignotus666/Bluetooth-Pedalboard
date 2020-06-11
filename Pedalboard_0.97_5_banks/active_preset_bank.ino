@@ -16,7 +16,7 @@ void banks()
       presetChanged = false;
 
       activePreset = (k + (b*6));                           //The preset to return to later if preset mode is exited.
-      return2ActivePreset();                                //Print active set of preset names with appropriate one highlighted in red.
+      printActivePreset();                                //Print active set of preset names with appropriate one highlighted in red.
       keyPressed[k] = false;                                //Return button state to false for debounce code.
     }
     lastActivePreset = activePreset;

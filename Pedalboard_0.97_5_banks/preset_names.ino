@@ -41,7 +41,7 @@ void loopNames()
 }
 
 //Small preset names printed in red and large names in green when active. Also used when returning to preset mode from stomp or loop mode:
-void return2ActivePreset()
+void printActivePreset()
 {
   b = bankNumber;
 

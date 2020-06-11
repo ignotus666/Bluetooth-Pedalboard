@@ -78,5 +78,5 @@ void calibrate()
   tft.setTextColor(ILI9341_GREEN);
   tft.printAlignedOffseted("DONE", gTextAlignMiddleCenter, 0, -65);
   delay(1500);
-  return2ActivePreset();
+  printActivePreset();
 }

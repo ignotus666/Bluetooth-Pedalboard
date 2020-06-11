@@ -1,3 +1,9 @@
+Ver 0.97:
+
+- Changed how to cycle through pedalboard bank, MIDI bank up/down and MIDI preset up/down change modes. Now it's using long
+press of switch 7 (keyPressed[6]) instead of depressed expression pedal + switch 7. It's very unpractical to step on an
+expression pedal and press a switch with the other foot unless sitting down. Long press is much more convenient.
+
 Ver 0.96:
 
 - Rearranged some code, added countdown for expression pedal calibration, changed some colours to distinguish between
