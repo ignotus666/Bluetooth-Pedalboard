@@ -90,7 +90,7 @@ void stompMode()
 
   for (int s = 0; s < 6; s++)
   {
-    if (keyPressed[s] == true)
+    if (keyPressed[s])
     {
       stompState[s] = !stompState[s];
 
@@ -177,7 +177,7 @@ void stompMode()
   //Switches 7 & 8 control volume when stomp mode is active:
 
   //For footswitch 7 (volume down):
-  if ((keyPressed[6] == true) && (stompStatus == true))
+  if ((keyPressed[6]) && (stompStatus == true))
   {
     lastVolVal = volVal - 4; //Change by increments of 4.
 
@@ -234,7 +234,7 @@ void stompMode()
   }
 
   //For footswitch 8 (volume up):
-  if ((keyPressed[7] == true) && (stompStatus == true))
+  if ((keyPressed[7]) && (stompStatus == true))
   {
     lastVolVal = volVal + 4;
 

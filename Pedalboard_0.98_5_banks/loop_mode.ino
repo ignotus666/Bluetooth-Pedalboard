@@ -80,7 +80,7 @@ void loopMode()
 
   for (int k = 0; k < 6; k++)
   {
-    if (keyPressed[k] == true)                //Check which button has been pressed.
+    if (keyPressed[k])                //Check which button has been pressed.
     {
       MIDI.sendControlChange(k + 12, 127, 1); //(Control number, controller value, channel). Send the same message whenever the switch is pressed.
       midiLedOn();
@@ -187,7 +187,7 @@ void loopMode()
 
 
   //For footswitch 7:
-  if (keyPressed[6] == true && loopStatus == true)
+  if (keyPressed[6] && loopStatus == true)
   {
     MIDI.sendControlChange(18, 127, 1);
     loopTime = millis();
@@ -214,7 +214,7 @@ void loopMode()
   }
 
   //For footswitch 8:
-  if (keyPressed[7] == true && loopStatus == true)
+  if (keyPressed[7] && loopStatus == true)
   {
     MIDI.sendControlChange(19, 127, 1);
     loopTime = millis();

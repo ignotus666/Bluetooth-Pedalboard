@@ -44,7 +44,7 @@ void bankMode()
 
             if (bankNumber < 0)
             {
-              bankNumber = 4;                                                    //Increase number for more banks.
+              bankNumber = 4;                                                    //Increase number for more banks (zero-indexed so 4 actually = 5).
             }
 
             presetChanged = true;
@@ -109,7 +109,7 @@ void bankMode()
       case 0:
         bankNumber++;
 
-        if (bankNumber > 4)
+        if (bankNumber > 4)                                                    //Increase for more banks.
         {
           bankNumber = 0;
         }

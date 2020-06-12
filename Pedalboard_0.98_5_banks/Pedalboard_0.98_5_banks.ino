@@ -108,7 +108,7 @@ const char *smallPresetName[5][6] =
   {"TRIP.DEL", "CRUNCH", "FUZZY", "EXTREME", "SLUDGE", "DOOM"},            //3
   {"PRES.19", "PRES.20", "PRES.21", "PRES.22", "PRES.23", "PRES.24"},      //4
   {"PRES.25", "PRES.26", "PRES.27", "PRES.28", "PRES.29", "PRES.30"}       //5
-};                                                                         //If increasing no. of banks, add more sets and reflect no. in first parameter after bankNames.
+};                                                                         //For more banks, add more sets (6 per bank) and reflect no. in first parameter after bankNames.
 
 const char *bigPresetName[] =                                                         //Large name printed in centre.
 { "MASTER OF PUPPETS", "BACK IN BLACK", "STONER", "CLEAN", "CLEAN w/EFF", "ECHOEY",   //Bank 1. These differ from the arrays above in that here individual names are printed, not sets.
@@ -116,7 +116,7 @@ const char *bigPresetName[] =                                                   
   "TRIPLE DELAY", "CRUNCH", "FUZZY", "EXTREME", "SLUDGE", "DOOM",                     //3
   "PRESET 19", "PRESET 20", "PRESET 21", "PRESET 22", "PRESET 23", "PRESET 24",       //4
   "PRESET 25", "PRESET 26", "PRESET 27", "PRESET 28", "PRESET 29", "PRESET 30"        //5
-};                                                                                    //Add more names if increasing no. of banks.
+};                                                                                    //Add more names if adding more banks (6 per bank).
 
 int activeLed = -1;    //Currently active LED. Set at boot to a value not corresponding to any LED.
 int lastLed = -1;      //LED to turn off when another one becomes active.
