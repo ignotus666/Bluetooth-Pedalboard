@@ -25,7 +25,7 @@ Default mode when booting is 'Preset Mode'. You get 6 presets to choose from usi
 
 <img src="https://user-images.githubusercontent.com/4263412/84315665-4920f080-ab6a-11ea-848f-3b2405ac3df0.jpg" width="30%"></img>  
 
-When in preset mode, by long-pressing Bank down (0.5 s) you can scroll through 3 different functions for the bank change buttons. In default mode they scroll through the pedalboard's banks (no MIDI sent). The next function sets them to send MIDI messages for 'Next Bank' and 'Previous Bank'. The last function sends MIDI messages for 'Next Preset' and 'Previous Preset'.
+When in preset mode, by long-pressing Bank down (0.7 s) you can scroll through 3 different functions for the bank change buttons. In default mode they scroll through the pedalboard's banks (no MIDI sent). The next function sets them to send MIDI messages for 'Next Bank' and 'Previous Bank'. The last function sends MIDI messages for 'Next Preset' and 'Previous Preset'.
 
 <img src="https://user-images.githubusercontent.com/4263412/84315668-49b98700-ab6a-11ea-80f0-90ec02b944c1.jpg" width="30%"></img> <img src="https://user-images.githubusercontent.com/4263412/84315669-4a521d80-ab6a-11ea-91d7-6fb915765abc.jpg" width="30%"></img>
 
@@ -39,7 +39,7 @@ The 'keyPressed[9]' (Loop Mode) switch activates 'Looper Mode'. You get 8 looper
 
 Pressing the 'Stomp Mode' or 'Loop Mode' switch again returns it to 'Preset Mode'.
 
-It is possible to calibrate an expression pedal connected to A0 (change accordingly if using another input). By holding down the expression pedal and pressing 'keyPressed[3]' it enters calibration mode and you have 5 seconds to move the pedal across its entire range. The min and max levels are stored in eeprom so calibration should only be needed once.
+It is possible to calibrate an expression pedal connected to A0 (change accordingly if using another input). By simultaneously pressing 'keyPressed[2]' and 'keyPressed[3]' (switches 3 and 4) it enters calibration mode and you have 5 seconds to move the pedal across its entire range. The min and max levels are stored in eeprom so calibration should only be needed once.
 
 To change preset names, there are 2 arrays of names in the Pedalboard_x.xx_5_banks.ino file, in the global variables. The first array is for the small names printed relative to the button positions; keep these short or abbreviated so they fit. The second array is for the full name of the active preset printed large in the centre of the screen. Names are displayed centred in their position on the screen without the need to enter coordinates.
 To increase the number of preset banks, Do a 'Find' (enable 'Search all sketch tabs') typing 'more banks' in the search field. This will take you to the lines that need modifications for more banks.
