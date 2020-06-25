@@ -5,25 +5,25 @@ void wah()
   tft.setFontMode(gTextFontModeSolid);
 
   //Hall-effect wah pedal code:
-  wahWah.update();
-  wahRead = wahWah.getValue();                                 //Get the smoothed analog value.
-  wahRead = constrain(wahRead, pedalMin, pedalMax);
-  wahVal = wahRead;                                            //Assign A0 value to wahVal.
-  wahVal = map(wahVal, pedalMin + 20, pedalMax - 5, 0, 127);  //Map to range of 0-127 for MIDI. Slightly padded max and min values to keep them within range.
-  wahVal = constrain(wahVal, 0, 127);                          //Prevent wahVal value from escaping from range permitted by MIDI protocol.
+  pedal.update();
+  pedalRead = pedal.getValue();                                    //Get the smoothed analog value.
+  pedalRead = constrain(pedalRead, pedalMin, pedalMax);
+  pedalVal = pedalRead;                                            //Assign A0 value to pedalVal.
+  pedalVal = map(pedalVal, pedalMin + 20, pedalMax - 5, 0, 127);   //Map to range of 0-127 for MIDI. Slightly padded max and min values to keep them within range.
+  pedalVal = constrain(pedalVal, 0, 127);                          //Prevent pedalVal value from escaping from range permitted by MIDI protocol.
 
-  String sensorVal = String(wahVal);                           //Print MIDI value.
-  String oldSensorVal = String(lastWahVal);
+  String sensorVal = String(pedalVal);                             //Print MIDI value.
+  String oldSensorVal = String(lastPedalVal);
 
   //convert the reading to a char array:
   sensorVal.toCharArray(sensorPrintout, 4);
   oldSensorVal.toCharArray(oldSensorPrintout, 4);
 
-  if (wahVal != lastWahVal)                                    // If value has changed...
+  if (pedalVal != lastPedalVal)                                    // If value has changed...
   {
-    if (millis() > 6000)                                       //Dirty hack preventing unwanted MIDI data sent right after booting.
+    if (millis() > 6000)                                           //Dirty hack preventing unwanted MIDI data sent right after booting.
     {
-      MIDI.sendControlChange(0, wahVal, 1);                    // Send MIDI CC message (control number, controller value, channel).
+      MIDI.sendControlChange(pedalControlNum, pedalVal, 1);        // Send MIDI CC message (control number, controller value, channel).
       midiLedOn();
     }
 
@@ -31,11 +31,11 @@ void wah()
     tft.setTextScale(1);
     tft.setFontMode(gTextFontModeSolid);
     tft.setTextColor(ILI9341_BLACK, ILI9341_BLACK);
-    tft.printAt(oldSensorPrintout, 255, 222);                 //Print old sensor value in black to erase it before printing new one.
+    tft.printAt(oldSensorPrintout, 273, 222);                      //Print old sensor value in black to erase it before printing new one.
     tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
-    tft.printAt(sensorPrintout, 255, 222);
+    tft.printAt(sensorPrintout, 273, 222);
   }
-  lastWahVal = wahVal;                                        //Assign wahVal value to lastWahVal at the end of each cycle.
+  lastPedalVal = pedalVal;                                         //Assign pedalVal value to lastPedalVal at the end of each cycle.
 }
 
 void batteryIndicator()

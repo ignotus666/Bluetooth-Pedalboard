@@ -12,19 +12,19 @@ void calibrate()
   // Calibrate during five seconds
   while (millis() - calibrateTime < 5000)
   {
-    wahWah.update();
-    wahRead = wahWah.getValue();
+    pedal.update();
+    pedalRead = pedal.getValue();
 
     //Record the maximum sensor value:
-    if (wahRead > pedalMax)
+    if (pedalRead > pedalMax)
     {
-      pedalMax = wahRead;
+      pedalMax = pedalRead;
     }
 
     //Record the minimum sensor value:
-    if (wahRead < pedalMin)
+    if (pedalRead < pedalMin)
     {
-      pedalMin = wahRead;
+      pedalMin = pedalRead;
     }
     
     //Count down 5 seconds:
@@ -62,7 +62,7 @@ void calibrate()
       tft.printAlignedOffseted("1", gTextAlignMiddleCenter, 130, -65);
     }
 
-    //Serial.println(wahRead); //Serial readings for debugging.
+    //Serial.println(pedalRead); //Serial readings for debugging.
   }
   //Serial.println(pedalMin);
   //Serial.println(pedalMax);

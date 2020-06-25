@@ -28,6 +28,9 @@ void bootSequence()
 
   tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
   tft.printAt("Vol", 144, 223);
+  
+  tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
+  tft.printAt("Wah:", 230, 223);
 
   tft.fillArc(155, 200, 21, 1, 0, 78, ILI9341_HOTPINK);//Volume arc outline.
   tft.fillArc(155, 200, 12, 1, 0, 78, ILI9341_HOTPINK);
@@ -60,7 +63,7 @@ void bootTextSequence()
 
   tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
   tft.setTextScale(1);
-  tft.printAt("Ver 0.98_5_banks", 90, 210);
+  tft.printAt("Ver 0.99_5_banks", 90, 210);
 
   tft.drawImage(guitar, 210, 110, guitarWidth, guitarHeight);
   tft.drawImage(guitar2, 42, 110, guitar2Width, guitar2Height);

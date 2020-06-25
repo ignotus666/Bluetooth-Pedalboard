@@ -1,17 +1,19 @@
 //Set the mode the bank buttons are in, using long press on BANK DOWN button:
 void bankMode()
+//Long press to scroll through bank button functions: (pedal banks / software banks / software next/prev preset).
+//Short press: 'prev' within each function.
 {
-  if (keyPressed[6] && loopStatus == false && stompStatus == false)    //Only switch 7 (keyPressed[6]) has the long/short press function.
-  {
-    if (buttonActive == false)
+  if (keyPressed[6] && loopStatus == false && stompStatus == false)             
+  { 
+    if (button6Active == false)
     {
-      buttonActive = true;
+      button6Active = true;
       buttonTimer = millis();
     }
 
-    if ((millis() - buttonTimer > longPressTime) && (longPressActive == false)) //Long press.
+    if ((millis() - buttonTimer > longPressTime) && (longPress6Active == false)) //Long press.
     {
-      longPressActive = true;
+      longPress6Active = true;
       bankButtonState++;
 
       if (bankButtonState > 2)
@@ -28,15 +30,15 @@ void bankMode()
 
   else
   {
-    if (buttonActive == true)                                                  //Short press.
+    if (button6Active == true)                                                    //Short press.
     {
-      if (longPressActive == true)
+      if (longPress6Active == true)
       {
-        longPressActive = false;
+        longPress6Active = false;
       }
-      
+
       else
-      
+
         switch (bankButtonState)                                                 //Short press does different things depending on mode (bankButtonState) the bank buttons are in.
         {
           case 0:                                                                //Pedalboard banks (no MIDI).
@@ -98,74 +100,115 @@ void bankMode()
             activeLed = -1;
             break;
         }
-      buttonActive = false;
+      button6Active = false;
     }
   }
 
-  if (keyPressed[7] && loopStatus == false && stompStatus == false)            //Switch 8 operates normally (no long/short press).
+//Long press: toggle between wah and vol functions. Short press: 'next' within each function.
+  if (keyPressed[7] && loopStatus == false && stompStatus == false)            
   {
-    switch (bankButtonState)
+    if (button7Active == false)
     {
-      case 0:
-        bankNumber++;
-
-        if (bankNumber > 4)                                                    //Increase for more banks.
-        {
-          bankNumber = 0;
-        }
-
-        presetChanged = true;
-
-        if (bankNumber != oldBankNumber)                                       //If banks change, reset preset names and last LED to -1.
-        {
-          activePreset = -1;
-          activeLed = -1;
-        }
-        break;
-
-      case 1:
-        MIDI.sendControlChange(22, 127, 1);
-        clearNameTime = millis();
-        presetChanged = true;
-
-        ledFlash();
-
-        clearLargeName();
-        printBluePreset();
-        tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
-        tft.setTextScale(2);
-        tft.printAlignedOffseted("NEXT BANK", gTextAlignMiddleCenter, 0, -65);
-
-        tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
-        tft.setTextScale(1);
-        tft.printAt("BANK>>", 90, 130);
-
-        activePreset = -1;
-        activeLed = -1;
-        break;
-
-      case 2:
-        MIDI.sendControlChange(24, 127, 1);
-        clearNameTime = millis();
-        presetChanged = true;
-
-        ledFlash();
-
-        clearLargeName();
-        printBluePreset();
-        tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
-        tft.setTextScale(2);
-        tft.printAlignedOffseted("NEXT PRESET", gTextAlignMiddleCenter, 0, -65);
-
-        tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
-        tft.setTextScale(1);
-        tft.printAt("PRES>>", 90, 130);
-
-        activePreset = -1;
-        activeLed = -1;
-        break;
+      button7Active = true;
+      buttonTimer = millis();
     }
-    keyPressed[7] = false;
+
+    if ((millis() - buttonTimer > longPressTime) && (longPress7Active == false)) //Long press.
+    {
+      longPress7Active = true;
+      pedalState = !pedalState;
+      clearPedalName();
+      ledFlash();
+
+      if (pedalState == 0)
+      {
+        pedalControlNum = 0;
+        tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
+        tft.printAt("Wah:", 230, 223);
+      }
+
+      else
+      {
+        pedalControlNum = 1;
+        tft.setTextColor(ILI9341_YELLOW, ILI9341_BLACK);
+        tft.printAt("Vol:", 230, 223);
+      }
+    }
+  }
+
+  else
+  {
+    if (button7Active == true)                                                    //Short press.
+    {
+      if (longPress7Active == true)
+      {
+        longPress7Active = false;
+      }
+
+      else
+        switch (bankButtonState)
+        {
+          case 0:
+            bankNumber++;
+
+            if (bankNumber > 4)                                                    //Increase for more banks.
+            {
+              bankNumber = 0;
+            }
+
+            presetChanged = true;
+
+            if (bankNumber != oldBankNumber)                                       //If banks change, reset preset names and last LED to -1.
+            {
+              activePreset = -1;
+              activeLed = -1;
+            }
+            break;
+
+          case 1:
+            MIDI.sendControlChange(22, 127, 1);
+            clearNameTime = millis();
+            presetChanged = true;
+
+            ledFlash();
+
+            clearLargeName();
+            printBluePreset();
+            tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
+            tft.setTextScale(2);
+            tft.printAlignedOffseted("NEXT BANK", gTextAlignMiddleCenter, 0, -65);
+
+            tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
+            tft.setTextScale(1);
+            tft.printAt("BANK>>", 90, 130);
+
+            activePreset = -1;
+            activeLed = -1;
+            break;
+
+          case 2:
+            MIDI.sendControlChange(24, 127, 1);
+            clearNameTime = millis();
+            presetChanged = true;
+
+            ledFlash();
+
+            clearLargeName();
+            printBluePreset();
+            tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
+            tft.setTextScale(2);
+            tft.printAlignedOffseted("NEXT PRESET", gTextAlignMiddleCenter, 0, -65);
+
+            tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
+            tft.setTextScale(1);
+            tft.printAt("PRES>>", 90, 130);
+
+            activePreset = -1;
+            activeLed = -1;
+            break;
+        }
+      button7Active = false;
+    }
   }
 
   if (bankButtonState == 1 || bankButtonState == 2)

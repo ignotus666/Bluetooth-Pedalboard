@@ -54,12 +54,14 @@ long unsigned midiLedTime = 0;
 const byte pressed[10] = {5, 4, 7, 6, 9, 8, 36, 37, 11, 10};
 const byte pressCount = 10;
 
-//Wah variables:
-const int wahPin = A0;
-ResponsiveAnalogRead wahWah(wahPin, true, 0.01);
-int wahVal = 0;
-int lastWahVal = 0;   //Initial wah values. One for the first value and another to test if there's been a change.
-int wahRead = 0;
+//Expression pedal variables:
+byte pedalControlNum = 0;
+bool pedalState = 0;
+const int pedalPin = A0;
+ResponsiveAnalogRead pedal(pedalPin, true, 0.01);
+int pedalVal = 0;
+int lastPedalVal = 0;   //Initial wah values. One for the first value and another to test if there's been a change.
+int pedalRead = 0;
 char sensorPrintout[4];    //Char array to print wah values.
 char oldSensorPrintout[4]; //Char array to print wah values.
 int pedalMin = 1023;       // Reference minimum pedal value for calibration.
@@ -169,8 +171,10 @@ bool keyPressed[10] = {false, false, false, false, false, false, false, false, f
 long buttonTimer = 0;
 long longPressTime = 700;
 
-boolean buttonActive = false;
-boolean longPressActive = false;
+boolean button6Active = false;
+boolean longPress6Active = false;
+boolean button7Active = false;
+boolean longPress7Active = false;
 
 //Set up MIDI communication:
 MIDI_CREATE_DEFAULT_INSTANCE();
@@ -303,4 +307,9 @@ void clearMode()          //Clear loop/stomp/preset mode on message.
 void clearBankMode()      //Bank up/down buttons' status space.
 {
   tft.fillRect(1, 130, 190, 20, ILI9341_BLACK);
+}
+
+void clearPedalName()
+{
+  tft.fillRect(230, 222, 40, 18, ILI9341_BLACK);
 }
