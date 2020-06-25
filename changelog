@@ -1,3 +1,8 @@
+Ver 0.99:
+
+- Added the possibility of changing the control number of the expression pedal by long-pressing the bankUp switch. Toggles 
+between control number 0 (wah) and 1 (volume).
+
 Ver 0.98:
 
 - It doesn't make much sense to calibrate an expression pedal by having to press it before it has been calibrated...
