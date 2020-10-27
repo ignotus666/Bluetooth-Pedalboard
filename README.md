@@ -1,4 +1,6 @@
 # Bluetooth-Pedalboard
+<img src="https://user-images.githubusercontent.com/4263412/97300656-0b8ddd00-1857-11eb-8f81-9850e45da54a.png" width="50%"></img> 
+
 MIDI Pedalboard with Bluetooth communication based on an Arduino Mega.
 It consists of 10 momentary footswitches, 9 LEDs, a hall-effect sensor (A1302) for the expression pedal, 2 x HC-05 bluetooth modules, a USB-MIDI circuit and a 2.4" ILI9341 TFT screen (with 5v to 3.3v logic level shifter). All switches are connected with external 10k pull down resistors. The Arduino pins for all the connected components are contained in the sketch but are really up to the user (except some TFT pins) and can be changed. I use a neodymium magnet for the A1302 sensor with a usable range of about 3 cm. It can be easily calibrated, explained below.
 
