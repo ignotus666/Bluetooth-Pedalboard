@@ -2,6 +2,7 @@ Ver 1.00:
 
 - Fixed an issue where the battery charge was often not being displayed accurately at all, rendering it useless.
 - Added a coloured bar under the wah/volume (green/yellow) icon to better distinguish which is active.
+- Resized wah icon to make it smaller. Memory usage was causing scrambled characters.
 
 Ver 0.99:
 
