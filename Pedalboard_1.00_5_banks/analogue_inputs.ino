@@ -112,8 +112,6 @@ void batteryIndicator()
 
     voltageVal2.toCharArray(volPercPrintout, 4);
 
-    //tft.setFont(SystemFont5x7);
-
     if (colour == ILI9341_YELLOW || colour == ILI9341_ORANGE)
     {
       tft.setTextColor(ILI9341_RED, ILI9341_BLACK);
@@ -123,8 +121,7 @@ void batteryIndicator()
     {
       tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
     }
-
-    //tft.setTextScale(1);
+    
     tft.setFontMode(gTextFontModeTransparent);
     if (voltagePerc >= 100)
     {
