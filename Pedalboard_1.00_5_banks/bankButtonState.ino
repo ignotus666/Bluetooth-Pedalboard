@@ -125,6 +125,7 @@ void bankMode()
         pedalControlNum = 0;
         tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
         tft.printAt("Wah:", 230, 223);
+        tft.fillRoundRect(230, 216, 67, 3, 1, ILI9341_GREEN);
       }
 
       else
@@ -132,6 +133,7 @@ void bankMode()
         pedalControlNum = 1;
         tft.setTextColor(ILI9341_YELLOW, ILI9341_BLACK);
         tft.printAt("Vol:", 230, 223);
+        tft.fillRoundRect(230, 216, 67, 3, 1, ILI9341_YELLOW);
       }
     }
   }

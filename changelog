@@ -1,3 +1,8 @@
+Ver 1.00:
+
+- Fixed an issue where the battery charge was often not being displayed accurately at all, rendering it useless.
+- Added a coloured bar under the wah/volume (green/yellow) icon to better distinguish which is active.
+
 Ver 0.99:
 
 - Added the possibility of changing the control number of the expression pedal by long-pressing the bankUp switch. Toggles 

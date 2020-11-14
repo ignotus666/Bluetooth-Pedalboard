@@ -62,6 +62,7 @@ ResponsiveAnalogRead pedal(pedalPin, true, 0.01);
 int pedalVal = 0;
 int lastPedalVal = 0;   //Initial wah values. One for the first value and another to test if there's been a change.
 int pedalRead = 0;
+int pedalBar = 0;
 char sensorPrintout[4];    //Char array to print wah values.
 char oldSensorPrintout[4]; //Char array to print wah values.
 int pedalMin = 1023;       // Reference minimum pedal value for calibration.
@@ -80,7 +81,7 @@ int volPerc = 0;
 
 //Battery stuff:
 int battPin = 15; //Analog pin to read battery voltage.
-AnalogSmooth as200 = AnalogSmooth(200); //Average value of 200 readings (library modified).
+AnalogSmooth as = AnalogSmooth(); //Average value of 10 readings.
 float battRead = 0;
 char voltagePrintout[5];//Char array for battery voltage.
 char volPercPrintout[4];//Char array for battery percentage.
@@ -89,7 +90,8 @@ int voltagePerc = 0;
 int lastVoltagePerc = 0;
 long unsigned lastReading = -30000;
 long unsigned currentReading = 0;
-bool usbOn = false;
+long unsigned battStartupTime = 0;
+bool usbOn = true;
 
 //Variables for bank changes:
 bool statusBank[5] = {true, false, false, false, false};
@@ -105,7 +107,7 @@ byte b = bankNumber;
 
 const char *smallPresetName[5][6] =
 {
-  {"MAST. PUP", "B in BLACK", "STONER", "CLEAN", "CLEANw/EFF", "ECHOEY"},  //Bank 1.
+  {"MAST. PUP", "B. in BLACK", "STONER", "CLEAN", "CLEANw/EFF", "ECHOEY"}, //Bank 1.
   {"TOOL", "KYUSS", "CYCO", "OCTA", "SANDMAN", "NEUROSIS"},                //Bank 2.
   {"TRIP.DEL", "CRUNCH", "FUZZY", "EXTREME", "SLUDGE", "DOOM"},            //3
   {"PRES.19", "PRES.20", "PRES.21", "PRES.22", "PRES.23", "PRES.24"},      //4
@@ -205,25 +207,6 @@ void setup()
   delay(100);
   pedalMax = EEPROM.get(ADDR_MAX_VAL, pedalMax);
   delay(100);
-
-
-  if (analogRead(A15) <= 613) //If it reads under 613 (3.0v) it's on USB power.
-  {
-    tft.fillRect(1, 223, 35, 16, ILI9341_BLACK);
-    tft.setFont(Arial_bold_14);
-    tft.setTextColor(ILI9341_CYAN);
-    tft.setTextScale(1);
-    tft.printAt("USB", 33, 200);
-    tft.printAt("POWER", 20, 219);
-    usbOn = true;
-  }
-
-  else
-  {
-    tft.drawRoundRect(20, 185, 53, 25, 3, ILI9341_WHITE); //Draw battery
-    tft.drawRoundRect(21, 186, 51, 23, 3, ILI9341_WHITE);
-    tft.fillRect(73, 193, 4, 8, ILI9341_WHITE);
-  }
 }
 
 void loop()
@@ -232,9 +215,39 @@ void loop()
   debounceTime();
   wah();
 
-  //Every 200 readings of the analog pin connected to the battery's + terminal, average them:
-  float analogSmooth200 = as200.analogReadSmooth(battPin);
-  battRead = analogSmooth200;
+  //Every 10 readings of the analog pin connected to the battery's + terminal, average them:
+  float analogSmooth = as.analogReadSmooth(battPin);
+  battRead = analogSmooth;
+
+  if (millis() - battStartupTime > 10000 && millis() - battStartupTime < 10100)
+  {
+    if (battRead < 640) //If it reads less than 3.1v it's on USB power.
+    {
+      tft.fillRect(1, 223, 35, 16, ILI9341_BLACK);
+      tft.setFont(Arial_bold_14);
+      tft.setTextColor(ILI9341_CYAN);
+      tft.setTextScale(1);
+      tft.printAt("USB", 33, 200);
+      tft.printAt("POWER", 20, 219);
+    }
+
+    else
+    {
+      tft.drawRoundRect(20, 185, 53, 25, 3, ILI9341_WHITE); //Draw battery
+      tft.drawRoundRect(21, 186, 51, 23, 3, ILI9341_WHITE);
+      tft.fillRect(73, 193, 4, 8, ILI9341_WHITE);
+
+      tft.setTextColor(ILI9341_CYAN, ILI9341_BLACK);
+      tft.setTextScale(1);
+      tft.printAt("Batt:", 1, 223);
+      
+      usbOn = false;
+    }
+  }
+
+  //Print averaged battery voltage every 30 seconds:
+  currentReading = millis();
+  readBattery();
 
   tft.setFont(Arial_bold_14);
 
@@ -268,10 +281,6 @@ void loop()
   {
     lastLed = activeLed;
   }
-
-  //Print averaged battery voltage every 30 seconds:
-  currentReading = millis();
-  readBattery();
 }
 
 //END OF LOOP().
