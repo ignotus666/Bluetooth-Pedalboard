@@ -24,7 +24,7 @@ void calibrate()
     //Record the minimum sensor value:
     if (pedalRead < pedalMin)
     {
-      pedalMin = pedalRead;  //Slightly padded max and min values to keep them within range.
+      pedalMin = pedalRead;
     }
     
     //Count down 5 seconds:
