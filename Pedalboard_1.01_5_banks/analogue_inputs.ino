@@ -14,23 +14,23 @@ void wah()
 
   int midi_out[] = {0, 16, 32, 48, 64, 80, 96, 112, 127};
 
-  int bar_out[] = {0, 9, 17, 25, 34, 42, 50, 58, 67};
+   int bar_out[] = {1, 10, 19, 24, 33, 42, 51, 60, 69};
 
   //Slightly padded max and min values to keep them within range.
-  int hall_in[] = {pedalMin + 20, pedalMin + (pedalRange * 0.20), pedalMin + (pedalRange * 0.35),
-                   pedalMin + (pedalRange * 0.55), pedalMin + (pedalRange * 0.70), pedalMin + (pedalRange * 0.80),
-                   pedalMin + (pedalRange * 0.87), pedalMin + (pedalRange * 0.94), pedalMax - 7
+  int hall_in[] = {pedalMin + 20, pedalMin + (pedalRange * 0.30), pedalMin + (pedalRange * 0.50),
+                   pedalMin + (pedalRange * 0.65), pedalMin + (pedalRange * 0.75), pedalMin + (pedalRange * 0.83),
+                   pedalMin + (pedalRange * 0.89), pedalMin + (pedalRange * 0.94), pedalMax - 7
                   };
   //Non-padded max and min values to stop pedalBar misbehaving.
-  int hall_in_2[] = {pedalMin, pedalMin + (pedalRange * 0.20), pedalMin + (pedalRange * 0.35),
-                   pedalMin + (pedalRange * 0.55), pedalMin + (pedalRange * 0.70), pedalMin + (pedalRange * 0.80),
-                   pedalMin + (pedalRange * 0.87), pedalMin + (pedalRange * 0.94), pedalMax
+  int hall_in_2[] = {pedalMin - 5, pedalMin + (pedalRange * 0.30), pedalMin + (pedalRange * 0.50),
+                   pedalMin + (pedalRange * 0.65), pedalMin + (pedalRange * 0.75), pedalMin + (pedalRange * 0.83),
+                   pedalMin + (pedalRange * 0.89), pedalMin + (pedalRange * 0.94), pedalMax + 5
                   };
 
   pedalVal = multiMap(pedalRead, hall_in, midi_out, 9);             //Map to range of 0-127 for MIDI. multiMap(val, _in, _out, no. of values).
   pedalVal = constrain(pedalVal, 0, 127);                           //Prevent pedalVal value from escaping from range permitted by MIDI protocol.
   pedalBar = multiMap(pedalRead, hall_in_2, bar_out, 9);
-  pedalBar = constrain(pedalBar, 0, 67);
+  pedalBar = constrain(pedalBar, 1, 69);
 
   String sensorVal = String(pedalVal);                             //Print MIDI value.
   String oldSensorVal = String(lastPedalVal);
