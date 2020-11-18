@@ -61,7 +61,7 @@ void bootTextSequence()
 
   tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
   tft.setTextScale(1);
-  tft.printAt("Ver 1.00_5_Banks", 90, 210);
+  tft.printAt("Ver 1.01_5_Banks", 90, 210);
 
   tft.drawImage(guitar, 210, 110, guitarWidth, guitarHeight);
   tft.drawImage(guitar2, 42, 110, guitar2Width, guitar2Height);

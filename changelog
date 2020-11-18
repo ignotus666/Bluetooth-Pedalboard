@@ -1,3 +1,7 @@
+Ver 1.01:
+
+- Made hall effect pedal output more linear.
+
 Ver 1.00:
 
 - Fixed an issue where the battery charge was often not being displayed accurately at all, rendering it useless.

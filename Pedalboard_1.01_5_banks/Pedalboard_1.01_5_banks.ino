@@ -207,6 +207,8 @@ void setup()
   delay(100);
   pedalMax = EEPROM.get(ADDR_MAX_VAL, pedalMax);
   delay(100);
+  //Serial.println(pedalMin);
+  //Serial.println(pedalMax);
 }
 
 void loop()
@@ -219,7 +221,7 @@ void loop()
   float analogSmooth = as.analogReadSmooth(battPin);
   battRead = analogSmooth;
 
-  if (millis() - battStartupTime > 10000 && millis() - battStartupTime < 10100)
+  if (millis() - battStartupTime > 60000 && millis() - battStartupTime < 60100)
   {
     if (battRead < 640) //If it reads less than 3.1v it's on USB power.
     {

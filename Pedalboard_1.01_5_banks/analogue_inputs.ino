@@ -8,11 +8,28 @@ void wah()
   pedal.update();
   pedalRead = pedal.getValue();                                    //Get the smoothed analog value.
   pedalRead = constrain(pedalRead, pedalMin, pedalMax);
-  pedalVal = pedalRead;                                            //Assign A0 value to pedalVal.
-  pedalVal = map(pedalVal, pedalMin + 20, pedalMax - 7, 0, 127);   //Map to range of 0-127 for MIDI. Slightly padded max and min values to keep them within range.
-  pedalVal = constrain(pedalVal, 0, 127);                          //Prevent pedalVal value from escaping from range permitted by MIDI protocol.
-  pedalBar = pedalRead;
-  pedalBar = map(pedalBar, pedalMin, pedalMax, 0, 67);
+
+  //Multimap values to make MIDI and pedalBar output more linear:
+  int pedalRange = pedalMax - pedalMin;
+
+  int midi_out[] = {0, 16, 32, 48, 64, 80, 96, 112, 127};
+
+  int bar_out[] = {0, 9, 17, 25, 34, 42, 50, 58, 67};
+
+  //Slightly padded max and min values to keep them within range.
+  int hall_in[] = {pedalMin + 20, pedalMin + (pedalRange * 0.20), pedalMin + (pedalRange * 0.35),
+                   pedalMin + (pedalRange * 0.55), pedalMin + (pedalRange * 0.70), pedalMin + (pedalRange * 0.80),
+                   pedalMin + (pedalRange * 0.87), pedalMin + (pedalRange * 0.94), pedalMax - 7
+                  };
+  //Non-padded max and min values to stop pedalBar misbehaving.
+  int hall_in_2[] = {pedalMin, pedalMin + (pedalRange * 0.20), pedalMin + (pedalRange * 0.35),
+                   pedalMin + (pedalRange * 0.55), pedalMin + (pedalRange * 0.70), pedalMin + (pedalRange * 0.80),
+                   pedalMin + (pedalRange * 0.87), pedalMin + (pedalRange * 0.94), pedalMax
+                  };
+
+  pedalVal = multiMap(pedalRead, hall_in, midi_out, 9);             //Map to range of 0-127 for MIDI. multiMap(val, _in, _out, no. of values).
+  pedalVal = constrain(pedalVal, 0, 127);                           //Prevent pedalVal value from escaping from range permitted by MIDI protocol.
+  pedalBar = multiMap(pedalRead, hall_in_2, bar_out, 9);
   pedalBar = constrain(pedalBar, 0, 67);
 
   String sensorVal = String(pedalVal);                             //Print MIDI value.
@@ -22,11 +39,11 @@ void wah()
   sensorVal.toCharArray(sensorPrintout, 4);
   oldSensorVal.toCharArray(oldSensorPrintout, 4);
 
-  if (pedalVal != lastPedalVal)                                    // If value has changed...
+  if (pedalVal != lastPedalVal)                                    //If value has changed...
   {
     if (millis() > 6000)                                           //Dirty hack preventing unwanted MIDI data sent right after booting.
     {
-      MIDI.sendControlChange(pedalControlNum, pedalVal, 1);        // Send MIDI CC message (control number, controller value, channel).
+      MIDI.sendControlChange(pedalControlNum, pedalVal, 1);        //Send MIDI CC message (control number, controller value, channel).
       midiLedOn();
     }
 
@@ -55,6 +72,25 @@ void wah()
 
   }
   lastPedalVal = pedalVal;                                         //Assign pedalVal value to lastPedalVal at the end of each cycle.
+}
+
+// Code to make pedal output more linear. Note: the _in array should have increasing values
+int multiMap(int val, int* _in, int* _out, uint8_t size)
+{
+  // take care the value is within range
+  // val = constrain(val, _in[0], _in[size-1]);
+  if (val <= _in[0]) return _out[0];
+  if (val >= _in[size-1]) return _out[size-1];
+
+  // search right interval
+  uint8_t pos = 1;  // _in[0] allready tested
+  while(val > _in[pos]) pos++;
+
+  // this will handle all exact "points" in the _in array
+  if (val == _in[pos]) return _out[pos];
+
+  // interpolate in the right segment for the rest
+  return (val - _in[pos-1]) * (_out[pos] - _out[pos-1]) / (_in[pos] - _in[pos-1]) + _out[pos-1];
 }
 
 void batteryIndicator()
@@ -121,7 +157,7 @@ void batteryIndicator()
     {
       tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
     }
-    
+
     tft.setFontMode(gTextFontModeTransparent);
     if (voltagePerc >= 100)
     {
