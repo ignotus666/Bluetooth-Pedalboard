@@ -1,7 +1,7 @@
 # Bluetooth-Pedalboard
 <img src="https://user-images.githubusercontent.com/4263412/97300656-0b8ddd00-1857-11eb-8f81-9850e45da54a.png" width="50%"></img> 
 
-MIDI Pedalboard with Bluetooth communication based on an Arduino Mega.
+This is a MIDI Pedalboard with Bluetooth communication based on an Arduino Mega. Its purpose is to be used with guitar amp sims.
 It consists of 10 momentary footswitches, 9 LEDs, a hall-effect sensor (A1302) for the expression pedal, 2 x HC-05 bluetooth modules, a USB-MIDI circuit and a 2.4" ILI9341 TFT screen (with 5v to 3.3v logic level shifter). All switches are connected with external 10k pull down resistors. The Arduino pins for all the connected components are contained in the sketch but are really up to the user (except some TFT pins) and can be changed. I use a neodymium magnet for the A1302 sensor with a usable range of about 3 cm. It can be easily calibrated, explained below.
 
 There is no bluetooth-specific code. There is one bluetooth module attached to the Arduino board and another in the PIC18F2550-based MIDI-USB receiver circuit connected at the PC via USB.
@@ -20,7 +20,7 @@ When the pedalboard is powered off, the line going from the battery + terminal t
 
 Li-ion batteries can be dangerous and should be handled with care. I take NO responsibility for anything bad happening. An alternative is to just use a small power bank to power the pedalboard and then you can leave out all the battery code and circuitry.
 
-FUNCTIONS:
+#### FUNCTIONS:
 
 The functions displayed on the screen are arranged so that they are in a position relative to the physical location of the footswitches, to identify what preset each switch activates, what stomp pedal it toggles or what loop function it operates when in each different mode.
 
@@ -50,3 +50,7 @@ To change preset names, there are 2 arrays of names in the Pedalboard_x.xx_5_ban
 To increase the number of preset banks, Do a 'Find' (enable 'Search all sketch tabs') typing 'more banks' in the search field. This will take you to the lines that need modifications for more banks.
 
 This video shows most of the functions: https://www.youtube.com/watch?v=eDRC17XOzQg&t=9s. Some aspects of the display have changed since.
+
+#### UPDATE:
+
+A more advanced version, based on an Atmega1284p and which uses Neopixel LEDs instead of regular LEDs, is available on the "neopixel-1284p" branch. Its construction is slightly more complex, however. It also has some added functions such as MIDI notes for 'tuner' and 'mute', improved battery monitoring (including a counter to monitor battery use time), improved analog pedal handling and various other code improvements. If there is interest I might document it - but if you have questions you can open an issue.
