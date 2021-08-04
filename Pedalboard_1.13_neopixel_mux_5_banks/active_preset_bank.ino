@@ -13,6 +13,8 @@ void banks()
       activeLed = k;
       toggleLeds();                                         //Turn LEDs on/off for footswitch 1 active.
       printBluePreset();                                    //Reset preset names to blue
+      leds[8] = CRGB::Black;                                //midiLedOff() sometimes doesn't have time to kick in.
+      FastLED.show();
       presetChanged = false;
 
       activePreset = (k + (b * 6));                         //The preset to return to later if preset mode is exited.

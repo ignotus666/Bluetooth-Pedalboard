@@ -3,17 +3,17 @@ void bankMode()
 //Long press to scroll through bank button functions: (pedal banks / software banks / software next/prev preset).
 //Short press: 'prev' within each function.
 {
-  if (keyPressed[6] && loopStatus == false && stompStatus == false)             
+  if (keyPressed2[0] && loopStatus == false && stompStatus == false)             
   { 
-    if (button6Active == false)
+    if (button9Active == false)
     {
-      button6Active = true;
+      button9Active = true;
       buttonTimer = millis();
     }
 
-    if ((millis() - buttonTimer > longPressTime) && (longPress6Active == false)) //Long press.
+    if ((millis() - buttonTimer > longPressTime) && (longPress9Active == false)) //Long press.
     {
-      longPress6Active = true;
+      longPress9Active = true;
       bankButtonState++;
 
       if (bankButtonState > 2)
@@ -24,17 +24,19 @@ void bankMode()
       clearBankMode();
       bankButtons();
       ledFlash();
-      digitalWrite(led[lastLed], HIGH);
+      presetModeLeds();
+      leds[lastLed] = CRGB::Red;
+      FastLED.show();
     }
   }
 
   else
   {
-    if (button6Active == true)                                                    //Short press.
+    if (button9Active == true)                                                    //Short press.
     {
-      if (longPress6Active == true)
+      if (longPress9Active == true)
       {
-        longPress6Active = false;
+        longPress9Active = false;
       }
 
       else
@@ -64,6 +66,7 @@ void bankMode()
             presetChanged = true;
 
             ledFlash();
+            presetModeLeds();
 
             clearLargeName();
             printBluePreset();
@@ -85,6 +88,7 @@ void bankMode()
             presetChanged = true;
 
             ledFlash();
+            presetModeLeds();
 
             clearLargeName();
             printBluePreset();
@@ -100,51 +104,54 @@ void bankMode()
             activeLed = -1;
             break;
         }
-      button6Active = false;
+      button9Active = false;
     }
   }
 
 //Long press: toggle between wah and vol functions. Short press: 'next' within each function.
-  if (keyPressed[7] && loopStatus == false && stompStatus == false)            
+  if (keyPressed2[1] && loopStatus == false && stompStatus == false)            
   {
-    if (button7Active == false)
+    if (button10Active == false)
     {
-      button7Active = true;
+      button10Active = true;
       buttonTimer = millis();
     }
 
-    if ((millis() - buttonTimer > longPressTime) && (longPress7Active == false)) //Long press.
+    if ((millis() - buttonTimer > longPressTime) && (longPress10Active == false)) //Long press.
     {
-      longPress7Active = true;
+      longPress10Active = true;
       pedalState = !pedalState;
       clearPedalName();
       ledFlash();
+      presetModeLeds();
+      leds[lastLed] = CRGB::Red;
+      FastLED.show();
 
       if (pedalState == 0)
       {
         pedalControlNum = 0;
         tft.setTextColor(ILI9341_GREEN, ILI9341_BLACK);
-        tft.printAt("Wah:", 230, 223);
-        tft.fillRoundRect(230, 216, 67, 3, 1, ILI9341_GREEN);
+        tft.printAt("Wah:", 240, 223);
+        tft.fillRoundRect(240, 216, 67, 3, 1, ILI9341_GREEN);
       }
 
       else
       {
         pedalControlNum = 1;
         tft.setTextColor(ILI9341_YELLOW, ILI9341_BLACK);
-        tft.printAt("Vol:", 230, 223);
-        tft.fillRoundRect(230, 216, 67, 3, 1, ILI9341_YELLOW);
+        tft.printAt("Vol:", 240, 223);
+        tft.fillRoundRect(240, 216, 67, 3, 1, ILI9341_YELLOW);
       }
     }
   }
 
   else
   {
-    if (button7Active == true)                                                    //Short press.
+    if (button10Active == true)                                                    //Short press.
     {
-      if (longPress7Active == true)
+      if (longPress10Active == true)
       {
-        longPress7Active = false;
+        longPress10Active = false;
       }
 
       else
@@ -173,6 +180,7 @@ void bankMode()
             presetChanged = true;
 
             ledFlash();
+            presetModeLeds();
 
             clearLargeName();
             printBluePreset();
@@ -194,6 +202,7 @@ void bankMode()
             presetChanged = true;
 
             ledFlash();
+            presetModeLeds();
 
             clearLargeName();
             printBluePreset();
@@ -209,7 +218,7 @@ void bankMode()
             activeLed = -1;
             break;
         }
-      button7Active = false;
+      button10Active = false;
     }
   }
 

@@ -8,29 +8,12 @@ void wah()
   pedal.update();
   pedalRead = pedal.getValue();                                    //Get the smoothed analog value.
   pedalRead = constrain(pedalRead, pedalMin, pedalMax);
-
-  //Multimap values to make MIDI and pedalBar output more linear:
-  int pedalRange = pedalMax - pedalMin;
-
-  int midi_out[] = {0, 16, 32, 48, 64, 80, 96, 112, 127};
-
-   int bar_out[] = {1, 10, 19, 24, 33, 42, 51, 60, 69};
-
-  //Slightly padded max and min values to keep them within range.
-  int hall_in[] = {pedalMin + 20, pedalMin + (pedalRange * 0.30), pedalMin + (pedalRange * 0.50),
-                   pedalMin + (pedalRange * 0.65), pedalMin + (pedalRange * 0.75), pedalMin + (pedalRange * 0.83),
-                   pedalMin + (pedalRange * 0.89), pedalMin + (pedalRange * 0.94), pedalMax - 7
-                  };
-  //Non-padded max and min values to stop pedalBar misbehaving.
-  int hall_in_2[] = {pedalMin - 5, pedalMin + (pedalRange * 0.30), pedalMin + (pedalRange * 0.50),
-                   pedalMin + (pedalRange * 0.65), pedalMin + (pedalRange * 0.75), pedalMin + (pedalRange * 0.83),
-                   pedalMin + (pedalRange * 0.89), pedalMin + (pedalRange * 0.94), pedalMax + 5
-                  };
-
-  pedalVal = multiMap(pedalRead, hall_in, midi_out, 9);             //Map to range of 0-127 for MIDI. multiMap(val, _in, _out, no. of values).
+  pedalVal = pedalRead; 
+  pedalVal = map(pedalVal, pedalMin+10, pedalMax-5, 0, 127);        //Map to range of 0-127.
   pedalVal = constrain(pedalVal, 0, 127);                           //Prevent pedalVal value from escaping from range permitted by MIDI protocol.
-  pedalBar = multiMap(pedalRead, hall_in_2, bar_out, 9);
-  pedalBar = constrain(pedalBar, 1, 69);
+  pedalBar = pedalRead;
+  pedalBar = map(pedalBar, pedalMin, pedalMax, 0, 67);
+  pedalBar = constrain(pedalBar, 0, 67);
 
   String sensorVal = String(pedalVal);                             //Print MIDI value.
   String oldSensorVal = String(lastPedalVal);
@@ -44,16 +27,24 @@ void wah()
     if (millis() > 6000)                                           //Dirty hack preventing unwanted MIDI data sent right after booting.
     {
       MIDI.sendControlChange(pedalControlNum, pedalVal, 1);        //Send MIDI CC message (control number, controller value, channel).
-      midiLedOn();
+      if (pedalVal > 126)
+      {
+        leds[8] = CRGB::Black;
+      }
+      else
+      {
+        leds[8] = CRGB((255 - (pedalVal * 2)), 0, (0 + (pedalVal * 2)));
+      }
+      FastLED.show();
     }
 
     tft.setFont(Arial_bold_14);
     tft.setTextScale(1);
     tft.setFontMode(gTextFontModeSolid);
     tft.setTextColor(ILI9341_BLACK, ILI9341_BLACK);
-    tft.printAt(oldSensorPrintout, 273, 223);                      //Print old sensor value in black to erase it before printing new one.
+    tft.printAt(oldSensorPrintout, 283, 223);                      //Print old sensor value in black to erase it before printing new one.
     tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
-    tft.printAt(sensorPrintout, 273, 223);
+    tft.printAt(sensorPrintout, 283, 223);
 
     unsigned int pedalBarColour = 0;
 
@@ -67,48 +58,38 @@ void wah()
       pedalBarColour = ILI9341_YELLOW;
     }
 
-    tft.fillRoundRect(230, 216, pedalBar, 3, 1, pedalBarColour);
-    tft.fillRoundRect(230 + pedalBar, 216, 67 - pedalBar, 3, 1, ILI9341_BLACK);
+    tft.fillRoundRect(240, 216, pedalBar, 3, 1, pedalBarColour);
+    tft.fillRoundRect(240 + pedalBar, 216, 67 - pedalBar, 3, 1, ILI9341_BLACK);
 
   }
   lastPedalVal = pedalVal;                                         //Assign pedalVal value to lastPedalVal at the end of each cycle.
-}
 
-// Code to make pedal output more linear. Note: the _in array should have increasing values
-int multiMap(int val, int* _in, int* _out, uint8_t size)
-{
-  // take care the value is within range
-  // val = constrain(val, _in[0], _in[size-1]);
-  if (val <= _in[0]) return _out[0];
-  if (val >= _in[size-1]) return _out[size-1];
 
-  // search right interval
-  uint8_t pos = 1;  // _in[0] allready tested
-  while(val > _in[pos]) pos++;
-
-  // this will handle all exact "points" in the _in array
-  if (val == _in[pos]) return _out[pos];
-
-  // interpolate in the right segment for the rest
-  return (val - _in[pos-1]) * (_out[pos] - _out[pos-1]) / (_in[pos] - _in[pos-1]) + _out[pos-1];
+  //Press buttons 1 and 6 to reset battery time counter:
+  if (keyPressed[0] == true && keyPressed[5] == true && usbOn == false)
+  {
+    minuteCounter = 0;
+    printUptime();
+    keyPressed[0] = false;
+    keyPressed[5] = false;
+  }
 }
 
 void batteryIndicator()
 {
-  voltageBar = battRead;
-  voltagePerc = battRead;
-  float voltage = battRead * (5 / 1023.0);
-  voltageBar = map(voltageBar, 640, 838, 0, 49);//Map bar to 3.1v - 4.1v.
+  float voltage = ((battRead * (3.3 / 1023.0)) * 3.29);  //Multiply by the ratio due to voltage divider.
+  float voltageBar = mapFloat(voltage, 3.0, 4.15, 0, 49);//Map bar to 3.1v - 4.1v.
   voltageBar = constrain(voltageBar, 0, 49);
-  voltagePerc = map(voltagePerc, 640, 838, 0, 100);
+  float perc = mapFloat(voltage, 3.0, 4.15, 0, 100);
+  int voltagePerc = (int) perc;                          //Cast float to int.
   voltagePerc = constrain(voltagePerc, 0, 100);
 
   unsigned int colour = 0;
 
-  if (voltagePerc != lastVoltagePerc)           //If voltage percentage has changed, write new value and apply appropriate colour.
+  if (voltagePerc != lastVoltagePerc)                    //If voltage percentage has changed, write new value and apply appropriate colour.
   {
     tft.setTextScale(1);
-    tft.fillRoundRect(22, 187, 49, 21, 3, ILI9341_BLACK);
+    tft.fillRoundRect(3, 187, 49, 21, 3, ILI9341_BLACK);
 
     if (voltagePerc >= 60)
     {
@@ -130,7 +111,7 @@ void batteryIndicator()
       colour = ILI9341_RED;
     }
 
-    tft.fillRoundRect(22, 187, 0 + (voltageBar), 21, 3, (colour));
+    tft.fillRoundRect(3, 187, voltageBar, 21, 3, (colour));
 
     String voltageVal = String(voltage);
 
@@ -140,9 +121,9 @@ void batteryIndicator()
     tft.setTextColor(ILI9341_CYAN, ILI9341_BLACK);
     tft.setTextScale(1);
     tft.setFontMode(gTextFontModeSolid);
-    tft.fillRect(42, 223, 32, 16, ILI9341_BLACK);
-    tft.printAt(voltagePrintout, 42, 223);
-    tft.printAt("v", 75, 223);
+    tft.fillRect(42, 214, 32, 16, ILI9341_BLACK);
+    tft.printAt(voltagePrintout, 42, 214);
+    tft.printAt("v", 75, 214);
 
     String voltageVal2 = String(voltagePerc);
 
@@ -161,19 +142,21 @@ void batteryIndicator()
     tft.setFontMode(gTextFontModeTransparent);
     if (voltagePerc >= 100)
     {
-      tft.printAt(volPercPrintout, 28, 191);
+      tft.printAt(volPercPrintout, 9, 191);
+      //tft.print(" %");
     }
 
     if (voltagePerc < 100 && voltagePerc > 9)
     {
-      tft.printAt(volPercPrintout, 35, 191);
+      tft.printAt(volPercPrintout, 16, 191);
+      //tft.print(" %");
     }
 
     if (voltagePerc < 10)
     {
-      tft.printAt(volPercPrintout, 41, 191);
+      tft.printAt(volPercPrintout, 22, 191);
+      //tft.print(" %");
     }
-
     tft.print(" %");
   }
   lastVoltagePerc = voltagePerc;
@@ -181,9 +164,49 @@ void batteryIndicator()
 
 void readBattery()
 {
+
   if (millis() - lastReading >= 30000 && usbOn == false)
   {
     batteryIndicator();
     lastReading = currentReading;
   }
+}
+
+void batteryLife()
+{
+  if (millis() - countBatteryTime >= 60000)
+  {
+    minuteCounter++;
+    eepromSaveCounter++;
+    countBatteryTime = millis();
+
+    if (eepromSaveCounter == 2)            //Save to eeprom every 2 minutes.
+    {
+      EEPROM.put(timeCount, minuteCounter);
+      eepromSaveCounter = 0;
+    }
+
+    printUptime();
+  }
+}
+
+void printUptime()
+{
+  tft.fillRect(50, 230, 50, 8, ILI9341_BLACK);
+  tft.setFont(SystemFont5x7);
+  tft.setTextScale(1);
+  hoursNum = minuteCounter / 60;
+  minutesNum = minuteCounter - (hoursNum * 60);
+  String minuteVal = String(minutesNum);
+  minuteVal.toCharArray(minutePrintout, 3);
+  String hourVal = String(hoursNum);
+  hourVal.toCharArray(hourPrintout, 3);
+  tft.setTextColor(ILI9341_HOTPINK, ILI9341_BLACK);
+  tft.printAt(hourPrintout, 50, 230);
+  tft.setTextColor(ILI9341_BLUE, ILI9341_BLACK);
+  tft.print("h ");
+  tft.setTextColor(ILI9341_HOTPINK, ILI9341_BLACK);
+  tft.print(minutePrintout);
+  tft.setTextColor(ILI9341_BLUE, ILI9341_BLACK);
+  tft.print("m");
 }

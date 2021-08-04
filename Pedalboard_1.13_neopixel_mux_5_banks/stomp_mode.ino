@@ -2,18 +2,28 @@
 
 void stompActive()
 {
+  int l = 0;
   stompStatus = !stompStatus;
 
   for (int s = 0; s < 6; s++)
   {
-    stompState[s] = true;
+    stompState[s] = false;
   }
 
   if (stompStatus == true)
   {
     ledFlash();
-    
-    digitalWrite(led[6], HIGH);
+
+    for (l = 0; l < 6; l++)
+    {
+      leds[l] = CRGB::Green;
+      leds[l].nscale8(15);
+      leds[7] = CRGB(196, 67, 247);
+      leds[7].nscale8(15);
+      FastLED.show();
+    }
+    leds[6] = CRGB::Blue;
+    FastLED.show();
 
     clearMode();
 
@@ -50,32 +60,8 @@ void stompActive()
   }
 
   else
-  {
-    ledFlash();
-
-    loopStatus = false;
-
-    clearTopHalf();
-    clearMode();
-    tft.setFont(Arial_bold_14);
-
-    return2lastBank();
-
-    if (presetChanged == false)
-    {
-      printActivePreset();
-      digitalWrite(led[lastLed], HIGH);
-    }
-    bankButtonNames();
-
-    tft.fillRoundRect(195, 155, 115, 18, 3, ILI9341_GREEN);
-    tft.drawRoundRect(194, 154, 117, 20, 3, ILI9341_RED);
-    tft.setFontMode(gTextFontModeTransparent);
-    tft.setTextColor(ILI9341_WHITE);
-    tft.setTextScale(1);
-    tft.printAt("PRESET MODE", 200, 158);
-
-    digitalWrite(led[6], LOW);
+  {    
+    return2PresetMode();
   }
 }
 
@@ -94,13 +80,15 @@ void stompMode()
     {
       stompState[s] = !stompState[s];
 
-      if (stompState[s] == true)
+      if (stompState[s] == false)
       {
-        MIDI.sendControlChange(s + 2, 0, 1);
+        MIDI.sendControlChange(s + 2, 0, 1); //CC notes start at 2.
         midiLedOn();
         pedalOutline = ILI9341_BLACK;
         numberColour = ILI9341_WHITE;
-        digitalWrite(led[s], LOW);
+        leds[s] = CRGB::Green;
+        leds[s].nscale8(15);
+        FastLED.show();
       }
 
       else
@@ -109,11 +97,12 @@ void stompMode()
         midiLedOn();
         pedalOutline = ILI9341_RED;
         numberColour = ILI9341_RED;
-        digitalWrite(led[s], HIGH);
+        leds[s] = CRGB::DarkMagenta;
+        FastLED.show();
       }
 
       //Draw pedal outlines and numbers accordingly:
-      switch (s)                                              
+      switch (s)
       {
         case 0:
 
@@ -174,19 +163,19 @@ void stompMode()
     }
   }
 
-  //Switches 7 & 8 control volume when stomp mode is active:
+  //Switches 9 & 10 control volume when stomp mode is active:
 
-  //For footswitch 7 (volume down):
-  if ((keyPressed[6]) && (stompStatus == true))
+  //For footswitch 9 (volume down):
+  if ((keyPressed2[0]) && (stompStatus == true))
   {
-    lastVolVal = volVal - 4; //Change by increments of 4.
+    lastVolVal = volVal - 3; //Change by increments of 3.
 
     if (lastVolVal <= 0)
     {
       lastVolVal = 0;
     }
 
-    MIDI.sendControlChange(0, lastVolVal, 1);
+    MIDI.sendControlChange(127, lastVolVal, 1);
     midiLedOn();
 
     volBar = lastVolVal;
@@ -211,7 +200,7 @@ void stompMode()
     tft.setFontMode(gTextFontModeSolid);
     tft.setTextColor(ILI9341_WHITE);
     tft.setTextScale(1);
-    
+
     //Keep number centred in arc:
     if (volPerc == 100)
     {
@@ -233,17 +222,17 @@ void stompMode()
     delay(60); //Delay for increments while holding switch down.
   }
 
-  //For footswitch 8 (volume up):
-  if ((keyPressed[7]) && (stompStatus == true))
+  //For footswitch 10 (volume up):
+  if ((keyPressed2[1]) && (stompStatus == true))
   {
-    lastVolVal = volVal + 4;
+    lastVolVal = volVal + 3;
 
     if (lastVolVal >= 127)
     {
       lastVolVal = 127;
     }
 
-    MIDI.sendControlChange(0, lastVolVal, 1);
+    MIDI.sendControlChange(127, lastVolVal, 1);
     midiLedOn();
 
     volBar = lastVolVal;

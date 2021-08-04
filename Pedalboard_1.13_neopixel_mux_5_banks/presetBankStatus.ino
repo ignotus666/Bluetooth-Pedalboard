@@ -1,4 +1,4 @@
-//Activate the appropriate bank number (determined in pedalboardBank()) or if loop or stomp mode are active:
+//Activate the appropriate bank number or if loop or stomp mode are active:
 void presetBankStatus()
 {
   for (int b = 0; b < 5; b++)        //Increase number for more banks.
@@ -40,6 +40,7 @@ void presetBanks()
     loopStatus = false;
 
     ledFlash();
+    presetModeLeds();
 
     clearBankSpace();
 

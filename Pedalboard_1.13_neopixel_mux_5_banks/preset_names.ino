@@ -21,7 +21,7 @@ void bankNames()
 
 void loopNames()
 {
-  tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
+  tft.setTextColor(ILI9341_LIGHTGREEN, ILI9341_BLACK);
   tft.setTextScale(1);
   tft.printAligned("INSERT", gTextAlignTopLeft);
 
@@ -35,6 +35,7 @@ void loopNames()
 
   tft.printAligned("PAUSE", gTextAlignTopRight);
 
+  tft.setTextColor(ILI9341_WHITE, ILI9341_BLACK);
   tft.printAt("UNDO", 1, 130);
 
   tft.printAt("REDO", 80, 130);
@@ -89,7 +90,7 @@ void printActivePreset()
 void printBluePreset()     //Just print last active preset back to blue instead of printing whole set again.
 {
   b = bankNumber;
-  
+
   tft.setTextColor(ILI9341_CYAN, ILI9341_BLACK);
   tft.setTextScale(1);
 
@@ -122,4 +123,30 @@ void printBluePreset()     //Just print last active preset back to blue instead 
   {
     tft.printAligned(smallPresetName[b][5], gTextAlignTopRight);
   }
+}
+
+void return2PresetMode()
+{
+  ledFlash();
+  presetModeLeds();
+
+  clearTopHalf();
+  clearMode();
+
+  return2lastBank();
+
+  if (presetChanged == false) //If bank buttons have been pressed, it's presumed the last active preset is no longer active; if not, it's still active.
+  {
+    printActivePreset();
+    leds[lastLed] = CRGB::Red;
+    FastLED.show();
+  }
+  bankButtonNames();
+
+  tft.fillRoundRect(195, 155, 115, 18, 3, ILI9341_GREEN);
+  tft.drawRoundRect(194, 154, 117, 20, 3, ILI9341_RED);
+  tft.setFontMode(gTextFontModeTransparent);
+  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextScale(1);
+  tft.printAt("PRESET MODE", 200, 158);
 }
