@@ -1,3 +1,12 @@
+Ver 1.13:
+
+- Changed platform to Atmega1284p.
+- Added Tuner and Mute MIDI notes activated via long press of the looper and stomp mode buttons.
+- Uses Neopixel strips instead of regular LEDs, with changes of colours associated with different functions.
+- Improved battery monitoring and added battery uptime counter to keep track of how long batteries last.
+- Improved analogue pedal handling.
+- A bunch of code changes to adapt to the new platform.
+
 Ver 1.01:
 
 - Made hall effect pedal output more linear.
@@ -10,7 +19,7 @@ Ver 1.00:
 
 Ver 0.99:
 
-- Added the possibility of changing the control number of the expression pedal by long-pressing the bankUp switch. Toggles 
+- Added the possibility of changing the control number of the expression pedal by long-pressing the bankUp switch. Toggles
 between control number 0 (wah) and 1 (volume).
 
 Ver 0.98:
@@ -38,13 +47,13 @@ After some extensive testing I reckon it's pretty much bug-free at this point.
 
 Ver 0.94:
 
-- Fixed calibration mode that was broken in previous version. Calibration mode is now activated by pressing the expression 
+- Fixed calibration mode that was broken in previous version. Calibration mode is now activated by pressing the expression
 pedal and button 4 (keyPressed[3]). Sorted out a couple of other bugs.
 
 
 Ver 0.93:
 
-- Another push to get rid of redundant code and make it more readable (within my limited abilities...). Added more 
+- Another push to get rid of redundant code and make it more readable (within my limited abilities...). Added more
 comments to explain what's happening. Adding more banks is much less complex now and comments are added to the lines where changes
 would be necessary. Changing preset names is also clearer as they are all grouped together in arrays.
 
@@ -68,7 +77,7 @@ calibration should only need to be performed once.
 Ver 0.90:
 
 - Made some major changes to code, using arrays for lots more things. Managed to get rid of almost 800 lines of redundant
-code... Probably lots more could be improved but it's a learning process. Also combined all .bmp images into one file; no 
+code... Probably lots more could be improved but it's a learning process. Also combined all .bmp images into one file; no
 need to have them scattered all over the place.
 - Fixed a couple of bugs.
 
@@ -92,7 +101,7 @@ accurate.
 
 Ver 0.81:
 
-- Added ResponsiveAnalogRead library for the hall sensor expression pedal. When on battery power the output was very jittery; 
+- Added ResponsiveAnalogRead library for the hall sensor expression pedal. When on battery power the output was very jittery;
 this library fixes the issue entirely. AnalogSmooth is good for the battery readings (lots of readings over a longer timespan)
 but not so good for returning values quickly. Likewise, ResponsiveAnalogRead isn't good for averaging readings over longer
 periods.
@@ -102,10 +111,10 @@ periods.
 
 
 ver 0.75:
-- Implemented button debounce code and got rid of (almost) all delays. Switches no longer cycle through states or 
+- Implemented button debounce code and got rid of (almost) all delays. Switches no longer cycle through states or
 repeatedly send MIDI messages if accidentally held down for too long.
 
-- Made Loop Mode functions more adequately reflect the behaviour of Sooperlooper. LEDs now blink when an operation is active 
+- Made Loop Mode functions more adequately reflect the behaviour of Sooperlooper. LEDs now blink when an operation is active
 and then default to 'Play' when pressed again.
 
 
@@ -121,10 +130,10 @@ ver 0.73:
 
 ver 0.72:
 - Some changes to code.
-- (Replaces new function in ver 0.70): When in preset mode, by pressing the expression pedal + bankDown you can scroll through 
-3 different functions for the bankUp and bankDown buttons. In default mode they scroll through the pedalboard's banks (no MIDI 
-sent). The next function sets them to send MIDI messages for 'Next Bank' and 'Previous Bank'. The last function sends MIDI 
-messages for 'Next Preset' and 'Previous Preset'. 
+- (Replaces new function in ver 0.70): When in preset mode, by pressing the expression pedal + bankDown you can scroll through
+3 different functions for the bankUp and bankDown buttons. In default mode they scroll through the pedalboard's banks (no MIDI
+sent). The next function sets them to send MIDI messages for 'Next Bank' and 'Previous Bank'. The last function sends MIDI
+messages for 'Next Preset' and 'Previous Preset'.
 
 
 ver 0.71:
@@ -140,4 +149,3 @@ ver 0.69:
 - Some code optimisation.
 - Preset names changed via find/replace will automatically be displayed in the right position without the need to modify
 screen coordinates.
-
