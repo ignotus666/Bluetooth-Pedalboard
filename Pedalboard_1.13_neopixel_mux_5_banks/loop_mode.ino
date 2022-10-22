@@ -1,15 +1,15 @@
 void loopActive()
 {
   int l = 0;
-  loopStatus = !loopStatus;
-  loopStateInit = false;
+  loopModeStatus = !loopModeStatus;
+  loopModeStateInit = false;
 
-  for (l = 0; l < 6; l++)          //Set loopStates to true.
+  for (l = 0; l < 6; l++)          //Set loopButtonStates to true.
   {
-    loopState[l] = true;
+    loopButtonState[l] = true;
   }
 
-  if (loopStatus == true)
+  if (loopModeStatus == true)
   {
     ledFlash();
 
@@ -48,9 +48,9 @@ void loopActive()
 
     for (int b = 0; b < 5; b++)
     {
-      statusBank[b] = false;
+      bankStatus[b] = false;
     }
-    stompStatus = false;
+    stompModeStatus = false;
   }
 
   else
@@ -77,8 +77,8 @@ void loopMode()
       midiLedOn();
       loopNames();
       loopLed = k;
-      loopLeds();
-      loopStateInit = true;
+      loopModeLeds();
+      loopModeStateInit = true;
       for (int l = 0; l < 6; l++)
       {
         if (l != (loopLed))                   //Set all ledOn states to false but don't change the state of the current led used (I just use the loopLed number as a handy reference).
@@ -194,7 +194,7 @@ void loopMode()
 
 
   //For footswitch 7:
-  if (keyPressed2[0] && loopStatus == true)
+  if (keyPressed2[0] && loopModeStatus == true)
   {
     MIDI.sendControlChange(18, 127, 1);
     loopTime = millis();
@@ -220,7 +220,7 @@ void loopMode()
   }
 
   //For footswitch 8:
-  if (keyPressed2[1] && loopStatus == true)
+  if (keyPressed2[1] && loopModeStatus == true)
   {
     MIDI.sendControlChange(19, 127, 1);
     loopTime = millis();

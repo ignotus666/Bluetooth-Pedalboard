@@ -124,7 +124,7 @@ int volPerc = 0;
 
 //Battery stuff:
 int battPin = A2; //Analog pin to read battery voltage.
-AnalogSmooth as200 = AnalogSmooth(200); //Average value of 10 readings.
+AnalogSmooth as200 = AnalogSmooth(200); //Average value of 200 readings.
 float battRead = 0;
 char voltagePrintout[5];//Char array for battery voltage.
 char volPercPrintout[4];//Char array for battery percentage.
@@ -145,7 +145,7 @@ byte hoursNum = 0;
 byte minutesNum = 0;
 
 //Variables for bank changes:
-bool statusBank[5] = {true, false, false, false, false};
+bool bankStatus[5] = {true, false, false, false, false};
 
 int bankNumber = 0;
 byte oldBankNumber = 1;
@@ -180,22 +180,22 @@ int lastActivePreset = 0;
 bool presetChanged = false;
 
 //Pedalboard mode variable:
-bool stompStatus = false;
+bool stompModeStatus = false;
 
 //Variables to toggle stomp buttons:
-bool stompState[6] = {false, false, false, false, false, false};
+bool stompButtonState[6] = {false, false, false, false, false, false};
 
 long unsigned clearNameTime = 0;
 
 //Variable to toggle loop mode:
-bool loopStatus = false;
-bool loopStateInit = false;
+bool loopModeStatus = false;
+bool loopModeStateInit = false;
 bool playLedOn =false;
 
 long unsigned loopTime = 0;
 
 //Variables to toggle loop buttons:
-bool loopState[6] = {true, true, true, true, true, true};
+bool loopButtonState[6] = {true, true, true, true, true, true};
 
 //Variables used to control blinking LEDs:
 bool ledOn[6] = {false, false, false, false, false, false};
@@ -309,7 +309,7 @@ void loop()
   //Turn MIDI LED off if it's on:
   midiLedOff();
 
-  if (loopStatus == false)
+  if (loopModeStatus == false)
   {
     lastLed = activeLed;
   }

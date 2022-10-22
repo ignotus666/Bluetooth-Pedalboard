@@ -25,7 +25,7 @@ void presetModeLeds()
   }
 }
 
-void loopLeds()
+void loopModeLeds()
 {
   for (int i = 0; i < 6; i++)
   {

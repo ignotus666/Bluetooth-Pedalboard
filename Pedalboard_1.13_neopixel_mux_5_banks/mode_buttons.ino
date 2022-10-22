@@ -18,7 +18,7 @@ void modeButtons()
       longPress7Active = true;
       ledFlash();
 
-      if ((loopStatus == false) && (stompStatus == false))
+      if ((loopModeStatus == false) && (stompModeStatus == false))
       {
         presetModeLeds();
 
@@ -29,7 +29,7 @@ void modeButtons()
         }
       }
 
-      if (stompStatus == true)
+      if (stompModeStatus == true)
       {
         for (l = 0; l < 6; l++)
         {
@@ -44,7 +44,7 @@ void modeButtons()
 
         for (int s = 0; s < 6; s++)
         {
-          if (stompState[s] == true)
+          if (stompButtonState[s] == true)
           {
             leds[s] = CRGB::DarkMagenta;
             FastLED.show();
@@ -52,7 +52,7 @@ void modeButtons()
         }
       }
 
-      if (loopStatus == true)
+      if (loopModeStatus == true)
       {
         for (l = 0; l < 6; l++)
         {
@@ -120,7 +120,7 @@ void modeButtons()
       longPress8Active = true;
       ledFlash();
 
-      if ((loopStatus == false) && (stompStatus == false))
+      if ((loopModeStatus == false) && (stompModeStatus == false))
       {
         presetModeLeds();
 
@@ -131,7 +131,7 @@ void modeButtons()
         }
       }
 
-      if (stompStatus == true)
+      if (stompModeStatus == true)
       {
         for (l = 0; l < 6; l++)
         {
@@ -146,7 +146,7 @@ void modeButtons()
 
         for (int s = 0; s < 6; s++)
         {
-          if (stompState[s] == true)
+          if (stompButtonState[s] == true)
           {
             leds[s] = CRGB::DarkMagenta;
             FastLED.show();
@@ -154,7 +154,7 @@ void modeButtons()
         }
       }
 
-      if (loopStatus == true)
+      if (loopModeStatus == true)
       {
         for (l = 0; l < 6; l++)
         {
@@ -167,7 +167,7 @@ void modeButtons()
         leds[7] = CRGB::Blue;
         FastLED.show();
 
-        if (playLedOn == true && loopStateInit == true)
+        if (playLedOn == true && loopModeStateInit == true)
         {
           leds[2] = CRGB::Green;
           FastLED.show();

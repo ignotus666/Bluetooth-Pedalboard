@@ -133,7 +133,7 @@ void return2PresetMode()
   clearTopHalf();
   clearMode();
 
-  return2lastBank();
+  return2LastBank();
 
   if (presetChanged == false) //If bank buttons have been pressed, it's presumed the last active preset is no longer active; if not, it's still active.
   {

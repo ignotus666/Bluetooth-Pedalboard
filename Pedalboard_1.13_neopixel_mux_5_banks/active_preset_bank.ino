@@ -35,17 +35,17 @@ void banks()
 
 //Function to return to last active bank when toggling between looper/stomp and preset mode:
 
-void return2lastBank()
+void return2LastBank()
 {
   for (int b = 1; b < 5; b++)       //Increase number here (b < *)for more banks.
   {
     if (b !=  (lastBank))
     {
-      statusBank[b] = false;
-      statusBank[lastBank] = true;
+      bankStatus[b] = false;
+      bankStatus[lastBank] = true;
     }
   }
-  stompStatus = false;
+  stompModeStatus = false;
 
   bankNames();
 }

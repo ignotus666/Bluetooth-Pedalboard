@@ -3,18 +3,18 @@ void presetBankStatus()
 {
   for (int b = 0; b < 5; b++)        //Increase number for more banks.
   {
-    if (statusBank[b] == true)       //b is bankNumber.
+    if (bankStatus[b] == true)       //b is bankNumber.
     {
       banks();
     }
   }
 
-  if (stompStatus == true)
+  if (stompModeStatus == true)
   {
     stompMode();                     //Kept these names (stompMode and loopMode) out of the array for the rest of the banks to make it easier to keep track in the code.
   }
 
-  else if (loopStatus == true)
+  else if (loopModeStatus == true)
   {
     loopMode();
   }
@@ -28,16 +28,16 @@ void presetBanks()
 
   if (bankNumber != oldBankNumber)
   {
-    statusBank[bankNumber] = true;
+    bankStatus[bankNumber] = true;
 
     clearSmallPresets();
 
     bankNames();
 
-    statusBank[bankNumber + 1] = false; //Only adjacent bank numbers need to be changed to 'false'.
-    statusBank[bankNumber - 1] = false;
-    stompStatus = false;
-    loopStatus = false;
+    bankStatus[bankNumber + 1] = false; //Only adjacent bank numbers need to be changed to 'false'.
+    bankStatus[bankNumber - 1] = false;
+    stompModeStatus = false;
+    loopModeStatus = false;
 
     ledFlash();
     presetModeLeds();

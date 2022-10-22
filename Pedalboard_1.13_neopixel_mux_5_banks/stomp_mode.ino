@@ -3,14 +3,14 @@
 void stompActive()
 {
   int l = 0;
-  stompStatus = !stompStatus;
+  stompModeStatus = !stompModeStatus;
 
   for (int s = 0; s < 6; s++)
   {
-    stompState[s] = false;
+    stompButtonState[s] = false;
   }
 
-  if (stompStatus == true)
+  if (stompModeStatus == true)
   {
     ledFlash();
 
@@ -54,9 +54,9 @@ void stompActive()
 
     for (int b = 0; b < 5; b++)
     {
-      statusBank[b] = false;
+      bankStatus[b] = false;
     }
-    loopStatus = false;
+    loopModeStatus = false;
   }
 
   else
@@ -78,9 +78,9 @@ void stompMode()
   {
     if (keyPressed[s])
     {
-      stompState[s] = !stompState[s];
+      stompButtonState[s] = !stompButtonState[s];
 
-      if (stompState[s] == false)
+      if (stompButtonState[s] == false)
       {
         MIDI.sendControlChange(s + 2, 0, 1); //CC notes start at 2.
         midiLedOn();
@@ -166,7 +166,7 @@ void stompMode()
   //Switches 9 & 10 control volume when stomp mode is active:
 
   //For footswitch 9 (volume down):
-  if ((keyPressed2[0]) && (stompStatus == true))
+  if ((keyPressed2[0]) && (stompModeStatus == true))
   {
     lastVolVal = volVal - 3; //Change by increments of 3.
 
@@ -223,7 +223,7 @@ void stompMode()
   }
 
   //For footswitch 10 (volume up):
-  if ((keyPressed2[1]) && (stompStatus == true))
+  if ((keyPressed2[1]) && (stompModeStatus == true))
   {
     lastVolVal = volVal + 3;
 

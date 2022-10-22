@@ -3,7 +3,7 @@ void bankMode()
 //Long press to scroll through bank button functions: (pedal banks / software banks / software next/prev preset).
 //Short press: 'prev' within each function.
 {
-  if (keyPressed2[0] && loopStatus == false && stompStatus == false)             
+  if (keyPressed2[0] && loopModeStatus == false && stompModeStatus == false)             
   { 
     if (button9Active == false)
     {
@@ -109,7 +109,7 @@ void bankMode()
   }
 
 //Long press: toggle between wah and vol functions. Short press: 'next' within each function.
-  if (keyPressed2[1] && loopStatus == false && stompStatus == false)            
+  if (keyPressed2[1] && loopModeStatus == false && stompModeStatus == false)            
   {
     if (button10Active == false)
     {
