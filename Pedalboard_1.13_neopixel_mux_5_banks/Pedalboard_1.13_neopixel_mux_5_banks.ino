@@ -71,8 +71,7 @@ bool newSwitchState[24] = {LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW,
 
 bool oldSwitchState[8] = {LOW, LOW, LOW, LOW, LOW, LOW, LOW, LOW};
 
-bool newSwitchState2[6] = {LOW, LOW, LOW, LOW, LOW, LOW
-                          };
+bool newSwitchState2[6] = {LOW, LOW, LOW, LOW, LOW, LOW};
 
 bool oldSwitchState2[2] = {LOW, LOW};
 long unsigned currentDebounceTime = 0;
