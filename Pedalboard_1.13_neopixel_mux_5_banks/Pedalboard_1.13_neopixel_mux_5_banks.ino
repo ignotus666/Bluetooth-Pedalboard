@@ -27,6 +27,9 @@
 #include <SPI.h>
 #include <MIDI.h>
 #include <ResponsiveAnalogRead.h>
+#ifdef swap
+#undef swap
+#endif
 #include <FastLED.h>
 #include <Mux.h>
 #include <AnalogSmooth.h>
